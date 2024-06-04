@@ -1,5 +1,5 @@
 import os
-from asyncio import subprocess
+import subprocess
 
 from libqtile import bar, layout, qtile, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
@@ -229,7 +229,7 @@ screens = [
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
-        walpaper=WALLPAPER,
+        wallpaper=WALLPAPER,
         wallpaper_mode="fill",
     ),
 ]
