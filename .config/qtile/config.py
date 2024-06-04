@@ -68,6 +68,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "space", lazy.widget["keyboardlayout"].next_keyboard()),
 ]
 
 groups = [
@@ -173,7 +174,7 @@ screens = [
                     text=BLACK_LOWER_RIGHT_TRIANGLE,
                     foreground=TRUE_BLACK,
                     background=TRANSPARENT,
-                    fontsize=52,
+                    fontsize=48,
                     padding=-2,
                 ),
                 widget.CurrentLayoutIcon(
@@ -181,37 +182,46 @@ screens = [
                     foreground=YELLOW,
                     background=TRUE_BLACK,
                     padding=2,
-                    scale=0.7,
+                    scale=0.5,
                 ),
                 widget.CurrentLayout(
                     foreground=YELLOW,
                     background=TRUE_BLACK,
-                    padding=4,
+                    padding=2,
                 ),
                 widget.TextBox(
                     text=BLACK_LOWER_RIGHT_TRIANGLE,
                     foreground=GREY3,
                     background=TRUE_BLACK,
-                    fontsize=52,
+                    fontsize=48,
                     padding=-2,
+                ),
+                widget.KeyboardLayout(
+                    foreground=YELLOW,
+                    background=TRANSPARENT,
+                    configured_keyboards=['us', 'es'],
+                ),
+                widget.Sep(
+                    linewidth=1,
+                    foreground=KHAKI1,
                 ),
                 widget.Clock(
                     foreground=YELLOW,
                     background=GREY3,
-                    padding=4,
+                    padding=2,
                     format="%d/%m/%Y %a %I:%M %p",
                 ),
                 widget.TextBox(
                     text=BLACK_LOWER_RIGHT_TRIANGLE,
                     foreground=TRUE_BLACK,
                     background=GREY3,
-                    fontsize=52,
+                    fontsize=48,
                     padding=-2,
                 ),
                 widget.QuickExit(
                     foreground=YELLOW,
                     background=TRUE_BLACK,
-                    padding=4,
+                    padding=2,
                     default_text="exit",
                 ),
                 widget.TextBox(
@@ -237,7 +247,7 @@ screens = [
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
+    Click([mod], "Button1", lazy.window.bring_to_front()),
 ]
 
 dgroups_key_binder = None
