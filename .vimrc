@@ -60,3 +60,7 @@ au BufNewFile,BufRead *.py
     \ set autoindent
     \ set textwidth=79
     \ set fileformat=unix
+
+au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
+
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
