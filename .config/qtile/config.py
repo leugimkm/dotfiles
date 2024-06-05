@@ -199,7 +199,7 @@ screens = [
                 ),
                 widget.KeyboardLayout(
                     foreground=YELLOW,
-                    background=TRANSPARENT,
+                    background=GREY3,
                     configured_keyboards=['us', 'es'],
                 ),
                 widget.Sep(
