@@ -16,6 +16,7 @@ WALLPAPER = "~/pictures/wallpapers/00.jpg"
 LOGO = "~/pictures/logos/aep_logo.png"
 CUSTOM_TEXT = "ayudaenpython.com"
 ICONS_PATH = "~/pictures/icons"
+FONT = "SauceCodePro NFM"
 SIZE = 24
 OPACITY = 1  # 0.9
 MARGINS = [10, 10, 4, 10]  # [N, E, S, W]
@@ -109,7 +110,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="Source Code Variable",
+    font=FONT,
     fontsize=12,
     padding=3,
     background=GREY3,
