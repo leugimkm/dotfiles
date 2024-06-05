@@ -1,3 +1,4 @@
+" PLUGINS ---------------------------------------------------------------- {{{
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
@@ -11,9 +12,10 @@ Plug 'alvan/vim-closetag'
 " Plug 'davidhalter/jedi-vim'
 " Plug 'valloric/YouCompleteMe'
 call plug#end()
+" }}}
 
-filetype plugin indent on
 syntax on
+filetype plugin indent on
 set incsearch
 set hlsearch
 
