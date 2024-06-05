@@ -1,4 +1,10 @@
 " PLUGINS ---------------------------------------------------------------- {{{
+"
+" if empty(glob('/.vim/autoload/plug.vim'))
+"     silent !curl -flo ~/.vim/autoload/plug.vim --create-dirs
+"         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" endif
+"
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
@@ -9,10 +15,14 @@ Plug 'vim-scripts/indentpython.vim'
 Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
+Plug 'dense-analysis/ale'
 " Plug 'davidhalter/jedi-vim'
 " Plug 'valloric/YouCompleteMe'
 call plug#end()
 " }}}
+
+" set rtp+=/usr/share/powerline/bindings/vim
+" set laststatus=2
 
 syntax on
 filetype plugin indent on
@@ -36,3 +46,17 @@ set scrolloff=8
 colorscheme gruvbox
 set background=dark
 hi Normal ctermbg=None
+
+au BufNewFile,BufRead *.js, *.html, *.css
+  \ set tabstop=2
+  \ set softtabstop=2
+  \ set shiftwidth=2
+
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set shiftwidth=4
+    \ set softtabstop=4
+    \ set expandtab
+    \ set autoindent
+    \ set textwidth=79
+    \ set fileformat=unix
