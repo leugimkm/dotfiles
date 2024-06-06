@@ -16,9 +16,7 @@ Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'dense-analysis/ale'
-" Plug 'neoclide/coc.nvim'
-" Plug 'davidhalter/jedi-vim'
-" Plug 'valloric/YouCompleteMe'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 " }}}
 
@@ -65,3 +63,19 @@ au BufNewFile,BufRead *.py
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+
+" set nobackup
+" set nowritebackup
+" set updatetime=300
+" set signcolumn=yes
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
