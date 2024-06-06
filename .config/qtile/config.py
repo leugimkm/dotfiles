@@ -11,7 +11,7 @@ def autostart():
     subprocess.run([os.path.expanduser('~/.config/qtile/autostart.sh')])
 
 
-WALLPAPER = "~/pictures/wallpapers/00.jpg"
+WALLPAPER = "~/pictures/wallpapers/01.jpg"
 LOGO = "~/pictures/logos/aep_logo.png"
 CUSTOM_TEXT = "ayudaenpython.com"
 ICONS_PATH = "~/pictures/icons"
@@ -51,15 +51,6 @@ BLACK_UPPER_RIGHT_TRIANGLE = '\u25e5'
 LEFT_HALF_BLACK_CIRCLE = '\u25d6'
 RIGHT_HALF_BLACK_CIRCLE = '\u25d7'
 
-LABELS = [
-    '\U000f0f0f',
-    '\U000f0f10',
-    '\U000f0f11',
-    '\U000f0f12',
-    '\U000f0f13',
-    '\U000f0f14',
-]
-
 mod = "mod4"
 terminal = "kitty"
 layout_theme = {
@@ -71,9 +62,17 @@ layout_theme = {
 widget_defaults = dict(
     font="SauceCodePro NF",
     fontsize=12,
-    padding=4,
+    padding=0,
     background=GREY3,
 )
+groups_config = [
+    ('\U000f0f0f', 'bsp'),
+    ('\U000f0f10', 'monadtall'),
+    ('\U000f0f11', 'monadthreecol'),
+    ('\U000f0f12', 'ratiotile'),
+    ('\U000f0f13', 'floating'),
+    ('\U000f0f14', 'max'),
+]
 
 extension_defaults = widget_defaults.copy()
 
@@ -105,18 +104,16 @@ keys = [
 ]
 
 groups = [
-    Group("1", label=LABELS[0], layout="bsp"),
-    Group("2", label=LABELS[1], layout="monadtall"),
-    Group("3", label=LABELS[2], layout="monadthreecol"),
-    Group("4", label=LABELS[3], layout="ratiotile"),
-    Group("5", label=LABELS[4], layout="floating"),
-    Group("6", label=LABELS[5], layout="max"),
+    Group(f"{i}", label=label, layout=layout)
+    for i, (label, layout) in enumerate(groups_config, 1)
 ]
 
 for i in groups:
     keys.extend([
-        Key([mod], i.name, lazy.group[i.name].toscreen(), desc="Switch to G {}".format(i.name)),
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True), desc="Switch to & move focused W to G {}".format(i.name)),
+        Key([mod], i.name, lazy.group[i.name].toscreen(),
+            desc="Switch to group {}".format(i.name)),
+        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
+            desc="Switch to & move focused W to group {}".format(i.name)),
     ])
 
 layouts = [
@@ -139,20 +136,17 @@ widgets = [
         foreground=TRUE_BLACK,
         background=TRANSPARENT,
         fontsize=24,
-        padding=0,
     ),
     widget.TextBox(
         text=CUSTOM_TEXT,
         foreground=KHAKI1,
         background=TRUE_BLACK,
-        padding=0,
     ),
     widget.TextBox(
         text=PLE_LOWER_RIGHT_TRIANGLE,
         foreground=GREY3,
         background=TRUE_BLACK,
         fontsize=24,
-        padding=0,
     ),
     widget.GroupBox(
         highlight_color=[GREY7, GREY7],
@@ -165,7 +159,6 @@ widgets = [
         fontsize=24,
         foreground=GREY3,
         background=TRANSPARENT,
-        padding=0,
     ),
     widget.Prompt(
         prompt="> ",
@@ -189,7 +182,6 @@ widgets = [
         foreground=TRUE_BLACK,
         background=TRANSPARENT,
         fontsize=24,
-        padding=0,
     ),
     widget.CurrentLayoutIcon(
         custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
@@ -201,14 +193,12 @@ widgets = [
     widget.CurrentLayout(
         foreground=YELLOW,
         background=TRUE_BLACK,
-        padding=2,
     ),
     widget.TextBox(
         text=PLE_LOWER_RIGHT_TRIANGLE,
         foreground=YELLOW,
         background=TRUE_BLACK,
         fontsize=24,
-        padding=0,
     ),
     widget.KeyboardLayout(
         foreground=TRUE_BLACK,
@@ -220,12 +210,10 @@ widgets = [
         foreground=GREY3,
         background=YELLOW,
         fontsize=24,
-        padding=0,
     ),
     widget.Clock(
         foreground=YELLOW,
         background=GREY3,
-        padding=2,
         format="%d/%m/%Y %a %I:%M %p",
     ),
     widget.TextBox(
@@ -233,12 +221,10 @@ widgets = [
         foreground=TRUE_BLACK,
         background=GREY3,
         fontsize=24,
-        padding=0,
     ),
     widget.QuickExit(
         foreground=YELLOW,
         background=TRUE_BLACK,
-        padding=2,
         default_text="exit",
     ),
     widget.TextBox(
@@ -246,7 +232,6 @@ widgets = [
         fontsize=24,
         foreground=TRUE_BLACK,
         background=TRANSPARENT,
-        padding=0,
     ),
 ]
 
