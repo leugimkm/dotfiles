@@ -15,12 +15,8 @@ WALLPAPER = "~/pictures/wallpapers/00.jpg"
 LOGO = "~/pictures/logos/aep_logo.png"
 CUSTOM_TEXT = "ayudaenpython.com"
 ICONS_PATH = "~/pictures/icons"
-FONT = "SauceCodePro NF"
-SIZE = 24
-OPACITY = 1  # 0.9
-MARGINS = [10, 10, 4, 10]  # [N, E, S, W]
 
-BAR = "#282c34"
+# BAR = "#282c34"
 BLACK = "#29414f"
 YELLOW = "#fac863"
 KHAKI1 = "#ffff87"
@@ -66,6 +62,20 @@ LABELS = [
 
 mod = "mod4"
 terminal = "kitty"
+layout_theme = {
+    "border_width": 2,
+    "margin": 4,
+    "border_focus": KHAKI1,
+    "border_normal": GREY3,
+}
+widget_defaults = dict(
+    font="SauceCodePro NF",
+    fontsize=12,
+    padding=4,
+    background=GREY3,
+)
+
+extension_defaults = widget_defaults.copy()
 
 keys = [
     Key([mod], "h", lazy.layout.left(), desc="Move focus to L"),
@@ -97,178 +107,157 @@ keys = [
 groups = [
     Group("1", label=LABELS[0], layout="bsp"),
     Group("2", label=LABELS[1], layout="monadtall"),
-    Group("3", label=LABELS[2], layout="monadtall"),
-    Group("4", label=LABELS[3], layout="monadtall"),
+    Group("3", label=LABELS[2], layout="monadthreecol"),
+    Group("4", label=LABELS[3], layout="radiotile"),
     Group("5", label=LABELS[4], layout="floating"),
-    Group("6", label=LABELS[5], layout="floating"),
+    Group("6", label=LABELS[5], layout="max"),
 ]
+
 for i in groups:
     keys.extend([
         Key([mod], i.name, lazy.group[i.name].toscreen(), desc="Switch to G {}".format(i.name)),
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True), desc="Switch to & move focused W to G {}".format(i.name)),
     ])
 
-layout_theme = {
-    "border_width": 2,
-    "margin": 4,
-    "border_focus": KHAKI1,
-    "border_normal": GREY3,
-}
-
 layouts = [
     layout.Bsp(**layout_theme),
     layout.Floating(**layout_theme),
     layout.MonadTall(**layout_theme),
     layout.RatioTile(**layout_theme),
-    # layout.Max(),
-    # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    # layout.Stack(num_stacks=2),
-    # layout.Matrix(),
-    # layout.MonadWide(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Max(**layout_theme),
+    layout.MonadThreeCol(**layout_theme),
 ]
 
-widget_defaults = dict(
-    font=FONT,
-    fontsize=12,
-    padding=4,
-    background=GREY3,
-)
-extension_defaults = widget_defaults.copy()
+widgets = [
+    widget.Image(
+        background=TRANSPARENT,
+        filename=LOGO,
+        scale="False",
+    ),
+    widget.TextBox(
+        text=PLE_LOWER_RIGHT_TRIANGLE,
+        foreground=TRUE_BLACK,
+        background=TRANSPARENT,
+        fontsize=24,
+        padding=0,
+    ),
+    widget.TextBox(
+        text=CUSTOM_TEXT,
+        foreground=KHAKI1,
+        background=TRUE_BLACK,
+        padding=0,
+    ),
+    widget.TextBox(
+        text=PLE_LOWER_RIGHT_TRIANGLE,
+        foreground=GREY3,
+        background=TRUE_BLACK,
+        fontsize=24,
+        padding=0,
+    ),
+    widget.GroupBox(
+        highlight_color=[GREY7, GREY7],
+        highlight_method="line",
+        active=[YELLOW, YELLOW],
+        this_current_screen_border=[YELLOW, YELLOW],
+    ),
+    widget.TextBox(
+        text=PLE_UPPER_LEFT_TRIANGLE,
+        fontsize=24,
+        foreground=GREY3,
+        background=TRANSPARENT,
+        padding=0,
+    ),
+    widget.Prompt(
+        prompt="> ",
+        foreground=KHAKI1,
+        background=TRANSPARENT,
+    ),
+    widget.WindowName(
+        format='{name}',
+        foreground=KHAKI1,
+        background=TRANSPARENT,
+    ),
+    widget.Chord(
+        chords_colors={
+            "launch": ("#ff0000", "#ffffff"),
+        },
+        name_transform=lambda name: name.upper(),
+    ),
+    widget.Systray(),
+    widget.TextBox(
+        text=PLE_LOWER_RIGHT_TRIANGLE,
+        foreground=TRUE_BLACK,
+        background=TRANSPARENT,
+        fontsize=24,
+        padding=0,
+    ),
+    widget.CurrentLayoutIcon(
+        custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
+        foreground=YELLOW,
+        background=TRUE_BLACK,
+        padding=2,
+        scale=0.5,
+    ),
+    widget.CurrentLayout(
+        foreground=YELLOW,
+        background=TRUE_BLACK,
+        padding=2,
+    ),
+    widget.TextBox(
+        text=PLE_LOWER_RIGHT_TRIANGLE,
+        foreground=YELLOW,
+        background=TRUE_BLACK,
+        fontsize=24,
+        padding=0,
+    ),
+    widget.KeyboardLayout(
+        foreground=TRUE_BLACK,
+        background=YELLOW,
+        configured_keyboards=['us', 'es'],
+    ),
+    widget.TextBox(
+        text=PLE_LOWER_RIGHT_TRIANGLE,
+        foreground=GREY3,
+        background=YELLOW,
+        fontsize=24,
+        padding=0,
+    ),
+    widget.Clock(
+        foreground=YELLOW,
+        background=GREY3,
+        padding=2,
+        format="%d/%m/%Y %a %I:%M %p",
+    ),
+    widget.TextBox(
+        text=PLE_LOWER_RIGHT_TRIANGLE,
+        foreground=TRUE_BLACK,
+        background=GREY3,
+        fontsize=24,
+        padding=0,
+    ),
+    widget.QuickExit(
+        foreground=YELLOW,
+        background=TRUE_BLACK,
+        padding=2,
+        default_text="exit",
+    ),
+    widget.TextBox(
+        text=PLE_UPPER_LEFT_TRIANGLE,
+        fontsize=24,
+        foreground=TRUE_BLACK,
+        background=TRANSPARENT,
+        padding=0,
+    ),
+]
 
 screens = [
     Screen(
         top=bar.Bar(
-            [
-                widget.Image(
-                    background=TRANSPARENT,
-                    filename=LOGO,
-                    scale="False",
-                ),
-                widget.TextBox(
-                    text=PLE_LOWER_RIGHT_TRIANGLE,
-                    foreground=TRUE_BLACK,
-                    background=TRANSPARENT,
-                    fontsize=24,
-                    padding=0,
-                ),
-                widget.TextBox(
-                    text=CUSTOM_TEXT,
-                    foreground=KHAKI1,
-                    background=TRUE_BLACK,
-                    padding=0,
-                ),
-                widget.TextBox(
-                    text=PLE_LOWER_RIGHT_TRIANGLE,
-                    foreground=GREY3,
-                    background=TRUE_BLACK,
-                    fontsize=24,
-                    padding=0,
-                ),
-                widget.GroupBox(
-                    highlight_color=[GREY7, GREY7],
-                    highlight_method="line",
-                    active=[YELLOW, YELLOW],
-                    this_current_screen_border=[YELLOW, YELLOW],
-                ),
-                widget.TextBox(
-                    text=PLE_UPPER_LEFT_TRIANGLE,
-                    fontsize=24,
-                    foreground=GREY3,
-                    background=TRANSPARENT,
-                    padding=0,
-                ),
-                widget.Prompt(
-                    prompt="> ",
-                    foreground=KHAKI1,
-                    background=TRANSPARENT,
-                ),
-                widget.WindowName(
-                    format='{name}',
-                    foreground=KHAKI1,
-                    background=TRANSPARENT,
-                ),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                widget.Systray(),
-                widget.TextBox(
-                    text=PLE_LOWER_RIGHT_TRIANGLE,
-                    foreground=TRUE_BLACK,
-                    background=TRANSPARENT,
-                    fontsize=24,
-                    padding=0,
-                ),
-                widget.CurrentLayoutIcon(
-                    custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
-                    foreground=YELLOW,
-                    background=TRUE_BLACK,
-                    padding=2,
-                    scale=0.5,
-                ),
-                widget.CurrentLayout(
-                    foreground=YELLOW,
-                    background=TRUE_BLACK,
-                    padding=2,
-                ),
-                widget.TextBox(
-                    text=PLE_LOWER_RIGHT_TRIANGLE,
-                    foreground=YELLOW,
-                    background=TRUE_BLACK,
-                    fontsize=24,
-                    padding=0,
-                ),
-                widget.KeyboardLayout(
-                    foreground=TRUE_BLACK,
-                    background=YELLOW,
-                    configured_keyboards=['us', 'es'],
-                ),
-                widget.TextBox(
-                    text=PLE_LOWER_RIGHT_TRIANGLE,
-                    foreground=GREY3,
-                    background=YELLOW,
-                    fontsize=24,
-                    padding=0,
-                ),
-                widget.Clock(
-                    foreground=YELLOW,
-                    background=GREY3,
-                    padding=2,
-                    format="%d/%m/%Y %a %I:%M %p",
-                ),
-                widget.TextBox(
-                    text=PLE_LOWER_RIGHT_TRIANGLE,
-                    foreground=TRUE_BLACK,
-                    background=GREY3,
-                    fontsize=24,
-                    padding=0,
-                ),
-                widget.QuickExit(
-                    foreground=YELLOW,
-                    background=TRUE_BLACK,
-                    padding=2,
-                    default_text="exit",
-                ),
-                widget.TextBox(
-                    text=PLE_UPPER_LEFT_TRIANGLE,
-                    fontsize=24,
-                    foreground=TRUE_BLACK,
-                    background=TRANSPARENT,
-                    padding=0,
-                ),
-            ],
-            size=SIZE,
+            widgets,
+            size=24,
             background=TRANSPARENT,
-            opacity=OPACITY,
-            margin=MARGINS,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            opacity=1,
+            margin=[10, 10, 4, 10],  # [N, E, S, W]
         ),
         wallpaper=WALLPAPER,
         wallpaper_mode="fill",
@@ -285,7 +274,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = False
-# floats_kept_above = True
+floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
     border_width=2,
