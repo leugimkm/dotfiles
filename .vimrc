@@ -16,6 +16,7 @@ Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'dense-analysis/ale'
+" Plug 'neoclide/coc.nvim'
 " Plug 'davidhalter/jedi-vim'
 " Plug 'valloric/YouCompleteMe'
 call plug#end()
