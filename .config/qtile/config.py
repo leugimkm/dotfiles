@@ -30,6 +30,21 @@ GREY7 = "#121212"
 TRUE_BLACK = "#000000"
 TRANSPARENT = "#00000000"
 
+PLE_LOWER_LEFT_TRIANGLE = '\ue0b8'
+PLE_LOWER_RIGHT_TRIANGLE = '\ue0ba'
+PLE_UPPER_LEFT_TRIANGLE = '\ue0bc'
+PLE_UPPER_RIGHT_TRIANGLE = '\ue0be'
+PLE_LEFT_HARD_DIVIDER_INVERSE = '\ue0d7'
+PLE_RIGHT_HARD_DIVIDER_INVERSE = '\ue0d6'
+PLE_LEFT_HALF_CIRCLE = '\ue0b6'
+PLE_RIGHT_HALF_CIRCLE = '\ue0c5'
+PLE_LEFT_FLAME = '\ue0c2'
+PLE_RIGHT_FLAME = '\ue0c0'
+PLE_LEFT_PIXELATED_SQUARES_BIG = '\ue0c7'
+PLE_RIGHT_PIXELATED_SQUARES_BIG = '\ue0c6'
+PLE_LEFT_PIXELATED_SQUARES_SMALL = '\ue0c5'
+PLE_RIGHT_PIXELATED_SQUARES_SMALL = '\ue0c4'
+
 BLACK_MEDIUM_LEFT_POINTING_TRIANGLE = '\u23f4'
 BLACK_MEDIUM_RIGHT_POINTING_TRIANGLE = '\u23f5'
 BLACK_RIGHT_POITING_TRIANGLE = '\u25b6'
@@ -40,7 +55,15 @@ BLACK_UPPER_LEFT_TRIANGLE = '\u25e4'
 BLACK_UPPER_RIGHT_TRIANGLE = '\u25e5'
 LEFT_HALF_BLACK_CIRCLE = '\u25d6'
 RIGHT_HALF_BLACK_CIRCLE = '\u25d7'
-DICE = ['\u2680', '\u2681', '\u2682', '\u2683', '\u2684', '\u2685']
+
+LABELS = [
+    '\U000f0f0f',
+    '\U000f0f10',
+    '\U000f0f11',
+    '\U000f0f12',
+    '\U000f0f13',
+    '\U000f0f14',
+]
 
 mod = "mod4"
 terminal = "kitty"
@@ -73,12 +96,12 @@ keys = [
 ]
 
 groups = [
-    Group("1", label=DICE[0], layout="bsp"),
-    Group("2", label=DICE[1], layout="monadtall"),
-    Group("3", label=DICE[2], layout="monadtall"),
-    Group("4", label=DICE[3], layout="monadtall"),
-    Group("5", label=DICE[4], layout="floating"),
-    Group("6", label=DICE[5], layout="floating"),
+    Group("1", label=LABELS[0], layout="bsp"),
+    Group("2", label=LABELS[1], layout="monadtall"),
+    Group("3", label=LABELS[2], layout="monadtall"),
+    Group("4", label=LABELS[3], layout="monadtall"),
+    Group("5", label=LABELS[4], layout="floating"),
+    Group("6", label=LABELS[5], layout="floating"),
 ]
 for i in groups:
     keys.extend([
@@ -112,7 +135,7 @@ layouts = [
 widget_defaults = dict(
     font=FONT,
     fontsize=12,
-    padding=3,
+    padding=4,
     background=GREY3,
 )
 extension_defaults = widget_defaults.copy()
@@ -134,11 +157,11 @@ screens = [
                     padding=4,
                 ),
                 widget.TextBox(
-                    text=BLACK_LOWER_RIGHT_TRIANGLE,
+                    text=PLE_LOWER_RIGHT_TRIANGLE,
                     foreground=GREY3,
                     background=TRUE_BLACK,
-                    fontsize=48,
-                    padding=-2,
+                    fontsize=24,
+                    padding=0,
                 ),
                 widget.Sep(linewidth=0, padding=4),
                 widget.GroupBox(
@@ -148,11 +171,11 @@ screens = [
                     this_current_screen_border=[YELLOW, YELLOW],
                 ),
                 widget.TextBox(
-                    text=BLACK_UPPER_LEFT_TRIANGLE,
-                    fontsize=48,
+                    text=PLE_UPPER_LEFT_TRIANGLE,
+                    fontsize=24,
                     foreground=GREY3,
                     background=TRANSPARENT,
-                    padding=-2,
+                    padding=0,
                 ),
                 widget.Prompt(
                     prompt="> ",
@@ -172,11 +195,11 @@ screens = [
                 ),
                 widget.Systray(),
                 widget.TextBox(
-                    text=BLACK_LOWER_RIGHT_TRIANGLE,
+                    text=PLE_LOWER_RIGHT_TRIANGLE,
                     foreground=TRUE_BLACK,
                     background=TRANSPARENT,
-                    fontsize=48,
-                    padding=-2,
+                    fontsize=24,
+                    padding=0,
                 ),
                 widget.CurrentLayoutIcon(
                     custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
@@ -191,11 +214,11 @@ screens = [
                     padding=2,
                 ),
                 widget.TextBox(
-                    text=BLACK_LOWER_RIGHT_TRIANGLE,
+                    text=PLE_LOWER_RIGHT_TRIANGLE,
                     foreground=GREY3,
                     background=TRUE_BLACK,
-                    fontsize=48,
-                    padding=-2,
+                    fontsize=24,
+                    padding=0,
                 ),
                 widget.KeyboardLayout(
                     foreground=YELLOW,
@@ -213,11 +236,11 @@ screens = [
                     format="%d/%m/%Y %a %I:%M %p",
                 ),
                 widget.TextBox(
-                    text=BLACK_LOWER_RIGHT_TRIANGLE,
+                    text=PLE_LOWER_RIGHT_TRIANGLE,
                     foreground=TRUE_BLACK,
                     background=GREY3,
-                    fontsize=48,
-                    padding=-2,
+                    fontsize=24,
+                    padding=0,
                 ),
                 widget.QuickExit(
                     foreground=YELLOW,
@@ -226,11 +249,11 @@ screens = [
                     default_text="exit",
                 ),
                 widget.TextBox(
-                    text=BLACK_UPPER_LEFT_TRIANGLE,
-                    fontsize=48,
+                    text=PLE_UPPER_LEFT_TRIANGLE,
+                    fontsize=24,
                     foreground=TRUE_BLACK,
                     background=TRANSPARENT,
-                    padding=-2,
+                    padding=0,
                 ),
             ],
             size=SIZE,
