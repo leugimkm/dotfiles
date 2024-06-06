@@ -108,7 +108,7 @@ groups = [
     Group("1", label=LABELS[0], layout="bsp"),
     Group("2", label=LABELS[1], layout="monadtall"),
     Group("3", label=LABELS[2], layout="monadthreecol"),
-    Group("4", label=LABELS[3], layout="radiotile"),
+    Group("4", label=LABELS[3], layout="ratiotile"),
     Group("5", label=LABELS[4], layout="floating"),
     Group("6", label=LABELS[5], layout="max"),
 ]
