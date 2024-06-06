@@ -1,15 +1,14 @@
 import os
 import subprocess
 
-from libqtile import bar, layout, qtile, widget, hook
+from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
 
-@hook.subscribe.startup_once
+@hook.subscribe.startup
 def autostart():
-    home = os.path.expanduser('~')
-    subprocess.Popen([home + '/.config/qtile.autostart.sh'])
+    subprocess.run([os.path.expanduser('~/.config/qtile/autostart.sh')])
 
 
 WALLPAPER = "~/pictures/wallpapers/00.jpg"

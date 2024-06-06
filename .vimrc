@@ -49,17 +49,17 @@ hi Normal ctermbg=None
 
 au BufNewFile,BufRead *.js, *.html, *.css
   \ set tabstop=2
-  \ set softtabstop=2
-  \ set shiftwidth=2
+  \ softtabstop=2
+  \ shiftwidth=2
 
 au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set shiftwidth=4
-    \ set softtabstop=4
-    \ set expandtab
-    \ set autoindent
-    \ set textwidth=79
-    \ set fileformat=unix
+  \ set tabstop=4
+  \ shiftwidth=4
+  \ softtabstop=4
+  \ expandtab
+  \ autoindent
+  \ textwidth=79
+  \ fileformat=unix
 
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
