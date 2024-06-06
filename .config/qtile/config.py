@@ -16,7 +16,7 @@ WALLPAPER = "~/pictures/wallpapers/00.jpg"
 LOGO = "~/pictures/logos/aep_logo.png"
 CUSTOM_TEXT = "ayudaenpython.com"
 ICONS_PATH = "~/pictures/icons"
-FONT = "SauceCodePro NFM"
+FONT = "SauceCodePro NF"
 SIZE = 24
 OPACITY = 1  # 0.9
 MARGINS = [10, 10, 4, 10]  # [N, E, S, W]
@@ -149,12 +149,18 @@ screens = [
                     filename=LOGO,
                     scale="False",
                 ),
-                widget.Sep(linewidth=0, padding=4),
+                widget.TextBox(
+                    text=PLE_LOWER_RIGHT_TRIANGLE,
+                    foreground=TRUE_BLACK,
+                    background=TRANSPARENT,
+                    fontsize=24,
+                    padding=0,
+                ),
                 widget.TextBox(
                     text=CUSTOM_TEXT,
                     foreground=KHAKI1,
                     background=TRUE_BLACK,
-                    padding=4,
+                    padding=0,
                 ),
                 widget.TextBox(
                     text=PLE_LOWER_RIGHT_TRIANGLE,
@@ -163,7 +169,6 @@ screens = [
                     fontsize=24,
                     padding=0,
                 ),
-                widget.Sep(linewidth=0, padding=4),
                 widget.GroupBox(
                     highlight_color=[GREY7, GREY7],
                     highlight_method="line",
@@ -215,19 +220,22 @@ screens = [
                 ),
                 widget.TextBox(
                     text=PLE_LOWER_RIGHT_TRIANGLE,
-                    foreground=GREY3,
+                    foreground=YELLOW,
                     background=TRUE_BLACK,
                     fontsize=24,
                     padding=0,
                 ),
                 widget.KeyboardLayout(
-                    foreground=YELLOW,
-                    background=GREY3,
+                    foreground=TRUE_BLACK,
+                    background=YELLOW,
                     configured_keyboards=['us', 'es'],
                 ),
-                widget.Sep(
-                    linewidth=1,
-                    foreground=KHAKI1,
+                widget.TextBox(
+                    text=PLE_LOWER_RIGHT_TRIANGLE,
+                    foreground=GREY3,
+                    background=YELLOW,
+                    fontsize=24,
+                    padding=0,
                 ),
                 widget.Clock(
                     foreground=YELLOW,
