@@ -4,7 +4,7 @@ from libqtile.config import Screen
 from widgets import widgets
 from colors import TRANSPARENT
 
-WALLPAPER = "~/pictures/wallpapers/00.jpg"
+WALLPAPER = "~/pictures/wallpapers/01.jpg"
 
 screens = [
     Screen(
