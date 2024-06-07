@@ -3,7 +3,7 @@ from os import path
 
 from libqtile import hook
 
-from widgets import widgets_defaults, extension_defaults
+from widgets import widget_defaults, extension_defaults
 from layouts import layouts, floating_layout
 from inputs import groups, keys, mouse, mod
 from screens import screens
@@ -18,7 +18,7 @@ mod = mod
 keys = keys
 groups = groups
 layouts = layouts
-widgets_defaults = widgets_defaults
+widget_defaults = widget_defaults
 extension_defaults = extension_defaults
 screens = screens
 mouse = mouse

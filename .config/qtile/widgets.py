@@ -1,3 +1,5 @@
+from os import path
+
 from libqtile import widget
 
 from colors import *
@@ -74,7 +76,7 @@ widgets = [
         fontsize=24,
     ),
     widget.CurrentLayoutIcon(
-        custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
+        custom_icon_paths=[path.expanduser(ICONS_PATH)],
         foreground=YELLOW,
         background=TRUE_BLACK,
         padding=2,
