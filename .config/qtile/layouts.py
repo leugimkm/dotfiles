@@ -1,5 +1,5 @@
 from libqtile import layout
-from libqtile import Match
+from libqtile.config import Match
 
 from colors import KHAKI1, GREY3
 
