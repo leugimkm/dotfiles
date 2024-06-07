@@ -64,8 +64,8 @@ au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b
 
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
-" set nobackup
-" set nowritebackup
+set nobackup
+set nowritebackup
 " set updatetime=300
 " set signcolumn=yes
 
