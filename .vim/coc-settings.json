@@ -1,5 +1,5 @@
 {
+  "suggest.noselect": true,
   "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true,
-  "suggest.noselect": true
+  "python.linting.enabled": true
 }
