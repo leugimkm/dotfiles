@@ -64,10 +64,11 @@ au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b
 
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
+" set updatetime=300
 set nobackup
 set nowritebackup
-" set updatetime=300
-" set signcolumn=yes
+set signcolumn=yes
+highlight clear signcolumn
 
 function! CheckBackspace() abort
   let col = col('.') - 1

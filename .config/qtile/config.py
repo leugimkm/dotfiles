@@ -3,9 +3,9 @@ from os import path
 
 from libqtile import hook
 
-from widgets import widget_defaults, extension_defaults
-from layouts import layouts, floating_layout
-from inputs import groups, keys, mouse, mod
+from widgets import extension_defaults
+from layouts import floating_layout, layouts
+from inputs import groups, keys, mouse
 from screens import screens
 
 
@@ -14,15 +14,9 @@ def autostart():
     subprocess.run([path.expanduser('~/.config/qtile/autostart.sh')])
 
 
-mod = mod
-keys = keys
-groups = groups
-layouts = layouts
-widget_defaults = widget_defaults
-extension_defaults = extension_defaults
+keys, groups, layouts, mouse = keys, groups, layouts, mouse
+extension_defaults, floating_layout = extension_defaults, floating_layout
 screens = screens
-mouse = mouse
-floating_layout = floating_layout
 dgroups_key_binder = None
 dgroups_app_rules = []
 follow_mouse_focus = True

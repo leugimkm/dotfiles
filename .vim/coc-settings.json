@@ -1,5 +1,8 @@
 {
   "suggest.noselect": true,
+  "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true
+  "pyright.inlayHints.functionReturnTypes": true,
+  "pyright.inlayHints.parameterTypes": false,
+  "pyright.inlayHints.variableTypes": false
 }
