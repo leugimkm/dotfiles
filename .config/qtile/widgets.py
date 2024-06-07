@@ -1,128 +1,65 @@
-from os import path
+import os
 
 from libqtile import widget
 
-from colors import *
-from icons import *
+from consts import PLE_LOWER_RIGHT_TRIANGLE, PLE_UPPER_LEFT_TRIANGLE
+from consts import GREY3, GREY7, TRUE_BLACK, TRANSPARENT, YELLOW, KHAKI1
 
-LOGO = "~/pictures/logos/aep_logo.png"
+
+def fgbg(fg, bg):
+    return {"foreground": fg, "background": bg}
+
+
+def decoration(fg, bg, switch=False, icon="left", size=24):
+    T = {"left": PLE_LOWER_RIGHT_TRIANGLE, "right": PLE_UPPER_LEFT_TRIANGLE}
+    return widget.TextBox(
+        text=T[icon], fontsize=size, **fgbg(fg, bg),
+    )
+
+
 CUSTOM_TEXT = "ayudaenpython.com"
 ICONS_PATH = "~/pictures/icons"
+LOGO = "~/pictures/logos/aep_logo.png"
+FORMAT = "%d/%m/%Y %a %I:%M %p"
+KBS = ["us", "es"]
 
 widget_defaults = dict(
     font="SauceCodePro NF",
+    background=GREY3,
     fontsize=12,
     padding=0,
-    background=GREY3,
 )
 extension_defaults = widget_defaults.copy()
 
 widgets = [
-    widget.Image(
-        background=TRANSPARENT,
-        filename=LOGO,
-        scale="False",
-    ),
-    widget.TextBox(
-        text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=TRUE_BLACK,
-        background=TRANSPARENT,
-        fontsize=24,
-    ),
-    widget.TextBox(
-        text=CUSTOM_TEXT,
-        foreground=KHAKI1,
-        background=TRUE_BLACK,
-    ),
-    widget.TextBox(
-        text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=GREY3,
-        background=TRUE_BLACK,
-        fontsize=24,
-    ),
+    widget.Image(filename=LOGO, scale="False", background=TRANSPARENT),
+    decoration(fg=TRUE_BLACK, bg=TRANSPARENT),
+    widget.TextBox(text=CUSTOM_TEXT, foreground=YELLOW, background=TRUE_BLACK),
+    decoration(fg=GREY3, bg=TRUE_BLACK),
     widget.GroupBox(
-        highlight_color=[GREY7, GREY7],
-        highlight_method="line",
-        active=[YELLOW, YELLOW],
-        this_current_screen_border=[YELLOW, YELLOW],
+        highlight_color=[GREY7, GREY7], highlight_method="line",
+        active=KHAKI1, this_current_screen_border=YELLOW, padding=2,
     ),
-    widget.TextBox(
-        text=PLE_UPPER_LEFT_TRIANGLE,
-        foreground=GREY3,
-        background=TRANSPARENT,
-        fontsize=24,
-    ),
-    widget.Prompt(
-        prompt="> ",
-        foreground=KHAKI1,
-        background=TRANSPARENT,
-    ),
-    widget.WindowName(
-        format='{name}',
-        foreground=KHAKI1,
-        background=TRANSPARENT,
-    ),
+    decoration(fg=GREY3, bg=TRANSPARENT, icon="right"),
+    widget.Prompt(prompt="> ", foreground=KHAKI1, background=TRANSPARENT),
+    widget.WindowName(**fgbg(KHAKI1, TRANSPARENT), format='{name}'),
     widget.Chord(
-        chords_colors={
-            "launch": ("#ff0000", "#ffffff"),
-        },
+        chords_colors={"launch": ("#ff0000", "#ffffff")},
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
-    widget.TextBox(
-        text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=TRUE_BLACK,
-        background=TRANSPARENT,
-        fontsize=24,
-    ),
+    decoration(fg=TRUE_BLACK, bg=TRANSPARENT),
     widget.CurrentLayoutIcon(
-        custom_icon_paths=[path.expanduser(ICONS_PATH)],
-        foreground=YELLOW,
-        background=TRUE_BLACK,
-        padding=2,
-        scale=0.5,
+        custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
+        padding=2, scale=0.5, **fgbg(YELLOW, TRUE_BLACK),
     ),
-    widget.CurrentLayout(
-        foreground=YELLOW,
-        background=TRUE_BLACK,
-    ),
-    widget.TextBox(
-        text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=YELLOW,
-        background=TRUE_BLACK,
-        fontsize=24,
-    ),
-    widget.KeyboardLayout(
-        foreground=TRUE_BLACK,
-        background=YELLOW,
-        configured_keyboards=['us', 'es'],
-    ),
-    widget.TextBox(
-        text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=GREY3,
-        background=YELLOW,
-        fontsize=24,
-    ),
-    widget.Clock(
-        foreground=YELLOW,
-        background=GREY3,
-        format="%d/%m/%Y %a %I:%M %p",
-    ),
-    widget.TextBox(
-        text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=TRUE_BLACK,
-        background=GREY3,
-        fontsize=24,
-    ),
-    widget.QuickExit(
-        foreground=YELLOW,
-        background=TRUE_BLACK,
-        default_text="exit",
-    ),
-    widget.TextBox(
-        text=PLE_UPPER_LEFT_TRIANGLE,
-        fontsize=24,
-        foreground=TRUE_BLACK,
-        background=TRANSPARENT,
-    ),
+    widget.CurrentLayout(foreground=YELLOW, background=TRUE_BLACK),
+    decoration(fg=GREY3, bg=TRUE_BLACK),
+    widget.KeyboardLayout(**fgbg(YELLOW, GREY3), configured_keyboards=KBS),
+    decoration(fg=TRUE_BLACK, bg=GREY3),
+    widget.Clock(format=FORMAT, **fgbg(YELLOW, TRUE_BLACK)),
+    decoration(fg=GREY3, bg=TRUE_BLACK),
+    widget.QuickExit(default_text="exit", **fgbg(YELLOW, GREY3)),
+    decoration(fg=GREY3, bg=TRANSPARENT),
 ]
+

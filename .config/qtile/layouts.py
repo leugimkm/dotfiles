@@ -1,7 +1,7 @@
 from libqtile import layout
 from libqtile.config import Match
 
-from colors import KHAKI1, GREY3
+from consts import KHAKI1, GREY3
 
 layout_theme = {
     "border_width": 2,
@@ -32,3 +32,4 @@ floating_layout = layout.Floating(
         Match(title="pinentry"),
     ]
 )
+

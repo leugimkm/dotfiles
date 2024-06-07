@@ -1,6 +1,8 @@
 from libqtile.config import Click, Drag, Group, Key
 from libqtile.lazy import lazy
 
+from consts import ONE, TWO, THRE, FOUR, FIVE, SIX
+
 mod = "mod4"
 terminal = "kitty"
 
@@ -59,12 +61,12 @@ groups = [
     Group(f"{i}", label=label, layout=layout)
     for i, (label, layout)
     in enumerate([
-        ('\U000f0f0f', 'bsp'),
-        ('\U000f0f10', 'monadtall'),
-        ('\U000f0f11', 'monadthreecol'),
-        ('\U000f0f12', 'ratiotile'),
-        ('\U000f0f13', 'floating'),
-        ('\U000f0f14', 'max'),
+        (ONE, 'bsp'),
+        (TWO, 'monadtall'),
+        (THRE, 'monadthreecol'),
+        (FOUR, 'ratiotile'),
+        (FIVE, 'floating'),
+        (SIX, 'max'),
     ], 1)
 ]
 
