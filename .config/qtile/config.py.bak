@@ -61,9 +61,9 @@ layout_theme = {
 }
 widget_defaults = dict(
     font="SauceCodePro NF",
+    background=GREY3,
     fontsize=12,
     padding=0,
-    background=GREY3,
 )
 groups_config = [
     ('\U000f0f0f', 'bsp'),
@@ -139,7 +139,7 @@ widgets = [
     ),
     widget.TextBox(
         text=CUSTOM_TEXT,
-        foreground=KHAKI1,
+        foreground=YELLOW,
         background=TRUE_BLACK,
     ),
     widget.TextBox(
@@ -151,14 +151,15 @@ widgets = [
     widget.GroupBox(
         highlight_color=[GREY7, GREY7],
         highlight_method="line",
-        active=[YELLOW, YELLOW],
-        this_current_screen_border=[YELLOW, YELLOW],
+        active=KHAKI1,
+        this_current_screen_border=YELLOW,
+        padding=2,
     ),
     widget.TextBox(
         text=PLE_UPPER_LEFT_TRIANGLE,
-        fontsize=24,
         foreground=GREY3,
         background=TRANSPARENT,
+        fontsize=24,
     ),
     widget.Prompt(
         prompt="> ",
@@ -196,41 +197,41 @@ widgets = [
     ),
     widget.TextBox(
         text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=YELLOW,
+        foreground=GREY3,
         background=TRUE_BLACK,
         fontsize=24,
     ),
     widget.KeyboardLayout(
-        foreground=TRUE_BLACK,
-        background=YELLOW,
+        foreground=YELLOW,
+        background=GREY3,
         configured_keyboards=['us', 'es'],
     ),
     widget.TextBox(
         text=PLE_LOWER_RIGHT_TRIANGLE,
-        foreground=GREY3,
-        background=YELLOW,
-        fontsize=24,
-    ),
-    widget.Clock(
-        foreground=YELLOW,
-        background=GREY3,
-        format="%d/%m/%Y %a %I:%M %p",
-    ),
-    widget.TextBox(
-        text=PLE_LOWER_RIGHT_TRIANGLE,
         foreground=TRUE_BLACK,
         background=GREY3,
         fontsize=24,
     ),
-    widget.QuickExit(
+    widget.Clock(
         foreground=YELLOW,
         background=TRUE_BLACK,
+        format="%d/%m/%Y %a %I:%M %p",
+    ),
+    widget.TextBox(
+        text=PLE_LOWER_RIGHT_TRIANGLE,
+        foreground=GREY3,
+        background=TRUE_BLACK,
+        fontsize=24,
+    ),
+    widget.QuickExit(
+        foreground=YELLOW,
+        background=GREY3,
         default_text="exit",
     ),
     widget.TextBox(
         text=PLE_UPPER_LEFT_TRIANGLE,
         fontsize=24,
-        foreground=TRUE_BLACK,
+        foreground=GREY3,
         background=TRANSPARENT,
     ),
 ]

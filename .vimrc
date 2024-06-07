@@ -20,6 +20,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 " }}}
 
+" autocmd vimenter * ++nested colorscheme gruvbox
+
 " set rtp+=/usr/share/powerline/bindings/vim
 " set laststatus=2
 
@@ -42,8 +44,10 @@ set colorcolumn=80
 set relativenumber
 set nu
 set scrolloff=8
-colorscheme gruvbox
+
 set background=dark
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
 hi Normal ctermbg=None
 
 au BufNewFile,BufRead *.js, *.html, *.css
