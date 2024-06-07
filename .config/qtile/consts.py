@@ -1,6 +1,4 @@
 
-# BAR = "#282c34"
-BLACK = "#29414f"
 YELLOW = "#fac863"
 KHAKI1 = "#ffff87"
 GREY3 = "#080808"

@@ -10,11 +10,9 @@ def fgbg(fg, bg):
     return {"foreground": fg, "background": bg}
 
 
-def decoration(fg, bg, switch=False, icon="left", size=24):
+def decoration(fg, bg, icon="left", size=24):
     T = {"left": PLE_LOWER_RIGHT_TRIANGLE, "right": PLE_UPPER_LEFT_TRIANGLE}
-    return widget.TextBox(
-        text=T[icon], fontsize=size, **fgbg(fg, bg),
-    )
+    return widget.TextBox(text=T[icon], fontsize=size, **fgbg(fg, bg))
 
 
 CUSTOM_TEXT = "ayudaenpython.com"
@@ -62,4 +60,3 @@ widgets = [
     widget.QuickExit(default_text="exit", **fgbg(YELLOW, GREY3)),
     decoration(fg=GREY3, bg=TRANSPARENT),
 ]
-

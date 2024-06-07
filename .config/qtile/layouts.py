@@ -32,4 +32,3 @@ floating_layout = layout.Floating(
         Match(title="pinentry"),
     ]
 )
-
