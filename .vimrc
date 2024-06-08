@@ -5,6 +5,7 @@ if empty(glob('/.vim/autoload/plug.vim'))
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
+
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
@@ -18,6 +19,17 @@ Plug 'alvan/vim-closetag'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+
+let g:coc_global_extensions = [
+\ 'coc-json',
+\ 'coc-tsserver',
+\ 'coc-html',
+\ 'coc-css',
+\ 'coc-clangd',
+\ 'coc-pyright',
+\ 'coc-utilsnips'
+\]
+
 " }}}
 
 " autocmd vimenter * ++nested colorscheme gruvbox
