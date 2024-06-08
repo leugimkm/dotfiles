@@ -27,7 +27,7 @@ let g:coc_global_extensions = [
 \ 'coc-css',
 \ 'coc-clangd',
 \ 'coc-pyright',
-\ 'coc-utilsnips'
+\ 'coc-ultisnips'
 \]
 
 " }}}
