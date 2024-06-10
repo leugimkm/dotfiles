@@ -58,5 +58,5 @@ widgets = [
     widget.Clock(format=FORMAT, **fgbg(YELLOW, TRUE_BLACK)),
     decoration(fg=GREY3, bg=TRUE_BLACK),
     widget.QuickExit(default_text="exit", **fgbg(YELLOW, GREY3)),
-    decoration(fg=GREY3, bg=TRANSPARENT),
+    decoration(fg=GREY3, bg=TRANSPARENT, icon="right"),
 ]
