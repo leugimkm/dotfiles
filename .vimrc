@@ -1,8 +1,8 @@
 " PLUGINS ---------------------------------------------------------------- {{{
 
 if empty(glob('/.vim/autoload/plug.vim'))
-    silent !curl -flo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -flo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 
@@ -37,10 +37,16 @@ let g:coc_global_extensions = [
 " set rtp+=/usr/share/powerline/bindings/vim
 " set laststatus=2
 
+
+
 syntax on
 filetype plugin indent on
 set incsearch
 set hlsearch
+set showcmd
+if has('mouse')
+  set mouse=a
+endif
 
 set tabstop=4
 set shiftwidth=4
