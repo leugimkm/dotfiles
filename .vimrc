@@ -38,7 +38,8 @@ let g:coc_global_extensions = [
 " set laststatus=2
 
 
-
+set nocompatible
+set hidden
 syntax on
 filetype plugin indent on
 set incsearch
@@ -47,6 +48,8 @@ set showcmd
 if has('mouse')
   set mouse=a
 endif
+set splitbelow
+set splitright
 
 set tabstop=4
 set shiftwidth=4
