@@ -8,6 +8,7 @@ endif
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
+Plug 'junegunn/fzf.vim',
 Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'preservim/tagbar'
@@ -37,7 +38,7 @@ let g:coc_global_extensions = [
 " set rtp+=/usr/share/powerline/bindings/vim
 " set laststatus=2
 
-
+let mapleader=" "
 set nocompatible
 set hidden
 syntax on
@@ -45,9 +46,7 @@ filetype plugin indent on
 set incsearch
 set hlsearch
 set showcmd
-if has('mouse')
-  set mouse=a
-endif
+set mouse=a
 set splitbelow
 set splitright
 
@@ -71,6 +70,12 @@ let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 hi Normal ctermbg=None
 
+set nobackup
+set nowritebackup
+set signcolumn=yes
+" set updatetime=300
+highlight clear signcolumn
+
 au BufNewFile,BufRead *.js, *.html, *.css
   \ set tabstop=2
   \ softtabstop=2
@@ -87,13 +92,8 @@ au BufNewFile,BufRead *.py
 
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
+let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-
-" set updatetime=300
-set nobackup
-set nowritebackup
-set signcolumn=yes
-highlight clear signcolumn
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -105,3 +105,6 @@ inoremap <silent><expr> <TAB>
       \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+map <leader>h :noh<CR>
+map <leader>t :NERDTreeToggle<CR>
