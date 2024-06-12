@@ -38,19 +38,20 @@ let g:coc_global_extensions = [
 " set rtp+=/usr/share/powerline/bindings/vim
 " set laststatus=2
 
+let mapleader=" "
 set nocompatible
+set mouse=a
 syntax on
 filetype plugin indent on
-set autoread
-au FocusGained,BufEnter * silent! checktime
-let mapleader=" "
 set hidden
-set incsearch
 set hlsearch
+set incsearch
 set showcmd
-set mouse=a
+set showmatch
 set splitbelow
 set splitright
+set autoread
+au FocusGained,BufEnter * silent! checktime
 
 set tabstop=4
 set shiftwidth=4
@@ -74,6 +75,7 @@ hi Normal ctermbg=None
 
 set nobackup
 set nowritebackup
+set noswapfile
 set signcolumn=yes
 " set updatetime=300
 highlight clear signcolumn
@@ -92,6 +94,21 @@ au BufNewFile,BufRead *.py
   \ textwidth=79
   \ fileformat=unix
 
+map <leader>h :noh<CR>
+map <leader>t :NERDTreeToggle<CR>
+
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
 let NERDTreeQuitOnOpen=1
@@ -107,6 +124,3 @@ inoremap <silent><expr> <TAB>
       \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
-
-map <leader>h :noh<CR>
-map <leader>t :NERDTreeToggle<CR>
