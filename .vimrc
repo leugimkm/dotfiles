@@ -38,11 +38,13 @@ let g:coc_global_extensions = [
 " set rtp+=/usr/share/powerline/bindings/vim
 " set laststatus=2
 
-let mapleader=" "
 set nocompatible
-set hidden
 syntax on
 filetype plugin indent on
+set autoread
+au FocusGained,BufEnter * silent! checktime
+let mapleader=" "
+set hidden
 set incsearch
 set hlsearch
 set showcmd
