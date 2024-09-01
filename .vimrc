@@ -97,6 +97,10 @@ au BufNewFile,BufRead *.py
 map <leader>h :noh<CR>
 map <leader>t :NERDTreeToggle<CR>
 
+map <leader>n :bnext<CR>
+map <leader>p :bprevious<CR>
+map <leader>d :bdelete<CR>
+
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
