@@ -106,7 +106,8 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-nnoremap <C-A-j> :w<CR>!clear; python %<CR>
+" nnoremap <C-A-j> :w<CR>!clear; python %<CR>
+autocmd FileType python nnoremap <C-A-j> :w<CR>:terminal python %<CR>
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
