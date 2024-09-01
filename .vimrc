@@ -106,6 +106,8 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+nnoremap <C-A-j> :w<CR>!clear; python %<CR>
+
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
 " inoremap <A-j> <Esc>:m .+1<CR>==gi
