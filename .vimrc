@@ -61,6 +61,7 @@ set smartindent
 set encoding=utf-8
 set fileencoding=utf-8
 set t_Co=256
+" set termguicolors
 let &t_ut=''
 
 set colorcolumn=80
