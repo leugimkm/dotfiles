@@ -3,7 +3,7 @@ import os
 from libqtile import widget
 
 from consts import PLE_LOWER_RIGHT_TRIANGLE, PLE_UPPER_LEFT_TRIANGLE
-from consts import GREY3, GREY7, BLACK, TRANSPARENT, YELLOW, KHAKI1
+from consts import GREY3, GREY7, BLACK, TRANSPARENT, YELLOW, KHAKI1, TRUE_TRANSPARENT
 
 
 def fgbg(fg, bg):
@@ -32,9 +32,9 @@ extension_defaults = widget_defaults.copy()
 
 widgets = [
     widget.Image(
-        filename=LOGO, scale="False", background=TRANSPARENT, margin=4,
+        filename=LOGO, scale="False", background=TRUE_TRANSPARENT, margin=4,
     ),
-    decoration(fg=BLACK, bg=TRANSPARENT),
+    decoration(fg=BLACK, bg=TRUE_TRANSPARENT),
     widget.TextBox(text=CUSTOM_TEXT, **fgbg(YELLOW, BLACK)),
     decoration(fg=GREY3, bg=BLACK),
     widget.GroupBox(
@@ -61,5 +61,5 @@ widgets = [
     widget.Clock(format=FORMAT, **fgbg(YELLOW, BLACK)),
     decoration(fg=GREY3, bg=BLACK),
     widget.QuickExit(default_text="exit", **fgbg(YELLOW, GREY3)),
-    decoration(fg=GREY3, bg=TRANSPARENT, icon="right"),
+    decoration(fg=GREY3, bg=TRUE_TRANSPARENT, icon="right"),
 ]
