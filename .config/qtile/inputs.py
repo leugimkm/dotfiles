@@ -6,6 +6,14 @@ from consts import ONE, TWO, THREE, FOUR, FIVE, SIX
 
 TERMINAL = "kitty"
 
+
+@lazy.function
+def minimize(qtile):
+    for w in qtile.current_group.windows:
+        if hasattr(w, "toggle_minimize"):
+            w.toggle_minimize()
+
+
 keys = [
     Key(("M-A-h"), lazy.layout.left()),
     Key(("M-A-l"), lazy.layout.right()),
@@ -32,6 +40,7 @@ keys = [
     Key(("M-C-r"), lazy.reload_config()),
     Key(("M-C-q"), lazy.shutdown()),
     Key(("M-r"), lazy.spawncmd()),
+    Key(("M-C-m"), minimize()),
 ]
 
 groups = [

@@ -4,10 +4,8 @@ from libqtile.config import Match
 from consts import KHAKI1, GREY3
 
 layout_theme = {
-    "border_width": 2,
-    "margin": 4,
-    "border_focus": KHAKI1,
-    "border_normal": GREY3,
+    "border_width": 2, "margin": 4,
+    "border_normal": GREY3, "border_focus": KHAKI1,
 }
 
 layouts = [
