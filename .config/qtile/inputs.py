@@ -1,15 +1,10 @@
 from libqtile.config import Click, Drag, Group, Key
 from libqtile.lazy import lazy
 
-from consts import ONE, TWO, THRE, FOUR, FIVE, SIX
+from consts import ONE, TWO, THREE, FOUR, FIVE, SIX
 
-MOD = "mod4"
-ALT = "mod1"
-ALTGR = "mod5"
-SHIFT = "shift"
-CTRL = "control"
-TAB = "Tab"
-terminal = "kitty"
+MOD, ALT, ATLGR = "mod4", "mod1", "mod5"
+TERMINAL = "kitty"
 
 keys = [
     Key([MOD, ALT], "h", lazy.layout.left()),
@@ -17,33 +12,32 @@ keys = [
     Key([MOD, ALT], "j", lazy.layout.down()),
     Key([MOD, ALT], "k", lazy.layout.up()),
     Key([MOD], "space", lazy.widget["keyboardlayout"].next_keyboard()),
-    Key([MOD, SHIFT], "h", lazy.layout.shuffle_left()),
-    Key([MOD, SHIFT], "l", lazy.layout.shuffle_right()),
-    Key([MOD, SHIFT], "j", lazy.layout.shuffle_down()),
-    Key([MOD, SHIFT], "k", lazy.layout.shuffle_up()),
-    Key([MOD, CTRL], "h", lazy.layout.grow_left()),
-    Key([MOD, CTRL], "l", lazy.layout.grow_right()),
-    Key([MOD, CTRL], "j", lazy.layout.grow_down()),
-    Key([MOD, CTRL], "k", lazy.layout.grow_up()),
+    Key([MOD, "shift"], "h", lazy.layout.shuffle_left()),
+    Key([MOD, "shift"], "l", lazy.layout.shuffle_right()),
+    Key([MOD, "shift"], "j", lazy.layout.shuffle_down()),
+    Key([MOD, "shift"], "k", lazy.layout.shuffle_up()),
+    Key([MOD, "control"], "h", lazy.layout.grow_left()),
+    Key([MOD, "control"], "l", lazy.layout.grow_right()),
+    Key([MOD, "control"], "j", lazy.layout.grow_down()),
+    Key([MOD, "control"], "k", lazy.layout.grow_up()),
     Key([MOD], "n", lazy.layout.normalize()),
-    Key([MOD, SHIFT], "Return", lazy.layout.toggle_split()),
-    Key([MOD], "Return", lazy.spawn(terminal)),
-    Key([MOD], TAB, lazy.next_layout()),
+    Key([MOD, "shift"], "Return", lazy.layout.toggle_split()),
+    Key([MOD], "Return", lazy.spawn(TERMINAL)),
+    Key([MOD], "Tab", lazy.next_layout()),
     Key([MOD], "w", lazy.window.kill()),
     Key([MOD], "f", lazy.window.toggle_fullscreen()),
     Key([MOD], "t", lazy.window.toggle_floating()),
-    Key([MOD, CTRL], "r", lazy.reload_config()),
-    Key([MOD, CTRL], "q", lazy.shutdown()),
+    Key([MOD, "control"], "r", lazy.reload_config()),
+    Key([MOD, "control"], "q", lazy.shutdown()),
     Key([MOD], "r", lazy.spawncmd()),
 ]
 
 groups = [
     Group(f"{i}", label=label, layout=layout)
-    for i, (label, layout)
-    in enumerate([
+    for i, (label, layout) in enumerate([
         (ONE, 'bsp'),
         (TWO, 'monadtall'),
-        (THRE, 'monadthreecol'),
+        (THREE, 'monadthreecol'),
         (FOUR, 'ratiotile'),
         (FIVE, 'floating'),
         (SIX, 'max'),
@@ -69,5 +63,5 @@ mouse = [
         start=lazy.window.get_position()),
     Drag([MOD], "Button3", lazy.window.set_size_floating(),
         start=lazy.window.get_size()),
-    Click([MOD], "Button1", lazy.window.bring_to_front()),
+    Click([MOD], "Button2", lazy.window.bring_to_front()),
 ]
