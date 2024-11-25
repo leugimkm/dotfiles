@@ -21,8 +21,8 @@ screens = [
             widgets,
             background=TRANSPARENT,
             size=24,
-            opacity=1,
-            margin=[10, 10, 4, 10],  # [N, E, S, W]
+            opacity=0.85,
+            margin=[4, 4, 2, 4],  # [N, E, S, W]
         ),
     ),
 ]
