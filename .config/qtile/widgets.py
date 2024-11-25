@@ -17,7 +17,7 @@ def decoration(fg, bg, icon="left", size=24):
 
 CUSTOM_TEXT = "ayudaenpython.com"
 ICONS_PATH = "~/pictures/icons"
-LOGO = "~/pictures/logos/aep_logo.png"
+LOGO = "~/pictures/logos/logo_custom.png"
 FORMAT = "%d/%m/%Y %a %I:%M %p"
 KBS = ["us", "es"]
 CHORDS_COLOR = {
@@ -31,7 +31,9 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 widgets = [
-    widget.Image(filename=LOGO, scale="False", background=TRANSPARENT),
+    widget.Image(
+        filename=LOGO, scale="False", background=TRANSPARENT, margin=4,
+    ),
     decoration(fg=BLACK, bg=TRANSPARENT),
     widget.TextBox(text=CUSTOM_TEXT, **fgbg(YELLOW, BLACK)),
     decoration(fg=GREY3, bg=BLACK),
