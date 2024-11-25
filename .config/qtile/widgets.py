@@ -3,7 +3,7 @@ import os
 from libqtile import widget
 
 from consts import PLE_LOWER_RIGHT_TRIANGLE, PLE_UPPER_LEFT_TRIANGLE
-from consts import GREY3, GREY7, TRUE_BLACK, TRANSPARENT, YELLOW, KHAKI1
+from consts import GREY3, GREY7, BLACK, TRANSPARENT, YELLOW, KHAKI1
 
 
 def fgbg(fg, bg):
@@ -31,9 +31,9 @@ extension_defaults = widget_defaults.copy()
 
 widgets = [
     widget.Image(filename=LOGO, scale="False", background=TRANSPARENT),
-    decoration(fg=TRUE_BLACK, bg=TRANSPARENT),
-    widget.TextBox(text=CUSTOM_TEXT, **fgbg(YELLOW, TRUE_BLACK)),
-    decoration(fg=GREY3, bg=TRUE_BLACK),
+    decoration(fg=BLACK, bg=TRANSPARENT),
+    widget.TextBox(text=CUSTOM_TEXT, **fgbg(YELLOW, BLACK)),
+    decoration(fg=GREY3, bg=BLACK),
     widget.GroupBox(
         highlight_color=[GREY7, GREY7], highlight_method="line",
         active=KHAKI1, this_current_screen_border=YELLOW, padding=2,
@@ -49,17 +49,17 @@ widgets = [
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
-    decoration(fg=TRUE_BLACK, bg=TRANSPARENT),
+    decoration(fg=BLACK, bg=TRANSPARENT),
     widget.CurrentLayoutIcon(
         custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
-        padding=2, scale=0.5, **fgbg(YELLOW, TRUE_BLACK),
+        padding=2, scale=0.5, **fgbg(YELLOW, BLACK),
     ),
-    widget.CurrentLayout(**fgbg(YELLOW, TRUE_BLACK)),
-    decoration(fg=GREY3, bg=TRUE_BLACK),
+    widget.CurrentLayout(**fgbg(YELLOW, BLACK)),
+    decoration(fg=GREY3, bg=BLACK),
     widget.KeyboardLayout(**fgbg(YELLOW, GREY3), configured_keyboards=KBS),
-    decoration(fg=TRUE_BLACK, bg=GREY3),
-    widget.Clock(format=FORMAT, **fgbg(YELLOW, TRUE_BLACK)),
-    decoration(fg=GREY3, bg=TRUE_BLACK),
+    decoration(fg=BLACK, bg=GREY3),
+    widget.Clock(format=FORMAT, **fgbg(YELLOW, BLACK)),
+    decoration(fg=GREY3, bg=BLACK),
     widget.QuickExit(default_text="exit", **fgbg(YELLOW, GREY3)),
     decoration(fg=GREY3, bg=TRANSPARENT, icon="right"),
 ]
