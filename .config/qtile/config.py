@@ -17,9 +17,15 @@ def autostart():
 keys, groups, layouts, mouse = keys, groups, layouts, mouse
 widget_defaults, extension_defaults = widget_defaults, extension_defaults
 floating_layout, screens = floating_layout, screens
-dgroups_key_binder, dgroups_app_rules = None, []
-follow_mouse_focus, bring_front_click, floats_kept_above = True, False, True
-cursor_warp, auto_fullscreen = False, True
-reconfigure_screens, auto_minimize = True, True
-focus_on_window_activation, wmname = "smart", "Qtile"
+dgroups_app_rules = []
+dgroups_key_binder = None
+follow_mouse_focus = True
+bring_front_click = False
+floats_kept_above = True
+cursor_warp = False
+auto_fullscreen = True
+focus_on_window_activation = "smart"
+reconfigure_screens = True
+auto_minimize = True
+wmname = "Qtile"
 
