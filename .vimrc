@@ -19,6 +19,8 @@ Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'yaegassy/coc-astro', {'do': 'yarn install --frozen-lockfile'}
+Plug 'yaegassy/coc-esbonio', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 let g:coc_global_extensions = [
@@ -28,6 +30,7 @@ let g:coc_global_extensions = [
 \ 'coc-css',
 \ 'coc-clangd',
 \ 'coc-pyright',
+\ 'coc-markdownlint',
 \ 'coc-ultisnips'
 \]
 
