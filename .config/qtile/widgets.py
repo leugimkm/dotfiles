@@ -32,17 +32,20 @@ extension_defaults = widget_defaults.copy()
 widgets = [
     widget.Image(filename=LOGO, scale="False", background=TRANSPARENT),
     decoration(fg=TRUE_BLACK, bg=TRANSPARENT),
-    widget.TextBox(text=CUSTOM_TEXT, foreground=YELLOW, background=TRUE_BLACK),
+    widget.TextBox(text=CUSTOM_TEXT, **fgbg(YELLOW, TRUE_BLACK)),
     decoration(fg=GREY3, bg=TRUE_BLACK),
     widget.GroupBox(
         highlight_color=[GREY7, GREY7], highlight_method="line",
         active=KHAKI1, this_current_screen_border=YELLOW, padding=2,
     ),
     decoration(fg=GREY3, bg=TRANSPARENT, icon="right"),
-    widget.Prompt(prompt="> ", foreground=KHAKI1, background=TRANSPARENT),
+    widget.Prompt(prompt="> ", **fgbg(KHAKI1, TRANSPARENT)),
     widget.WindowName(**fgbg(KHAKI1, TRANSPARENT), format='{name}'),
     widget.Chord(
-        chords_colors={"launch": ("#ff0000", "#ffffff")},
+        chords_colors={
+            "launch": ("#ff0000", "#ffffff"),
+            "vim mode": ("#2980b9", "#ffffff"),
+        },
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
@@ -51,7 +54,7 @@ widgets = [
         custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
         padding=2, scale=0.5, **fgbg(YELLOW, TRUE_BLACK),
     ),
-    widget.CurrentLayout(foreground=YELLOW, background=TRUE_BLACK),
+    widget.CurrentLayout(**fgbg(YELLOW, TRUE_BLACK)),
     decoration(fg=GREY3, bg=TRUE_BLACK),
     widget.KeyboardLayout(**fgbg(YELLOW, GREY3), configured_keyboards=KBS),
     decoration(fg=TRUE_BLACK, bg=GREY3),
