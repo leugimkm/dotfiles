@@ -20,12 +20,13 @@ ICONS_PATH = "~/pictures/icons"
 LOGO = "~/pictures/logos/aep_logo.png"
 FORMAT = "%d/%m/%Y %a %I:%M %p"
 KBS = ["us", "es"]
+CHORDS_COLOR = {
+    "launch": ("#ff0000", "#ffffff"),
+    "vim mode": ("#2980b9", "#ffffff"),
+}
 
 widget_defaults = dict(
-    font="SauceCodePro NF",
-    background=GREY3,
-    fontsize=12,
-    padding=0,
+    font="SauceCodePro NF", fontsize=12, padding=0, background=GREY3,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -42,10 +43,7 @@ widgets = [
     widget.Prompt(prompt="> ", **fgbg(KHAKI1, TRANSPARENT)),
     widget.WindowName(**fgbg(KHAKI1, TRANSPARENT), format='{name}'),
     widget.Chord(
-        chords_colors={
-            "launch": ("#ff0000", "#ffffff"),
-            "vim mode": ("#2980b9", "#ffffff"),
-        },
+        chords_colors=CHORDS_COLOR,
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
