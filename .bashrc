@@ -14,3 +14,8 @@ POWERLINE_BASH_SELECT=1
 . /usr/share/powerline/bindings/bash/powerline.sh
 
 eval "$(fzf --bash)"
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,.venv,__pycache__,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'
+"
