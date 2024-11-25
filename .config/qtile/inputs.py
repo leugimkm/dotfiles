@@ -3,57 +3,41 @@ from libqtile.lazy import lazy
 
 from consts import ONE, TWO, THRE, FOUR, FIVE, SIX
 
-mod = "mod4"
+MOD = "mod4"
+ALT = "mod1"
+ALTGR = "mod5"
+SHIFT = "shift"
+CTRL = "control"
+TAB = "Tab"
 terminal = "kitty"
 
 keys = [
-    Key([mod], "h", lazy.layout.left(),
-        desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(),
-        desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(),
-        desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(),
-        desc="Move focus up"),
-    # Key([mod], "space", lazy.layout.next(),
-    #    desc="Move window focus to other window"),
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
-        desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
-        desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
-        desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(),
-        desc="Move window up"),
-    Key([mod, "control"], "h", lazy.layout.grow_left(),
-        desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(),
-        desc="Grow window to the righ"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(),
-        desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(),
-        desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(),
-        desc="Reset all W sizes"),
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
+    Key([MOD, ALT], "h", lazy.layout.left(), desc="Move focus to L"),
+    Key([MOD, ALT], "l", lazy.layout.right(), desc="Move focus to R"),
+    Key([MOD, ALT], "j", lazy.layout.down(), desc="Move focus D"),
+    Key([MOD, ALT], "k", lazy.layout.up(), desc="Move focus U"),
+    Key([MOD, SHIFT], "h", lazy.layout.shuffle_left(), desc="Move W to the L"),
+    Key([MOD, SHIFT], "l", lazy.layout.shuffle_right(), desc="Move W to the R"),
+    Key([MOD, SHIFT], "j", lazy.layout.shuffle_down(), desc="Move W D"),
+    Key([MOD, SHIFT], "k", lazy.layout.shuffle_up(), desc="Move W U"),
+    Key([MOD, CTRL], "h", lazy.layout.grow_left(), desc="Grow W to the L"),
+    Key([MOD, CTRL], "l", lazy.layout.grow_right(), desc="Grow W to the R"),
+    Key([MOD, CTRL], "j", lazy.layout.grow_down(), desc="Grow W D"),
+    Key([MOD, CTRL], "k", lazy.layout.grow_up(), desc="Grow W U"),
+    Key([MOD], "n", lazy.layout.normalize(), desc="Reset all W sizes"),
+    Key([MOD], TAB, lazy.next_layout(), desc="Toggle between layouts"),
+    Key([MOD, CTRL], "r", lazy.reload_config(), desc="Reload the config"),
+    Key([MOD, CTRL], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([MOD], "r", lazy.spawncmd(), desc="Spawn a CMD using a prompt widget"),
+    Key([MOD], "w", lazy.window.kill(), desc="Kill focused W"),
+    Key([MOD], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([MOD, SHIFT], "Return", lazy.layout.toggle_split(),
         desc="Toggle between split/unsplit sides of stack"),
-    Key([mod], "Return", lazy.spawn(terminal),
-        desc="Launch terminal"),
-    Key([mod], "Tab", lazy.next_layout(),
-        desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(),
-        desc="Kill focused W"),
-    Key([mod], "f", lazy.window.toggle_fullscreen(),
+    Key([MOD], "f", lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen on the focused W"),
-    Key([mod], "t", lazy.window.toggle_floating(),
+    Key([MOD], "t", lazy.window.toggle_floating(),
         desc="Toggle floating on the focused W"),
-    Key([mod, "control"], "r", lazy.reload_config(),
-        desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(),
-        desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(),
-        desc="Spawn a command using a prompt widget"),
-    Key([mod], "space", lazy.widget["keyboardlayout"].next_keyboard(),
+    Key([MOD], "space", lazy.widget["keyboardlayout"].next_keyboard(),
         desc="Next keyboard layout"),
 ]
 
@@ -73,21 +57,21 @@ groups = [
 for group in groups:
     keys.extend([
         Key(
-            [mod], group.name,
+            [MOD], group.name,
             lazy.group[group.name].toscreen(),
             desc="Switch to group {}".format(group.name),
         ),
         Key(
-            [mod, "shift"], group.name,
+            [MOD, "shift"], group.name,
             lazy.window.togroup(group.name, switch_group=True),
             desc="Switch to & move focused W to group {}".format(group.name),
         ),
     ])
 
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(),
+    Drag([MOD], "Button1", lazy.window.set_position_floating(),
         start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
+    Drag([MOD], "Button3", lazy.window.set_size_floating(),
         start=lazy.window.get_size()),
-    Click([mod], "Button1", lazy.window.bring_to_front()),
+    Click([MOD], "Button1", lazy.window.bring_to_front()),
 ]
