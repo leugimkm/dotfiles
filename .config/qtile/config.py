@@ -17,8 +17,8 @@ def autostart():
 keys, groups, layouts, mouse = keys, groups, layouts, mouse
 widget_defaults, extension_defaults = widget_defaults, extension_defaults
 floating_layout, screens = floating_layout, screens
-dgroups_app_rules = []
 dgroups_key_binder = None
+dgroups_app_rules = []
 follow_mouse_focus = True
 bring_front_click = False
 floats_kept_above = True

@@ -24,5 +24,6 @@ screens = [
             opacity=0.85,
             margin=[4, 4, 2, 4],  # [N, E, S, W]
         ),
+        x11_drag_polling_rate=60,
     ),
 ]
