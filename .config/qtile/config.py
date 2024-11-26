@@ -9,6 +9,7 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 from consts import SYMBOLS as S, PLE_TRIANGLE as D, GRUVBOX as C
+from consts import PLE_HARD_DIVIDER_INVERSE as DD
 
 
 @hook.subscribe.startup
@@ -32,8 +33,13 @@ def fgbg(fg, bg):
     return {"foreground": C[fg], "background": C[bg]}
 
 
-def decoration(fg, bg, icon="L", size=24):
+def deco_1(fg, bg, icon="L", size=24):
     T = {"L": D["lower"]["R"], "R": D["upper"]["L"]}
+    return widget.TextBox(text=T[icon], fontsize=size, **fgbg(fg, bg))
+
+
+def deco_2(fg, bg, icon="R", size=24):
+    T = {"L": DD["R"], "R": DD["L"]}
     return widget.TextBox(text=T[icon], fontsize=size, **fgbg(fg, bg))
 
 
@@ -69,9 +75,8 @@ keys = [
 groups = [
     Group(f"{i}", label=label, layout=layout)
     for i, (label, layout) in enumerate([
-        (S["1"], 'monadtall'), (S["2"], 'monadthreecol'),
-        (S["3"], 'monadWide'), (S["4"], 'plasma'),
-        (S["5"], 'max'), (S["6"], 'max'),
+        (S["1"], 'monadtall'), (S["2"], 'monadthreecol'), (S["3"], 'monadwide'),
+        (S["4"], 'plasma'), (S["5"], 'monadtall'), (S["6"], 'max'),
     ], 1)
 ]
 
@@ -109,17 +114,17 @@ extension_defaults = widget_defaults.copy()
 
 widgets = [
     widget.Image(
-        filename="~/pictures/logos/logo_custom.png", scale="False", margin=4,
+        filename="~/pictures/logos/logo_custom.png", scale="False",
         background=C["true_transparent"],
     ),
-    decoration("bg2", "true_transparent"),
-    widget.TextBox(text="ayudaenpython.com", **fgbg("fg", "bg2")),
-    decoration("bg0", "bg2"),
+    deco_2("bg2", "true_transparent"),
+    widget.TextBox(text=" ayudaenpython.com", **fgbg("fg", "bg2")),
+    deco_2("bg0", "bg2"),
     widget.GroupBox(
         highlight_color=["000000", "282828"], highlight_method="line",
         active=C["khaki1"], this_current_screen_border=C["yellow"], padding=2,
     ),
-    decoration("bg0", "transparent", icon="R"),
+    deco_1("bg0", "transparent", icon="R"),
     widget.Prompt(prompt="> ", **fgbg("khaki1", "transparent")),
     widget.WindowName(**fgbg("khaki1", "transparent"), format='{name}'),
     widget.Chord(
@@ -130,21 +135,21 @@ widgets = [
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
-    decoration("bg1", "transparent"),
+    deco_1("bg1", "transparent"),
     widget.CurrentLayoutIcon(
         custom_icon_paths=[os.path.expanduser("~/pictures/icons")],
         padding=2, scale=0.5, **fgbg("yellow", "bg1"),
     ),
     widget.CurrentLayout(**fgbg("yellow", "bg1")),
-    decoration("bg0", "bg1"),
+    deco_1("bg0", "bg1"),
     widget.KeyboardLayout(
         configured_keyboards=["us", "es"], **fgbg("green", "bg0"),
     ),
-    decoration("bg1", "bg0"),
+    deco_1("bg1", "bg0"),
     widget.Clock(format="%d/%m/%Y %a %I:%M %p", **fgbg("blue", "bg1")),
-    decoration("bg0", "bg1"),
+    deco_1("bg0", "bg1"),
     widget.QuickExit(default_text="exit", **fgbg("red", "bg0")),
-    decoration("bg0", "true_transparent", icon="R"),
+    deco_1("bg0", "true_transparent", icon="R"),
 ]
 
 screens = [
@@ -181,3 +186,4 @@ focus_on_window_activation = "smart"
 reconfigure_screens = True
 auto_minimize = True
 wmname = "LG3D"
+
