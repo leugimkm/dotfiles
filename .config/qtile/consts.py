@@ -1,55 +1,51 @@
-CUSTOM_TEXT = "ayudaenpython.com"
-ICONS_PATH = "~/pictures/icons"
-LOGO = "~/pictures/logos/logo_custom.png"
-FORMAT = "%d/%m/%Y %a %I:%M %p"
-KBS = ["us", "es"]
-CHORDS_COLOR = {
-    "launch": ("#ff0000", "#ffffff"),
-    "vim mode": ("#2980b9", "#ffffff"),
+GRUVBOX = {
+    "bg0": "#282828",
+    "bg1": "#3c3836",
+    "bg2": "#504945",
+    "bg3": "#665c54",
+    "bg4": "#7c6f64",
+    "gray": "#a89984",
+    "fg": "ebdbb2",
+    "orange": "#fe8019",
+    "red": "#fb4934",
+    "green": "#b8bb26",
+    "yellow": "#fabd2f",
+    "blue": "#83a598",
+    "purple": "#d3869b",
+    "aqua": "#8ec07c",
+    "khaki1": "#ffff87",
+    "transparent": "#28282840",
+    "true_transparent": "#00000000",
 }
-
-YELLOW = "#fac863"
-KHAKI1 = "#ffff87"
-GREY3 = "#080808"
-GREY7 = "#121212"
-BLACK = "#222222"
-TRANSPARENT = "#22222240"
-TRUE_BLACK = "#000000"
-TRUE_TRANSPARENT = "#00000000"
-
-ZERO = '\U000f0f0e'
-ONE = '\U000f0f0f'
-TWO = '\U000f0f10'
-THREE = '\U000f0f11'
-FOUR = '\U000f0f12'
-FIVE = '\U000f0f13'
-SIX = '\U000f0f14'
-SEVEN = '\U000f0f15'
-EIGHT = '\U000f0f16'
-NINE = '\U000f0f17'
-
-PLE_LOWER_LEFT_TRIANGLE = '\ue0b8'
-PLE_LOWER_RIGHT_TRIANGLE = '\ue0ba'
-PLE_UPPER_LEFT_TRIANGLE = '\ue0bc'
-PLE_UPPER_RIGHT_TRIANGLE = '\ue0be'
-PLE_LEFT_HARD_DIVIDER_INVERSE = '\ue0d7'
-PLE_RIGHT_HARD_DIVIDER_INVERSE = '\ue0d6'
-PLE_LEFT_HALF_CIRCLE = '\ue0b6'
-PLE_RIGHT_HALF_CIRCLE = '\ue0c5'
-PLE_LEFT_FLAME = '\ue0c2'
-PLE_RIGHT_FLAME = '\ue0c0'
-PLE_LEFT_PIXELATED_SQUARES_BIG = '\ue0c7'
-PLE_RIGHT_PIXELATED_SQUARES_BIG = '\ue0c6'
-PLE_LEFT_PIXELATED_SQUARES_SMALL = '\ue0c5'
-PLE_RIGHT_PIXELATED_SQUARES_SMALL = '\ue0c4'
-
-BLACK_MEDIUM_LEFT_POINTING_TRIANGLE = '\u23f4'
-BLACK_MEDIUM_RIGHT_POINTING_TRIANGLE = '\u23f5'
-BLACK_RIGHT_POINTING_TRIANGLE = '\u25b6'
-BLACK_LEFT_POINTING_TRIANGLE = '\u25c0'
-BLACK_LOWER_RIGHT_TRIANGLE = '\u25e2'
-BLACK_LOWER_LEFT_TRIANGLE = '\u25e3'
-BLACK_UPPER_LEFT_TRIANGLE = '\u25e4'
-BLACK_UPPER_RIGHT_TRIANGLE = '\u25e5'
-LEFT_HALF_BLACK_CIRCLE = '\u25d6'
-RIGHT_HALF_BLACK_CIRCLE = '\u25d7'
+SYMBOLS = {
+    "0": '\U000f0f0e',
+    "1": '\U000f0f0f',
+    "2": '\U000f0f10',
+    "3": '\U000f0f11',
+    "4": '\U000f0f12',
+    "5": '\U000f0f13',
+    "6": '\U000f0f14',
+    "7": '\U000f0f15',
+    "8": '\U000f0f16',
+    "9": '\U000f0f17',
+}
+HALF_BLACK_CIRCLE = {"L": "\u25d6", "R": "\u25d7"}
+PLE_HALF_CIRCLE = {"L": "\ue0b6", "R": "\ue0c5"}
+PLE_FLAME = {"L": "\ue0c2", "R": "\ue0c0"}
+PLE_HARD_DIVIDER_INVERSE = {"L": "\ue0d7", "R": "\ue0d6"}
+PLE_TRIANGLE = {
+    "lower": {"L": "\ue0b8", "R": "\ue0ba"},
+    "upper": {"L": "\ue0bc", "R": "\ue0be"},
+}
+PLE_PIXELATED_SQUARES = {
+    "big" : {"L": "\ue0c7", "R": "\ue0c6"},
+    "small": {"L": "\ue0c5", "R": "\ue0c4"},
+}
+POINTING_TRIANGLE = {
+    "black": {"L": "\u25c0", "R": "\u25b6"},
+    "black medium": {"L": "\u23f4", "R": "\u23f5"},
+}
+BLACK_TRIANGLE = {
+    "lower": {"L": "\u25e3", "R": "\u25e2"}, 
+    "upper": {"L": "\u25e4", "R": "\u25e5"}, 
+}

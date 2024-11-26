@@ -8,11 +8,8 @@ from libqtile.config import Group, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-from consts import ONE, TWO, THREE, FOUR, FIVE, SIX
-from consts import TRANSPARENT, KHAKI1, GREY3
-from consts import PLE_LOWER_RIGHT_TRIANGLE, PLE_UPPER_LEFT_TRIANGLE
-from consts import GREY3, GREY7, BLACK, TRANSPARENT, YELLOW, KHAKI1, TRUE_TRANSPARENT
-from consts import CUSTOM_TEXT, ICONS_PATH, LOGO, FORMAT, KBS, CHORDS_COLOR
+from consts import SYMBOLS as S, PLE_TRIANGLE as D, GRUVBOX as C
+
 
 @hook.subscribe.startup
 def autostart():
@@ -32,11 +29,11 @@ def set_wallpaper():
 
 
 def fgbg(fg, bg):
-    return {"foreground": fg, "background": bg}
+    return {"foreground": C[fg], "background": C[bg]}
 
 
-def decoration(fg, bg, icon="left", size=24):
-    T = {"left": PLE_LOWER_RIGHT_TRIANGLE, "right": PLE_UPPER_LEFT_TRIANGLE}
+def decoration(fg, bg, icon="L", size=24):
+    T = {"L": D["lower"]["R"], "R": D["upper"]["L"]}
     return widget.TextBox(text=T[icon], fontsize=size, **fgbg(fg, bg))
 
 
@@ -72,27 +69,16 @@ keys = [
 groups = [
     Group(f"{i}", label=label, layout=layout)
     for i, (label, layout) in enumerate([
-        (ONE, 'bsp'),
-        (TWO, 'monadtall'),
-        (THREE, 'monadthreecol'),
-        (FOUR, 'ratiotile'),
-        (FIVE, 'floating'),
-        (SIX, 'max'),
+        (S["1"], 'monadtall'), (S["2"], 'monadthreecol'),
+        (S["3"], 'monadWide'), (S["4"], 'plasma'),
+        (S["5"], 'max'), (S["6"], 'max'),
     ], 1)
 ]
 
-for group in groups:
+for g in groups:
     keys.extend([
-        Key(
-            f"M-{group.name}",
-            lazy.group[group.name].toscreen(),
-            desc=f"Switch to group {group.name}",
-        ),
-        Key(
-            f"M-S-{group.name}",
-            lazy.window.togroup(group.name, switch_group=True),
-            desc=f"Switch to & move focused W to group {group.name}",
-        ),
+        Key(f"M-{g.name}", lazy.group[g.name].toscreen()),
+        Key(f"M-S-{g.name}", lazy.window.togroup(g.name, switch_group=True)),
     ])
 
 mouse = [
@@ -105,7 +91,7 @@ mouse = [
 
 layout_theme = {
     "border_width": 2, "margin": 4,
-    "border_normal": GREY3, "border_focus": KHAKI1,
+    "border_normal": C["bg0"], "border_focus": C["khaki1"],
 }
 
 layouts = [
@@ -117,42 +103,48 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="SauceCodePro NF", fontsize=12, padding=0, background=GREY3,
+    font="SauceCodePro NF", fontsize=12, padding=0, background=C["bg0"],
 )
 extension_defaults = widget_defaults.copy()
 
 widgets = [
     widget.Image(
-        filename=LOGO, scale="False", background=TRUE_TRANSPARENT, margin=4,
+        filename="~/pictures/logos/logo_custom.png", scale="False", margin=4,
+        background=C["true_transparent"],
     ),
-    decoration(fg=BLACK, bg=TRUE_TRANSPARENT),
-    widget.TextBox(text=CUSTOM_TEXT, **fgbg(YELLOW, BLACK)),
-    decoration(fg=GREY3, bg=BLACK),
+    decoration("bg2", "true_transparent"),
+    widget.TextBox(text="ayudaenpython.com", **fgbg("fg", "bg2")),
+    decoration("bg0", "bg2"),
     widget.GroupBox(
-        highlight_color=[GREY7, GREY7], highlight_method="line",
-        active=KHAKI1, this_current_screen_border=YELLOW, padding=2,
+        highlight_color=["000000", "282828"], highlight_method="line",
+        active=C["khaki1"], this_current_screen_border=C["yellow"], padding=2,
     ),
-    decoration(fg=GREY3, bg=TRANSPARENT, icon="right"),
-    widget.Prompt(prompt="> ", **fgbg(KHAKI1, TRANSPARENT)),
-    widget.WindowName(**fgbg(KHAKI1, TRANSPARENT), format='{name}'),
+    decoration("bg0", "transparent", icon="R"),
+    widget.Prompt(prompt="> ", **fgbg("khaki1", "transparent")),
+    widget.WindowName(**fgbg("khaki1", "transparent"), format='{name}'),
     widget.Chord(
-        chords_colors=CHORDS_COLOR,
+        chords_colors={
+            "launch": ("#ff0000", "#ffffff"),
+            "vim mode": ("#2980b9", "#ffffff"),
+        },
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
-    decoration(fg=BLACK, bg=TRANSPARENT),
+    decoration("bg1", "transparent"),
     widget.CurrentLayoutIcon(
-        custom_icon_paths=[os.path.expanduser(ICONS_PATH)],
-        padding=2, scale=0.5, **fgbg(YELLOW, BLACK),
+        custom_icon_paths=[os.path.expanduser("~/pictures/icons")],
+        padding=2, scale=0.5, **fgbg("yellow", "bg1"),
     ),
-    widget.CurrentLayout(**fgbg(YELLOW, BLACK)),
-    decoration(fg=GREY3, bg=BLACK),
-    widget.KeyboardLayout(**fgbg(YELLOW, GREY3), configured_keyboards=KBS),
-    decoration(fg=BLACK, bg=GREY3),
-    widget.Clock(format=FORMAT, **fgbg(YELLOW, BLACK)),
-    decoration(fg=GREY3, bg=BLACK),
-    widget.QuickExit(default_text="exit", **fgbg(YELLOW, GREY3)),
-    decoration(fg=GREY3, bg=TRUE_TRANSPARENT, icon="right"),
+    widget.CurrentLayout(**fgbg("yellow", "bg1")),
+    decoration("bg0", "bg1"),
+    widget.KeyboardLayout(
+        configured_keyboards=["us", "es"], **fgbg("green", "bg0"),
+    ),
+    decoration("bg1", "bg0"),
+    widget.Clock(format="%d/%m/%Y %a %I:%M %p", **fgbg("blue", "bg1")),
+    decoration("bg0", "bg1"),
+    widget.QuickExit(default_text="exit", **fgbg("red", "bg0")),
+    decoration("bg0", "true_transparent", icon="R"),
 ]
 
 screens = [
@@ -160,11 +152,8 @@ screens = [
         wallpaper=set_wallpaper(),
         wallpaper_mode="fill",
         top=bar.Bar(
-            widgets,
-            background=TRANSPARENT,
-            size=24,
-            opacity=0.85,
-            margin=[4, 4, 2, 4],  # [N, E, S, W]
+            widgets, background=C["transparent"],
+            size=24, opacity=0.85, margin=[4, 4, 2, 4],  # [N, E, S, W]
         ),
     ),
 ]
