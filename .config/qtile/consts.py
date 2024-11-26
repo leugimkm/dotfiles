@@ -1,3 +1,12 @@
+CUSTOM_TEXT = "ayudaenpython.com"
+ICONS_PATH = "~/pictures/icons"
+LOGO = "~/pictures/logos/logo_custom.png"
+FORMAT = "%d/%m/%Y %a %I:%M %p"
+KBS = ["us", "es"]
+CHORDS_COLOR = {
+    "launch": ("#ff0000", "#ffffff"),
+    "vim mode": ("#2980b9", "#ffffff"),
+}
 
 YELLOW = "#fac863"
 KHAKI1 = "#ffff87"
