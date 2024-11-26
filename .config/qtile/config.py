@@ -115,7 +115,7 @@ extension_defaults = widget_defaults.copy()
 widgets = [
     widget.Image(
         filename="~/pictures/logos/logo_custom.png", scale="False",
-        background=C["true_transparent"],
+        background=C["true_transparent"], margin=4,
     ),
     deco_2("bg2", "true_transparent"),
     widget.TextBox(text=" ayudaenpython.com", **fgbg("fg", "bg2")),
