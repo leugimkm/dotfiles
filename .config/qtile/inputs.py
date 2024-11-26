@@ -35,7 +35,7 @@ keys = [
     Key(("M-<Return>"), lazy.spawn(TERMINAL)),
     Key(("M-<Tab>"), lazy.next_layout()),
     Key(("M-w"), lazy.window.kill()),
-    Key(("M-f"), lazy.window.toggle_fullscreen()),
+    Key(("M-f"), lazy.window.toggle_fullscreen(), lazy.hide_show_bar()),
     Key(("M-t"), lazy.window.toggle_floating()),
     Key(("M-C-r"), lazy.reload_config()),
     Key(("M-C-q"), lazy.shutdown()),
