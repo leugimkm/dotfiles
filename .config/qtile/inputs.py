@@ -60,12 +60,12 @@ for group in groups:
         Key(
             f"M-{group.name}",
             lazy.group[group.name].toscreen(),
-            desc="Switch to group {}".format(group.name),
+            desc=f"Switch to group {group.name}",
         ),
         Key(
             f"M-S-{group.name}",
             lazy.window.togroup(group.name, switch_group=True),
-            desc="Switch to & move focused W to group {}".format(group.name),
+            desc=f"Switch to & move focused W to group {group.name}",
         ),
     ])
 
