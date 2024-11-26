@@ -10,7 +10,6 @@ layout_theme = {
 
 layouts = [
     layout.Bsp(**layout_theme),
-    layout.Floating(**layout_theme),
     layout.MonadTall(**layout_theme),
     layout.RatioTile(**layout_theme),
     layout.Max(**layout_theme),
@@ -18,8 +17,7 @@ layouts = [
 ]
 
 floating_layout = layout.Floating(
-    border_width=2,
-    border_focus=KHAKI1,
+    **layout_theme,
     float_rules=[
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),
