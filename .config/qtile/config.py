@@ -118,7 +118,7 @@ widgets = [
         background=C["true_transparent"], margin=4,
     ),
     deco_1("bg2", "true_transparent"),
-    widget.TextBox(text=" ayudaenpython.com", **fgbg("fg", "bg2")),
+    widget.TextBox(text="ayudaenpython.com", **fgbg("fg", "bg2")),
     deco_1("bg0", "bg2"),
     widget.GroupBox(
         highlight_color=["000000", "282828"], highlight_method="line",
