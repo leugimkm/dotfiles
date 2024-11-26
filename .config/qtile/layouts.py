@@ -9,10 +9,10 @@ layout_theme = {
 }
 
 layouts = [
-    layout.Bsp(**layout_theme),
     layout.MonadTall(**layout_theme),
     layout.MonadThreeCol(**layout_theme),
-    layout.RatioTile(**layout_theme),
+    layout.MonadWide(**layout_theme),
+    layout.Plasma(**layout_theme),
     layout.Max(**layout_theme),
 ]
 
