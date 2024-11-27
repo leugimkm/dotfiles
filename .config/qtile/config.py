@@ -158,7 +158,7 @@ screens = [
         wallpaper_mode="fill",
         top=bar.Bar(
             widgets, background=C["transparent"],
-            size=24, opacity=0.85, margin=[4, 4, 2, 4],  # [N, E, S, W]
+            size=24, opacity=0.95, margin=[4, 4, 2, 4],  # [N, E, S, W]
         ),
     ),
 ]
