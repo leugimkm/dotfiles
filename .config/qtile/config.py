@@ -8,7 +8,7 @@ from libqtile.config import Group, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-from consts import SYMBOLS as S, PLE_TRIANGLE as D, GRUVBOX as C
+from consts import SYMBOLS as S, PLE_TRIANGLE as D, DEFAULT as C
 from consts import PLE_HARD_DIVIDER_INVERSE as DD
 
 
@@ -116,7 +116,7 @@ extension_defaults = widget_defaults.copy()
 widgets = [
     widget.Image(
         filename="~/pictures/logos/logo_custom.png", scale="False",
-        background=C["true_transparent"], margin=4,
+        background=C["true_transparent"], margin=4, 
     ),
     deco_1("bg2", "true_transparent"),
     widget.TextBox(text="ayudaenpython.com", **fgbg("fg", "bg2")),
