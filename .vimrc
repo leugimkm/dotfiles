@@ -110,6 +110,9 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+vnoremap <C-c> "+y
+vnoremap <C-v> "+P
+
 " nnoremap <C-A-j> :w<CR>!clear; python %<CR>
 autocmd FileType python nnoremap <C-A-j> :w<CR>:terminal python %<CR>
 
