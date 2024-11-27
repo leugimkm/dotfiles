@@ -19,3 +19,7 @@ export FZF_CTRL_T_OPTS="
   --preview 'bat -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'
 "
+
+function run() {
+    g++ -o "$1" "$1.cpp"
+}
