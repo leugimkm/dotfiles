@@ -31,7 +31,10 @@ let g:coc_global_extensions = [
 \ 'coc-clangd',
 \ 'coc-pyright',
 \ 'coc-markdownlint',
-\ 'coc-ultisnips'
+\ 'coc-ultisnips',
+\ 'coc-sh',
+\ 'coc-yaml',
+\ 'coc-toml'
 \]
 
 " }}}
