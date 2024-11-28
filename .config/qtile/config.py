@@ -117,8 +117,10 @@ extension_defaults = widget_defaults.copy()
 
 widgets = [
     widget.Image(
-        filename="~/pictures/logos/logo_custom.png", scale="False",
-        background="#00000000", margin=4, 
+        filename="~/pictures/logos/logo_custom.png",
+        scale="False",
+        background="#00000000",
+        margin=4,
     ),
     Deco(C["selection_background"], "#00000000"),
     widget.TextBox(
@@ -131,8 +133,10 @@ widgets = [
     Deco(C["color11"], C["color9"]),
     Deco(C["selection_background"], C["color11"]),
     widget.GroupBox(
-        highlight_color=["000000", "282828"], highlight_method="line",
-        active=C["foreground"], this_current_screen_border=C["color11"], padding=2,
+        highlight_color=["000000", "282828"],
+        highlight_method="line",
+        active=C["foreground"],
+        this_current_screen_border=C["color11"],
     ),
     Deco(C["background"], "#00000000", side="R"),
     widget.Prompt(
