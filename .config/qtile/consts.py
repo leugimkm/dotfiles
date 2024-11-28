@@ -1,45 +1,48 @@
-GRUVBOX = {
-    "bg0": "#282828",
-    "bg1": "#3c3836",
-    "bg2": "#504945",
-    "bg3": "#665c54",
-    "bg4": "#7c6f64",
-    "gray": "#a89984",
-    "fg": "#ebdbb2",
-    "fg1": "#ebdbb2",
-    "fg2": "#d5c4a1",
-    "fg3": "#bdae93",
-    "fg4": "#a89984",
-    "orange": "#fe8019",
-    "red": "#fb4934",
-    "red2": "cc241d",
-    "green": "#b8bb26",
-    "yellow": "#fabd2f",
-    "blue": "#83a598",
-    "purple": "#d3869b",
-    "aqua": "#8ec07c",
-    "khaki1": "#ffff87",
-    "transparent": "#28282840",
-    "true_transparent": "#00000000",
-}
-DEFAULT = {
-    "bg0": "#0a0a0a",
-    "bg1": "#171717",
-    "bg2": "#262626",
-    "bg3": "#404040",
-    "bg4": "#525252",
-    "gray": "#a89984",
-    "fg": "#f4f4f4",
-    "orange": "#fe8019",
-    "red": "#fb4934",
-    "green": "#c3e88d",
-    "yellow": "#ffcb6b",
-    "blue": "#6796e6",
-    "purple": "#d3869b",
-    "aqua": "#8ec07c",
-    "khaki1": "#ffff87",
-    "transparent": "#0a0a0a40",
-    "true_transparent": "#00000000",
+THEME = {
+    "gruvbox": {
+        "background": "#282828",
+        "foreground": "#ebdbb2",
+        "selection_background": "#3c3836",
+        "selection_foreground": "#928374",
+        "color0": "#282828",
+        "color8": "#928374",
+        "color1": "#cc241d",  # red
+        "color9": "#fb4934",  # light red
+        "color2": "#98971a",  # green
+        "color10": "#b8bb26",  # light green
+        "color3": "#d79921",  # yellow
+        "color11": "#fabd2f",  # light yellow
+        "color4": "#458588",  # blue
+        "color12": "#83a598",  # light blue
+        "color5": "#b16286",  # magenta
+        "color13": "#d3869b",  # light magenta
+        "color6": "#689d6a",  # cyan
+        "color14": "#8ec07c",  # light cyan
+        "color7": "#a89984",  # gray
+        "color15": "#928374",  # light gray
+    },
+    "ayu": {
+        "background": "#0e1419",
+        "foreground": "#e5e1cf",
+        "selection_background": "#243340",
+        "selection_foreground": "#0e1419",
+        "color0": "#000000",
+        "color8": "#323232",
+        "color1": "#ff3333",
+        "color9": "#ff6565",
+        "color2": "#b8cc52",
+        "color10": "#e9fe83",
+        "color3": "#e6c446",
+        "color11": "#fff778",
+        "color4": "#36e3d9",
+        "color12": "#68d4ff",
+        "color5": "#f07078",
+        "color13": "#ffa3aa",
+        "color6": "#95e5cb",
+        "color14": "#c7fffc",
+        "color7": "#ffffff",
+        "color15": "#ffffff",
+    },
 }
 SYMBOLS = {
     "0": '\U000f0f0e',

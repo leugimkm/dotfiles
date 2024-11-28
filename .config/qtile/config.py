@@ -10,7 +10,9 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 from custom import Center, Deco
-from consts import SYMBOLS as S, GRUVBOX as C
+from consts import SYMBOLS as S, THEME
+
+C = THEME["ayu"]
 
 
 @hook.subscribe.startup
@@ -28,10 +30,6 @@ def minimize(qtile):
 def set_wallpaper():
     dir_ = os.path.expanduser('~/pictures/wallpapers')
     return os.path.join(dir_, choice(os.listdir(dir_)))
-
-
-def fgbg(fg, bg):
-    return {"foreground": C[fg], "background": C[bg]}
 
 
 keys = [
@@ -100,7 +98,7 @@ mouse = [
 
 layout_theme = {
     "border_width": 2, "margin": 8,
-    "border_normal": C["bg0"], "border_focus": C["bg4"],
+    "border_normal": C["background"], "border_focus": C["color11"],
 }
 
 layouts = [
@@ -113,28 +111,40 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="SauceCodePro NF", fontsize=12, padding=0, background=C["bg0"],
+    font="SauceCodePro NF", fontsize=12, padding=0, background=C["background"],
 )
 extension_defaults = widget_defaults.copy()
 
 widgets = [
     widget.Image(
         filename="~/pictures/logos/logo_custom.png", scale="False",
-        background=C["true_transparent"], margin=4, 
+        background="#00000000", margin=4, 
     ),
-    Deco(**fgbg("bg2", "true_transparent")),
-    widget.TextBox(text="ayudaenpython.com", **fgbg("fg", "bg2")),
-    Deco(**fgbg("blue", "bg2")),
-    Deco(**fgbg("red", "blue")),
-    Deco(**fgbg("yellow", "red")),
-    Deco(**fgbg("bg0", "yellow")),
+    Deco(C["selection_background"], "#00000000"),
+    widget.TextBox(
+        text="ayudaenpython.com",
+        foreground=C["foreground"],
+        background=C["selection_background"],
+    ),
+    Deco(C["color12"], C["selection_background"]),
+    Deco(C["color9"], C["color12"]),
+    Deco(C["color11"], C["color9"]),
+    Deco(C["selection_background"], C["color11"]),
     widget.GroupBox(
         highlight_color=["000000", "282828"], highlight_method="line",
-        active=C["khaki1"], this_current_screen_border=C["yellow"], padding=2,
+        active=C["foreground"], this_current_screen_border=C["color11"], padding=2,
     ),
-    Deco(**fgbg("bg0", "transparent"), side="R"),
-    widget.Prompt(prompt="> ", **fgbg("khaki1", "transparent")),
-    widget.WindowName(**fgbg("khaki1", "transparent"), format='{name}'),
+    Deco(C["background"], "#00000000", side="R"),
+    widget.Prompt(
+        prompt="> ",
+        foreground=C["foreground"],
+        background="#00000000",
+    ),
+    widget.WindowName(
+        foreground=C["foreground"],
+        background="#00000000",
+        format='{name}'
+    ),
     widget.Chord(
         chords_colors={
             "launch": ("#ff0000", "#ffffff"),
@@ -143,28 +153,43 @@ widgets = [
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
-    Deco(**fgbg("bg1", "transparent")),
+    Deco(C["selection_background"], "#00000000"),
     widget.CurrentLayoutIcon(
         custom_icon_paths=[os.path.expanduser("~/pictures/icons")],
-        padding=2, scale=0.5, **fgbg("yellow", "bg1"),
+        padding=2, scale=0.5,
+        foreground=C["color11"],
+        background=C["selection_background"],
     ),
-    widget.CurrentLayout(**fgbg("yellow", "bg1")),
-    Deco(**fgbg("bg0", "bg1")),
+    widget.CurrentLayout(
+        foreground=C["color11"],
+        background=C["selection_background"]
+    ),
+    Deco(C["background"], C["selection_background"]),
     widget.KeyboardLayout(
-        configured_keyboards=["us", "es"], **fgbg("green", "bg0"),
+        configured_keyboards=["us", "es"],
+        foreground=C["color10"],
+        background=C["background"],
     ),
-    Deco(**fgbg("bg1", "bg0")),
-    widget.Clock(format="%d/%m/%Y %a %I:%M %p", **fgbg("blue", "bg1")),
-    Deco(**fgbg("bg0", "bg1")),
-    widget.QuickExit(default_text="exit", **fgbg("red", "bg0")),
-    Deco(**fgbg("bg0", "true_transparent"), side="R"),
+    Deco(C["selection_background"], C["background"]),
+    widget.Clock(
+        format="%d/%m/%Y %a %I:%M %p",
+        foreground=C["color12"],
+        background=C["selection_background"],
+    ),
+    Deco(C["background"], C["selection_background"]),
+    widget.QuickExit(
+        default_text="exit",
+        foreground=C["color9"],
+        background=C["background"],
+    ),
+    Deco(C["background"], "#00000000", side="R"),
 ]
 
 screens = [
     Screen(
         wallpaper=set_wallpaper(), wallpaper_mode="fill",
         top=bar.Bar(
-            widgets, background=C["transparent"],
+            widgets, background="#28282840",
             size=24, opacity=0.95, margin=[4, 4, 2, 4],  # [N, E, S, W]
         ),
     ),
