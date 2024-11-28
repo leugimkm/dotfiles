@@ -4,7 +4,8 @@ from random import choice
 
 from libqtile import bar, layout, hook, widget
 from libqtile.config import EzClick as Click, EzDrag as Drag, EzKey as Key
-from libqtile.config import Group, Match, Screen
+from libqtile.config import Group, Match, Screen, EzKeyChord as KeyChord
+from libqtile.config import ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -61,6 +62,12 @@ keys = [
     Key(("M-C-q"), lazy.shutdown()),
     Key(("M-r"), lazy.spawncmd()),
     Key(("M-C-m"), minimize()),
+    KeyChord(("M-p"), [
+        Key(("f"), lazy.spawn("firefox")),
+        Key(("q"), lazy.spawn("qutebrowser")),
+        Key(("r"), lazy.spawn("rofi -show drun")),
+        Key(("1"), lazy.group["scratchpad"].dropdown_toggle("term")),
+    ]),
 ]
 
 groups = [
@@ -76,6 +83,12 @@ for g in groups:
         Key(f"M-{g.name}", lazy.group[g.name].toscreen()),
         Key(f"M-S-{g.name}", lazy.window.togroup(g.name, switch_group=True)),
     ])
+
+groups.append(
+    ScratchPad("scratchpad", [
+        DropDown("term", "kitty", width=0.4, x=0.3, y=0.2),
+    ])
+)
 
 mouse = [
     Drag("M-1", lazy.window.set_position_floating(),
