@@ -4,6 +4,8 @@
 
 PS1='[\u@\h \W]\$ '
 
+set -o vi
+
 alias ls='lsd --color=auto'
 alias ll='lsd -la --color=auto'
 alias grep='grep --color=auto'
