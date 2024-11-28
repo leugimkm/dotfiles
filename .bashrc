@@ -20,6 +20,6 @@ export FZF_CTRL_T_OPTS="
   --bind 'ctrl-/:change-preview-window(down|hidden|)'
 "
 
-function run() {
+function runcpp() {
     g++ -o "$1" "$1.cpp"
 }
