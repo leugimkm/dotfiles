@@ -10,4 +10,6 @@ Minimal dotfiles for:
 - [Ranger](https://ranger.github.io/) - Console file manager
 - [Powerline](https://powerline.readthedocs.io/en/master/index.html) - Statusline plugin
 - [Picom](https://github.com/yshui/picom) - Compositor for X11
+- [Tmux](https://github.com/tmux/tmux/wiki) - Terminal multiplexer
+- [Rofi](https://davatorium.github.io/rofi/) - Window switcher, application launcher and dmenu replacement
 - [Qutebrowser](https://www.qutebrowser.org/) - Keyboard-focused web browser
