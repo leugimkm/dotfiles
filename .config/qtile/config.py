@@ -8,8 +8,8 @@ from libqtile.config import Group, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-from consts import SYMBOLS as S, PLE_TRIANGLE as D, DEFAULT as C
-from consts import PLE_HARD_DIVIDER_INVERSE as DD
+from custom import Center, Deco
+from consts import SYMBOLS as S, GRUVBOX as C
 
 
 @hook.subscribe.startup
@@ -31,16 +31,6 @@ def set_wallpaper():
 
 def fgbg(fg, bg):
     return {"foreground": C[fg], "background": C[bg]}
-
-
-def deco_1(fg, bg, icon="L", size=24):
-    T = {"L": D["lower"]["R"], "R": D["upper"]["L"]}
-    return widget.TextBox(text=T[icon], fontsize=size, **fgbg(fg, bg))
-
-
-def deco_2(fg, bg, icon="R", size=24):
-    T = {"L": DD["R"], "R": DD["L"]}
-    return widget.TextBox(text=T[icon], fontsize=size, **fgbg(fg, bg))
 
 
 keys = [
@@ -105,6 +95,7 @@ layouts = [
     layout.MonadThreeCol(**layout_theme),
     layout.MonadWide(**layout_theme),
     layout.Plasma(**layout_theme),
+    Center(**layout_theme),
     layout.Max(**layout_theme),
 ]
 
@@ -118,14 +109,17 @@ widgets = [
         filename="~/pictures/logos/logo_custom.png", scale="False",
         background=C["true_transparent"], margin=4, 
     ),
-    deco_1("bg2", "true_transparent"),
+    Deco(**fgbg("bg2", "true_transparent")),
     widget.TextBox(text="ayudaenpython.com", **fgbg("fg", "bg2")),
-    deco_1("bg0", "bg2"),
+    Deco(**fgbg("blue", "bg2")),
+    Deco(**fgbg("red", "blue")),
+    Deco(**fgbg("yellow", "red")),
+    Deco(**fgbg("bg0", "yellow")),
     widget.GroupBox(
         highlight_color=["000000", "282828"], highlight_method="line",
         active=C["khaki1"], this_current_screen_border=C["yellow"], padding=2,
     ),
-    deco_1("bg0", "transparent", icon="R"),
+    Deco(**fgbg("bg0", "transparent"), side="R"),
     widget.Prompt(prompt="> ", **fgbg("khaki1", "transparent")),
     widget.WindowName(**fgbg("khaki1", "transparent"), format='{name}'),
     widget.Chord(
@@ -136,27 +130,26 @@ widgets = [
         name_transform=lambda name: name.upper(),
     ),
     widget.Systray(),
-    deco_1("bg1", "transparent"),
+    Deco(**fgbg("bg1", "transparent")),
     widget.CurrentLayoutIcon(
         custom_icon_paths=[os.path.expanduser("~/pictures/icons")],
         padding=2, scale=0.5, **fgbg("yellow", "bg1"),
     ),
     widget.CurrentLayout(**fgbg("yellow", "bg1")),
-    deco_1("bg0", "bg1"),
+    Deco(**fgbg("bg0", "bg1")),
     widget.KeyboardLayout(
         configured_keyboards=["us", "es"], **fgbg("green", "bg0"),
     ),
-    deco_1("bg1", "bg0"),
+    Deco(**fgbg("bg1", "bg0")),
     widget.Clock(format="%d/%m/%Y %a %I:%M %p", **fgbg("blue", "bg1")),
-    deco_1("bg0", "bg1"),
+    Deco(**fgbg("bg0", "bg1")),
     widget.QuickExit(default_text="exit", **fgbg("red", "bg0")),
-    deco_1("bg0", "true_transparent", icon="R"),
+    Deco(**fgbg("bg0", "true_transparent"), side="R"),
 ]
 
 screens = [
     Screen(
-        wallpaper=set_wallpaper(),
-        wallpaper_mode="fill",
+        wallpaper=set_wallpaper(), wallpaper_mode="fill",
         top=bar.Bar(
             widgets, background=C["transparent"],
             size=24, opacity=0.95, margin=[4, 4, 2, 4],  # [N, E, S, W]

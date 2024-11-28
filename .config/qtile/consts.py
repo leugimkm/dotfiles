@@ -6,8 +6,13 @@ GRUVBOX = {
     "bg4": "#7c6f64",
     "gray": "#a89984",
     "fg": "#ebdbb2",
+    "fg1": "#ebdbb2",
+    "fg2": "#d5c4a1",
+    "fg3": "#bdae93",
+    "fg4": "#a89984",
     "orange": "#fe8019",
     "red": "#fb4934",
+    "red2": "cc241d",
     "green": "#b8bb26",
     "yellow": "#fabd2f",
     "blue": "#83a598",
@@ -26,7 +31,7 @@ DEFAULT = {
     "gray": "#a89984",
     "fg": "#f4f4f4",
     "orange": "#fe8019",
-    "red": "#f4474f",
+    "red": "#fb4934",
     "green": "#c3e88d",
     "yellow": "#ffcb6b",
     "blue": "#6796e6",
@@ -48,23 +53,26 @@ SYMBOLS = {
     "8": '\U000f0f16',
     "9": '\U000f0f17',
 }
-HALF_BLACK_CIRCLE = {"L": "\u25d6", "R": "\u25d7"}
-PLE_HALF_CIRCLE = {"L": "\ue0b6", "R": "\ue0c5"}
-PLE_FLAME = {"L": "\ue0c2", "R": "\ue0c0"}
-PLE_HARD_DIVIDER_INVERSE = {"L": "\ue0d7", "R": "\ue0d6"}
-PLE_TRIANGLE = {
-    "lower": {"L": "\ue0b8", "R": "\ue0ba"},
-    "upper": {"L": "\ue0bc", "R": "\ue0be"},
+PLE = {
+    "flame": {"L": "\ue0c2", "R": "\ue0c0"},
+    "half_circle": {"L": "\ue0b6", "R": "\ue0c5"},
+    "half_black_circle": {"L": "\u25d6", "R": "\u25d7"},
+    "hard_divider_inverse": {"L": "\ue0d7", "R": "\ue0d6"},
+    "triangle": {
+        "lower": {"L": "\ue0b8", "R": "\ue0ba"},
+        "upper": {"L": "\ue0bc", "R": "\ue0be"},
+    },
+    "pixelated_squares": {
+        "big" : {"L": "\ue0c7", "R": "\ue0c6"},
+        "small": {"L": "\ue0c5", "R": "\ue0c4"},
+    },
+    "pointing_triangle": {
+        "black": {"L": "\u25c0", "R": "\u25b6"},
+        "black medium": {"L": "\u23f4", "R": "\u23f5"},
+    },
+    "black_triangle": {
+        "lower": {"L": "\u25e3", "R": "\u25e2"}, 
+        "upper": {"L": "\u25e4", "R": "\u25e5"}, 
+    },
 }
-PLE_PIXELATED_SQUARES = {
-    "big" : {"L": "\ue0c7", "R": "\ue0c6"},
-    "small": {"L": "\ue0c5", "R": "\ue0c4"},
-}
-POINTING_TRIANGLE = {
-    "black": {"L": "\u25c0", "R": "\u25b6"},
-    "black medium": {"L": "\u23f4", "R": "\u23f5"},
-}
-BLACK_TRIANGLE = {
-    "lower": {"L": "\u25e3", "R": "\u25e2"}, 
-    "upper": {"L": "\u25e4", "R": "\u25e5"}, 
-}
+
