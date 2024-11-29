@@ -10,6 +10,9 @@ alias ls='lsd --color=auto'
 alias ll='lsd -la --color=auto'
 alias grep='grep --color=auto'
 
+alias tozsh="sudo chsh $USER -s /bin/zsh"
+alias tobash="sudo chsh $USER -s /bin/bash"
+
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
