@@ -33,10 +33,10 @@ def set_wallpaper():
 
 
 keys = [
-    Key(("M-A-h"), lazy.layout.left()),
-    Key(("M-A-l"), lazy.layout.right()),
-    Key(("M-A-j"), lazy.layout.down()),
-    Key(("M-A-k"), lazy.layout.up()),
+    Key(("C-S-h"), lazy.layout.left()),
+    Key(("C-S-l"), lazy.layout.right()),
+    Key(("C-S-j"), lazy.layout.down()),
+    Key(("C-S-k"), lazy.layout.up()),
     Key(("M-j"), lazy.group.next_window(), lazy.window.bring_to_front()),
     Key(("M-k"), lazy.group.prev_window(), lazy.window.bring_to_front()),
     Key(("M-<space>"), lazy.widget["keyboardlayout"].next_keyboard()),
