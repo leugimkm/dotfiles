@@ -109,6 +109,10 @@ map <leader>n :bnext<CR>
 map <leader>p :bprevious<CR>
 map <leader>d :bdelete<CR>
 
+nmap <leader>- <C-W>s<C-W>l
+nmap <leader>\ <C-W>v<C-W>l
+nmap <leader>c <C-W>c
+
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
