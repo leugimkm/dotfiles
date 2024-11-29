@@ -30,6 +30,8 @@ if [ ! -d "$ZINIT_HOME" ]; then
     git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
+source "${ZINIT_HOME}/zinit.zsh"
+
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
@@ -46,8 +48,6 @@ zinit cdreplay -q
 
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
-
-source "${ZINIT_HOME}/zinit.zsh"
 
 powerline-daemon -q
 . /usr/share/powerline/bindings/zsh/powerline.zsh
