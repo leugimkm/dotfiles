@@ -20,7 +20,6 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-alias cd=z
 alias ls='lsd --color=always'
 alias ll='lsd -la  --color=always'
 
@@ -46,7 +45,7 @@ autoload -U compinit && compinit
 zinit cdreplay -q
 
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh)"
 
 source "${ZINIT_HOME}/zinit.zsh"
 
