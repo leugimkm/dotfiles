@@ -52,3 +52,6 @@ eval "$(zoxide init zsh)"
 powerline-daemon -q
 . /usr/share/powerline/bindings/zsh/powerline.zsh
 
+function runcpp() {
+    g++ -o "$1" "$1.cpp"
+}
