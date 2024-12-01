@@ -103,7 +103,7 @@ au BufNewFile,BufRead *.py
   \ fileformat=unix
 
 map <leader>h :noh<CR>
-map <leader>t :NERDTreeToggle<CR>
+map <leader>e :NERDTreeToggle<CR>
 
 map <leader>n :bnext<CR>
 map <leader>p :bprevious<CR>
