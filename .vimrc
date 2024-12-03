@@ -76,10 +76,12 @@ set relativenumber
 set nu
 set scrolloff=8
 
+" set belloff=all
+
 set background=dark
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
-hi Normal ctermbg=None
+hi Normal guibg=NONE ctermbg=NONE
 
 set nobackup
 set nowritebackup
