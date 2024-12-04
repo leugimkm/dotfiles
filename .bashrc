@@ -18,6 +18,8 @@ POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . /usr/share/powerline/bindings/bash/powerline.sh
 
+# POSH_THEME="custom"
+# eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"
 eval "$(fzf --bash)"
 export FZF_CTRL_T_OPTS="
   --walker-skip .git,.venv,__pycache__,node_modules,target
