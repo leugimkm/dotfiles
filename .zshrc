@@ -49,8 +49,12 @@ zinit cdreplay -q
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
 
-powerline-daemon -q
-. /usr/share/powerline/bindings/zsh/powerline.zsh
+export PATH=$PATH:/home/leugimkm/.local/bin
+POSH_THEME="custom"
+eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"
+
+# powerline-daemon -q
+# . /usr/share/powerline/bindings/zsh/powerline.zsh
 
 function runcpp() {
     g++ -o "$1" "$1.cpp"
