@@ -59,3 +59,7 @@ eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.j
 function runcpp() {
     g++ -o "$1" "$1.cpp"
 }
+
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+  exec startx
+fi
