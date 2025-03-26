@@ -49,7 +49,7 @@ zinit cdreplay -q
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
 
-export PATH=$PATH:/home/leugimkm/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 POSH_THEME="custom"
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"
 
