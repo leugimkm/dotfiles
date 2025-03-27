@@ -18,6 +18,7 @@ Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'vim-airline/vim-airline'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'yaegassy/coc-astro', {'do': 'yarn install --frozen-lockfile'}
@@ -43,7 +44,7 @@ let g:coc_global_extensions = [
 " autocmd vimenter * ++nested colorscheme gruvbox
 
 " set rtp+=/usr/share/powerline/bindings/vim
-" set laststatus=2
+set laststatus=2
 
 let mapleader=" "
 set nocompatible
