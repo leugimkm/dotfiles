@@ -45,6 +45,7 @@ let g:coc_global_extensions = [
 
 " set rtp+=/usr/share/powerline/bindings/vim
 set laststatus=2
+match ErrorMsg /\s\+$/
 
 let mapleader=" "
 set nocompatible
