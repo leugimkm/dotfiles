@@ -137,11 +137,18 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
+augroup toogle_number
+    autocmd!
+    autocmd BufLeave,FocusLost,InsertEnter,WinLeave * setlocal norelativenumber
+    autocmd BufEnter,FocusGained,InsertLeave,WinEnter * setlocal relativenumber
+augroup END
+
 let g:netrw_banner=0
 let g:netrw_winsize=25
 
+let g:NERDTreeWinPos="right"
 let NERDTreeQuitOnOpen=1
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let NERDTreeIgnore = ['\.pyc$', '__pycache__', '^node_modules$']
 
 function! CheckBackspace() abort
   let col = col('.') - 1
