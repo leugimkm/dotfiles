@@ -90,6 +90,8 @@ set nowritebackup
 set noswapfile
 set signcolumn=yes
 " set updatetime=300
+set backspace=indent,eol,start
+set ttyfast
 highlight clear signcolumn
 
 au BufNewFile,BufRead *.js, *.html, *.css
@@ -160,3 +162,19 @@ inoremap <silent><expr> <TAB>
       \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+nmap <silent> gh <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+function! RunPythonFile(split_type)
+    let l:file = expand("%:p")
+    let l:cmd = "python " . shellescape(l:file)
+    let l:tmux_cmd = "tmux split-window -" . a:split_type
+    let l:shell_cmd = "'zsh -c \"" . l:cmd . "; exec zsh\"'"
+    call system(l:tmux_cmd . " " . l:shell_cmd)
+endfunction
+
+nnoremap <leader>j- :call RunPythonFile('v')<CR>
+nnoremap <leader>j\ :call RunPythonFile('h')<CR>
