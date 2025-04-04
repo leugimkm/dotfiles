@@ -137,6 +137,10 @@ nnoremap <A-k> :m .-2<CR>==
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+let &listchars="eol:$,tab:>-trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
+set nolist
+nmap <silent> <leader><tab> :set nolist!<CR>
+
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
 augroup toogle_number
@@ -171,6 +175,9 @@ nmap <silent> gr <Plug>(coc-references)
 function! RunPythonFile(split_type)
     let l:file = expand("%:p")
     let l:cmd = "python " . shellescape(l:file)
+    if system('tmux display-message -p "#S" 2>/dev/null') =~ "failed"
+        call system("tmux new-session -d")
+    endif
     let l:tmux_cmd = "tmux split-window -" . a:split_type
     let l:shell_cmd = "'zsh -c \"" . l:cmd . "; exec zsh\"'"
     call system(l:tmux_cmd . " " . l:shell_cmd)
