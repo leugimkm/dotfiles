@@ -127,8 +127,8 @@ map <C-l> <C-W>l
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 
-" nnoremap <C-A-j> :w<CR>!clear; python %<CR>
-autocmd FileType python nnoremap <C-A-j> :w<CR>:terminal python %<CR>
+nnoremap <C-A-j> :!clear; python %<CR>
+" autocmd FileType python nnoremap <C-A-j> :terminal python %<CR>
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -137,7 +137,8 @@ nnoremap <A-k> :m .-2<CR>==
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
-let &listchars="eol:$,tab:>-trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
+" let &listchars="eol:$,tab:\u258f,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
+let &listchars="eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
 set nolist
 nmap <silent> <leader><tab> :set nolist!<CR>
 
@@ -175,8 +176,12 @@ nmap <silent> gr <Plug>(coc-references)
 function! RunPythonFile(split_type)
     let l:file = expand("%:p")
     let l:cmd = "python " . shellescape(l:file)
-    if system('tmux display-message -p "#S" 2>/dev/null') =~ "failed"
-        call system("tmux new-session -d")
+    let l:send_keys = 'vim ' . shellescape(l:file) . '" C-m'
+    if empty($TMUX)
+        echo "No tmux session!"
+        " let l:com = 'tmux new-session -A -s vimux \; send-keys "' . l:send_keys
+        " silent execute "! " . l:com
+        " quit
     endif
     let l:tmux_cmd = "tmux split-window -" . a:split_type
     let l:shell_cmd = "'zsh -c \"" . l:cmd . "; exec zsh\"'"
