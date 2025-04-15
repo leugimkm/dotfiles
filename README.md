@@ -5,6 +5,7 @@
 Minimal dotfiles for:
 
 - [Vim](https://www.vim.org/) - Terminal text editor
+- [NeoVim](https://neovim.io/) - Hyperextensible Vim-based text editor
 - [Qtile](https://qtile.org/) - Tiling window manager
 - [kitty](https://sw.kovidgoyal.net/kitty/index.html) - Terminal emulator
 - [Ranger](https://ranger.github.io/) - Console file manager
