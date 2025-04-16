@@ -5,9 +5,9 @@ if empty(glob('/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
-
 call plug#begin()
 Plug 'morhetz/gruvbox'
+Plug 'junegunn/fzf', { 'do': { -> fxf#install() } }
 Plug 'junegunn/fzf.vim',
 Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -43,56 +43,60 @@ let g:coc_global_extensions = [
 
 " autocmd vimenter * ++nested colorscheme gruvbox
 
-" set rtp+=/usr/share/powerline/bindings/vim
-set laststatus=2
-match ErrorMsg /\s\+$/
-
 let mapleader=" "
 set nocompatible
 set mouse=a
 syntax on
 filetype plugin indent on
 set hidden
+set ruler
+set laststatus=2
+set autoread
+au FocusGained,BufEnter * silent! checktime
+set wildmenu
+set magic
+set lazyredraw
+match ErrorMsg /\s\+$/
+set signcolumn=yes
+highlight clear signcolumn
+set colorcolumn=80
+" set updatetime=300
 set hlsearch
 set incsearch
+set ignorecase
+set smartcase
 set showcmd
 set showmatch
 set splitbelow
 set splitright
-set autoread
-au FocusGained,BufEnter * silent! checktime
-
+set expandtab
+set smarttab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set expandtab
+set autoindent
 set smartindent
-set encoding=utf-8
-set fileencoding=utf-8
-set t_Co=256
-" set termguicolors
-let &t_ut=''
-
-set colorcolumn=80
 set relativenumber
-set nu
+set number
 set scrolloff=8
-
-" set belloff=all
-
-set background=dark
-let g:gruvbox_contrast_dark='hard'
-colorscheme gruvbox
-hi Normal guibg=NONE ctermbg=NONE
-
+set belloff=all
 set nobackup
 set nowritebackup
 set noswapfile
-set signcolumn=yes
-" set updatetime=300
-set backspace=indent,eol,start
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
 set ttyfast
-highlight clear signcolumn
+set backspace=indent,eol,start
+set ffs=unix,dos,mac
+set t_Co=256
+let &t_ut=''
+set termguicolors
+set background=dark
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_italic=1
+colorscheme gruvbox
+hi Normal guibg=NONE ctermbg=NONE
 
 au BufNewFile,BufRead *.js, *.html, *.css
   \ set tabstop=2
@@ -108,15 +112,41 @@ au BufNewFile,BufRead *.py
   \ textwidth=79
   \ fileformat=unix
 
-map <leader>h :noh<CR>
-map <leader>e :NERDTreeToggle<CR>
+if has('unnamedplus')
+    set clipboard=unnamed,unnamedplus
+endif
 
-map <leader>n :bnext<CR>
-map <leader>p :bprevious<CR>
-map <leader>d :bdelete<CR>
+if has('macunix')
+    vmap <C-x> :!pbcopy<CR>
+    vmap <C-c> :w !pbcopy<CR><CR>
+endif
+
+" let &listchars="eol:$,tab:\u258f,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
+let &listchars="eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
+set nolist
+
+nmap <silent> <leader><tab> :set nolist!<CR>
+nnoremap <silent> <leader><CR> :noh<CR>
+noremap <leader>e :NERDTreeToggle<CR>
+map <leader>uw :set wrap!<CR>
+
+nnoremap + <C-a>
+nnoremap - <C-x>
+
+nnoremap sh <C-w><
+nnoremap sl <C-w>>
+nnoremap sj <C-w>-
+nnoremap sk <C-w>+
+
+map <leader>bn :bnext<CR>
+map <leader>bp :bprevious<CR>
+map <leader>bd :bdelete<CR>
+map <S-h> :bprevious<CR>
+map <S-l> :bnext<CR>
+map <S-x> :bdelete<CR>
 
 nmap <leader>- <C-W>s<C-W>l
-nmap <leader>\ <C-W>v<C-W>l
+nmap <leader>\| <C-W>v<C-W>l
 nmap <leader>c <C-W>c
 
 map <C-j> <C-W>j
@@ -127,8 +157,10 @@ map <C-l> <C-W>l
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 
+nnoremap <C-/> :terminal<CR>
 nnoremap <C-A-j> :!clear; python %<CR>
 " autocmd FileType python nnoremap <C-A-j> :terminal python %<CR>
+autocmd FileType python nnoremap <silent> <leader>sh :terminal python %<CR>
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -136,11 +168,6 @@ nnoremap <A-k> :m .-2<CR>==
 " inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-
-" let &listchars="eol:$,tab:\u258f,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
-let &listchars="eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
-set nolist
-nmap <silent> <leader><tab> :set nolist!<CR>
 
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
@@ -168,10 +195,10 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
-nmap <silent> gh <Plug>(coc-definition)
-nmap <silent> gt <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent><nowait> gd <Plug>(coc-definition)
+nmap <silent><nowait> gy <Plug>(coc-type-definition)
+nmap <silent><nowait> gi <Plug>(coc-implementation)
+nmap <silent><nowait> gr <Plug>(coc-references)
 
 function! RunPythonFile(split_type)
     let l:file = expand("%:p")
