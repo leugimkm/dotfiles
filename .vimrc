@@ -137,6 +137,7 @@ nnoremap sh <C-w><
 nnoremap sl <C-w>>
 nnoremap sj <C-w>-
 nnoremap sk <C-w>+
+" nnoremap <silent> <leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 
 map <leader>bn :bnext<CR>
 map <leader>bp :bprevious<CR>
