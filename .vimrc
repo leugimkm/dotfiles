@@ -155,6 +155,8 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+vnoremap > >gv
+vnoremap < <gv
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 
