@@ -7,7 +7,7 @@ endif
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
-Plug 'junegunn/fzf', { 'do': { -> fxf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim',
 Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -186,7 +186,8 @@ let g:netrw_winsize=25
 
 let g:NERDTreeWinPos="right"
 let NERDTreeQuitOnOpen=1
-let NERDTreeIgnore = ['\.pyc$', '__pycache__', '^node_modules$']
+let NERDTreeIgnore=['\.pyc$', '__pycache__', '^node_modules$']
+let NERDTreeShowHidden=1
 
 function! CheckBackspace() abort
   let col = col('.') - 1
