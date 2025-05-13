@@ -88,7 +88,7 @@ set fileencoding=utf-8
 set fileencodings=utf-8
 set ttyfast
 set backspace=indent,eol,start
-set ffs=unix,dos,mac
+set fileformats=unix,dos,mac
 set t_Co=256
 let &t_ut=''
 set termguicolors
@@ -107,10 +107,7 @@ au BufNewFile,BufRead *.py
   \ set tabstop=4
   \ shiftwidth=4
   \ softtabstop=4
-  \ expandtab
-  \ autoindent
   \ textwidth=79
-  \ fileformat=unix
 
 if has('unnamedplus')
     set clipboard=unnamed,unnamedplus
@@ -155,6 +152,12 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+tnoremap <silent> <C-j> <C-W>j
+tnoremap <silent> <C-k> <C-W>k
+tnoremap <silent> <C-h> <C-W>h
+tnoremap <silent> <C-l> <C-W>l
+tnoremap <Esc> <C-\><C-n>
+
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 
@@ -167,8 +170,8 @@ nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
 " inoremap <A-j> <Esc>:m .+1<CR>==gi
 " inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+vnoremap <S-j> :m '>+1<CR>gv=gv
+vnoremap <S-k> :m '<-2<CR>gv=gv
 
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
