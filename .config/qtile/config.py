@@ -97,7 +97,7 @@ mouse = [
 ]
 
 layout_theme = {
-    "border_width": 2, "margin": 8,
+    "border_width": 0, "margin": 8,
     "border_normal": C["background"], "border_focus": C["color11"],
 }
 
