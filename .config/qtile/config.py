@@ -13,11 +13,12 @@ from custom import Center, Deco
 from consts import SYMBOLS as S, THEME
 
 C = THEME["ayu"]
+EXTRAS = False
 
 
 @hook.subscribe.startup
 def autostart():
-    subprocess.run([os.path.expanduser('~/.config/qtile/autostart.sh')])
+    subprocess.run([os.path.expanduser("~/.config/qtile/autostart.sh")])
 
 
 @lazy.function
@@ -28,7 +29,7 @@ def minimize(qtile):
 
 
 def set_wallpaper():
-    dir_ = os.path.expanduser('~/pictures/wallpapers')
+    dir_ = os.path.expanduser("~/pictures/wallpapers")
     return os.path.join(dir_, choice(os.listdir(dir_)))
 
 
@@ -60,7 +61,7 @@ keys = [
     Key(("M-C-q"), lazy.shutdown()),
     Key(("M-r"), lazy.spawncmd()),
     Key(("M-C-m"), minimize()),
-    KeyChord(("M-p"), [
+    KeyChord( ("M-p"), [
         Key(("f"), lazy.spawn("firefox")),
         Key(("q"), lazy.spawn("qutebrowser")),
         Key(("r"), lazy.spawn("rofi -show drun")),
@@ -71,34 +72,40 @@ keys = [
 groups = [
     Group(f"{i}", label=label, layout=layout)
     for i, (label, layout) in enumerate([
-        (S["1"], 'monadtall'), (S["2"], 'monadthreecol'), (S["3"], 'monadwide'),
-        (S["4"], 'plasma'), (S["5"], 'monadtall'), (S["6"], 'max'),
+        (S["1"], "monadtall"),
+        (S["2"], "monadthreecol"),
+        (S["3"], "monadwide"),
+        (S["4"], "plasma"),
+        (S["5"], "monadtall"),
+        (S["6"], "max"),
     ], 1)
 ]
 
 for g in groups:
-    keys.extend([
+    keys.extend( [
         Key(f"M-{g.name}", lazy.group[g.name].toscreen()),
         Key(f"M-S-{g.name}", lazy.window.togroup(g.name, switch_group=True)),
     ])
 
 groups.append(
-    ScratchPad("scratchpad", [
+    ScratchPad( "scratchpad", [
         DropDown("term", "kitty", width=0.4, x=0.3, y=0.2),
     ])
 )
 
 mouse = [
     Drag("M-1", lazy.window.set_position_floating(),
-        start=lazy.window.get_position()),
+         start=lazy.window.get_position()),
     Drag("M-3", lazy.window.set_size_floating(),
-        start=lazy.window.get_size()),
+         start=lazy.window.get_size()),
     Click("M-2", lazy.window.bring_to_front()),
 ]
 
 layout_theme = {
-    "border_width": 0, "margin": 8,
-    "border_normal": C["background"], "border_focus": C["color11"],
+    "border_width": 0,
+    "margin": 8,
+    "border_normal": C["background"],
+    "border_focus": C["color11"],
 }
 
 layouts = [
@@ -111,11 +118,14 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="SauceCodePro NF", fontsize=12, padding=0, background=C["background"],
+    font="SauceCodePro NF",
+    fontsize=12,
+    padding=0,
+    background=C["background"],
 )
 extension_defaults = widget_defaults.copy()
 
-widgets = [
+extra_widgets = [
     widget.Image(
         filename="~/pictures/logos/logo_custom.png",
         scale="False",
@@ -128,7 +138,11 @@ widgets = [
         foreground=C["foreground"],
         background=C["selection_background"],
     ),
-    Deco(C["color12"], C["selection_background"]),
+    Deco(C["selection_background"], "#00000000", side="R"),
+]
+
+widgets = [
+    Deco(C["color12"], "#00000000"),
     Deco(C["color9"], C["color12"]),
     Deco(C["color11"], C["color9"]),
     Deco(C["selection_background"], C["color11"]),
@@ -144,12 +158,20 @@ widgets = [
         foreground=C["foreground"],
         background="#00000000",
     ),
+    widget.Spacer(
+        background="#00000000",
+    ),
     widget.WindowName(
         foreground=C["foreground"],
         background="#00000000",
-        format='{name}'
+        format="{name}",
+        width=420,
+    ),
+    widget.Spacer(
+        background="#00000000",
     ),
     widget.Chord(
+        background="#00000000",
         chords_colors={
             "launch": ("#ff0000", "#ffffff"),
             "vim mode": ("#2980b9", "#ffffff"),
@@ -158,9 +180,16 @@ widgets = [
     ),
     widget.Systray(),
     Deco(C["selection_background"], "#00000000"),
+    widget.Wallpaper(
+        directory="~/pictures/wallpapers",
+        label="\u2318",
+        background=C["background"],
+    ),
+    Deco(C["selection_background"], C["background"]),
     widget.CurrentLayoutIcon(
         custom_icon_paths=[os.path.expanduser("~/pictures/icons")],
-        padding=2, scale=0.5,
+        padding=2,
+        scale=0.5,
         foreground=C["color11"],
         background=C["selection_background"],
     ),
@@ -189,12 +218,19 @@ widgets = [
     Deco(C["background"], "#00000000", side="R"),
 ]
 
+if EXTRAS:
+    widgets[:0] = extra_widgets
+
 screens = [
     Screen(
-        wallpaper=set_wallpaper(), wallpaper_mode="fill",
+        wallpaper=set_wallpaper(),
+        wallpaper_mode="fill",
         top=bar.Bar(
-            widgets, background="#28282840",
-            size=24, opacity=0.95, margin=[4, 4, 2, 4],  # [N, E, S, W]
+            widgets,
+            background="#28282840",
+            size=24,
+            opacity=0.95,
+            margin=[8, 8, 4, 8],  # [N, E, S, W]
         ),
     ),
 ]
@@ -215,11 +251,13 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),
         Match(title="branchdialog"),
         Match(title="pinentry"),
-    ]
+    ],
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
 auto_minimize = True
+wl_input_rules = None
+wl_xcursor_theme = None
+wl_xcursor_size = 24
 wmname = "LG3D"
-
