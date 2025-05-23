@@ -95,8 +95,9 @@ set termguicolors
 set background=dark
 let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_italic=1
+let g:gruvbox_transparent_bg=1
 colorscheme gruvbox
-hi Normal guibg=NONE ctermbg=NONE
+highlight Normal guibg=NONE ctermbg=NONE
 
 au BufNewFile,BufRead *.js, *.html, *.css
   \ set tabstop=2

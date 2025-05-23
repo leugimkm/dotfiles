@@ -9,11 +9,14 @@ from libqtile.config import ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-from custom import Center, Deco
+from custom import Center, Deco, ColorTheme
 from consts import SYMBOLS as S, THEME
 
-C = THEME["ayu"]
+DIR = os.path.expanduser("~/pictures/wallpapers")
+ICONS = os.path.expanduser("~/pictures/icons")
+C = ColorTheme(THEME["gruvbox"])
 EXTRAS = False
+SQUARE = False
 
 
 @hook.subscribe.startup
@@ -29,8 +32,24 @@ def minimize(qtile):
 
 
 def set_wallpaper():
-    dir_ = os.path.expanduser("~/pictures/wallpapers")
-    return os.path.join(dir_, choice(os.listdir(dir_)))
+    return os.path.join(DIR, choice(os.listdir(DIR)))
+
+
+def AW(color, bg=True, pad=0):
+    bg_color = "background" if bg else "selection_background"
+    return {
+        "foreground": C(f"bright {color}"),
+        "background": C(bg_color),
+        "padding": pad,
+    }
+
+
+def SW(color, shade=35, pad=8):
+    return {
+        "foreground": C(f"bright {color}"),
+        "background": C(color, shade),
+        "padding": pad,
+    }
 
 
 keys = [
@@ -41,8 +60,14 @@ keys = [
     Key(("M-j"), lazy.group.next_window(), lazy.window.bring_to_front()),
     Key(("M-k"), lazy.group.prev_window(), lazy.window.bring_to_front()),
     Key(("M-<space>"), lazy.widget["keyboardlayout"].next_keyboard()),
-    Key(("M-S-h"), lazy.layout.shuffle_left()),
-    Key(("M-S-l"), lazy.layout.shuffle_right()),
+    Key(("M-i"), lazy.layout.grow()),
+    Key(("M-m"), lazy.layout.shrink()),
+    Key(("M-n"), lazy.layout.reset()),
+    Key(("M-o"), lazy.layout.maximize()),
+    Key(("M-S-n"), lazy.layout.normalize()),
+    Key(("M-S-<space>"), lazy.layout.flip()),
+    Key(("M-S-h"), lazy.layout.swap_left()),
+    Key(("M-S-l"), lazy.layout.swap_right()),
     Key(("M-S-j"), lazy.layout.shuffle_down()),
     Key(("M-S-k"), lazy.layout.shuffle_up()),
     Key(("M-C-h"), lazy.layout.grow_left()),
@@ -76,8 +101,7 @@ groups = [
         (S["2"], "monadthreecol"),
         (S["3"], "monadwide"),
         (S["4"], "plasma"),
-        (S["5"], "monadtall"),
-        (S["6"], "max"),
+        (S["5"], "max"),
     ], 1)
 ]
 
@@ -87,11 +111,9 @@ for g in groups:
         Key(f"M-S-{g.name}", lazy.window.togroup(g.name, switch_group=True)),
     ])
 
-groups.append(
-    ScratchPad( "scratchpad", [
-        DropDown("term", "kitty", width=0.4, x=0.3, y=0.2),
-    ])
-)
+groups.append( ScratchPad( "scratchpad", [
+    DropDown("term", "kitty", width=0.4, x=0.3, y=0.2),
+]))
 
 mouse = [
     Drag("M-1", lazy.window.set_position_floating(),
@@ -104,8 +126,8 @@ mouse = [
 layout_theme = {
     "border_width": 0,
     "margin": 8,
-    "border_normal": C["background"],
-    "border_focus": C["color11"],
+    "border_normal": C("background"),
+    "border_focus": C("bright yellow"),
 }
 
 layouts = [
@@ -117,12 +139,7 @@ layouts = [
     layout.Max(**layout_theme),
 ]
 
-widget_defaults = dict(
-    font="SauceCodePro NF",
-    fontsize=12,
-    padding=0,
-    background=C["background"],
-)
+widget_defaults = dict(font="SauceCodePro NF", fontsize=12, padding=0)
 extension_defaults = widget_defaults.copy()
 
 extra_widgets = [
@@ -132,94 +149,82 @@ extra_widgets = [
         background="#00000000",
         margin=4,
     ),
-    Deco(C["selection_background"], "#00000000"),
+    Deco(C("selection_background"), "#00000000"),
     widget.TextBox(
         text="ayudaenpython.com",
-        foreground=C["foreground"],
-        background=C["selection_background"],
+        foreground=C("foreground"),
+        background=C("selection_background"),
     ),
-    Deco(C["selection_background"], "#00000000", side="R"),
+    Deco(C("selection_background"), "#00000000", side="R"),
+]
+
+squared_widgets = [
+    widget.Wallpaper(directory=DIR, label="\u2318", **SW("magenta")),
+    widget.CurrentLayoutIcon(
+        custom_icon_paths=[ICONS], scale=0.5, **SW("yellow", 50),
+    ),
+    widget.CurrentLayout(**SW("yellow")),
+    widget.KeyboardLayout(configured_keyboards=["us", "es"], **SW("green")),
+    widget.Clock(format="%d/%m/%Y %a \u231b %H:%M %p", **SW("blue")),
+    widget.QuickExit(default_text="\u23fb ", **SW("red")),
+]
+
+angled_widgets = [
+    Deco(C("background"), "#00000000"),
+    widget.Wallpaper(directory=DIR, label="\u2318", **AW("magenta", True)),
+    Deco(C("selection_background"), C("background")),
+    widget.CurrentLayoutIcon(
+        custom_icon_paths=[ICONS], scale=0.5, **AW("yellow", False, 4),
+    ),
+    widget.CurrentLayout(**AW("yellow", False)),
+    Deco(C("background"), C("selection_background")),
+    widget.KeyboardLayout(configured_keyboards=["us", "es"], **AW("green", True)),
+    Deco(C("selection_background"), C("background")),
+    widget.Clock(format="%d/%m/%Y %a \u231b %H:%M %p", **AW("blue", False)),
+    Deco(C("background"), C("selection_background")),
+    widget.QuickExit(default_text="\u23fb ", **AW("red", True)),
+    Deco(C("background"), "#00000000", side="R"),
 ]
 
 widgets = [
-    Deco(C["color12"], "#00000000"),
-    Deco(C["color9"], C["color12"]),
-    Deco(C["color11"], C["color9"]),
-    Deco(C["selection_background"], C["color11"]),
+    Deco(C("bright blue"), "#00000000"),
+    Deco(C("bright red"), C("bright blue")),
+    Deco(C("bright yellow"), C("bright red")),
+    Deco(C("background"), C("bright yellow")),
     widget.GroupBox(
+        background=C("background"),
         highlight_color=["000000", "282828"],
         highlight_method="line",
-        active=C["foreground"],
-        this_current_screen_border=C["color11"],
+        active=C("foreground"),
+        this_current_screen_border=C("bright yellow"),
     ),
-    Deco(C["background"], "#00000000", side="R"),
+    Deco(C("background"), "#00000000", side="R"),
     widget.Prompt(
         prompt="> ",
-        foreground=C["foreground"],
+        foreground=C("selection_foreground"),
         background="#00000000",
-    ),
-    widget.Spacer(
-        background="#00000000",
+        padding=4,
     ),
     widget.WindowName(
-        foreground=C["foreground"],
+        foreground=C("foreground"),
         background="#00000000",
-        format="{name}",
-        width=420,
-    ),
-    widget.Spacer(
-        background="#00000000",
+        format='{name}',
+        padding=4,
     ),
     widget.Chord(
-        background="#00000000",
-        chords_colors={
-            "launch": ("#ff0000", "#ffffff"),
-            "vim mode": ("#2980b9", "#ffffff"),
-        },
+        chords_colors={"launch": ("#2980b9", "#00000000")},
         name_transform=lambda name: name.upper(),
+        padding=8,
     ),
     widget.Systray(),
-    Deco(C["selection_background"], "#00000000"),
-    widget.Wallpaper(
-        directory="~/pictures/wallpapers",
-        label="\u2318",
-        background=C["background"],
-    ),
-    Deco(C["selection_background"], C["background"]),
-    widget.CurrentLayoutIcon(
-        custom_icon_paths=[os.path.expanduser("~/pictures/icons")],
-        padding=2,
-        scale=0.5,
-        foreground=C["color11"],
-        background=C["selection_background"],
-    ),
-    widget.CurrentLayout(
-        foreground=C["color11"],
-        background=C["selection_background"]
-    ),
-    Deco(C["background"], C["selection_background"]),
-    widget.KeyboardLayout(
-        configured_keyboards=["us", "es"],
-        foreground=C["color10"],
-        background=C["background"],
-    ),
-    Deco(C["selection_background"], C["background"]),
-    widget.Clock(
-        format="%d/%m/%Y %a %I:%M %p",
-        foreground=C["color12"],
-        background=C["selection_background"],
-    ),
-    Deco(C["background"], C["selection_background"]),
-    widget.QuickExit(
-        default_text="exit",
-        foreground=C["color9"],
-        background=C["background"],
-    ),
-    Deco(C["background"], "#00000000", side="R"),
 ]
 
 if EXTRAS:
     widgets[:0] = extra_widgets
+if SQUARE:
+    widgets += squared_widgets
+else:
+    widget += angled_widgets
 
 screens = [
     Screen(

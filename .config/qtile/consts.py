@@ -1,3 +1,25 @@
+ALIASES = {
+    "background": "background",
+    "foreground": "foreground",
+    "selection_background": "selection_background",
+    "selection_foreground": "selection_foreground",
+    "red": "color1",
+    "bright red": "color9",
+    "green": "color2",
+    "bright green": "color10",
+    "yellow": "color3",
+    "bright yellow": "color11",
+    "blue": "color4",
+    "bright blue": "color12",
+    "magenta": "color5",
+    "bright magenta": "color13",
+    "cyan": "color6",
+    "bright cyan": "color14",
+    "white": "color7",
+    "bright white": "color15",
+    "black": "color0",
+    "bright black": "color8"
+}
 THEME = {
     "gruvbox": {
         "background": "#282828",
@@ -6,20 +28,20 @@ THEME = {
         "selection_foreground": "#928374",
         "color0": "#282828",
         "color8": "#928374",
-        "color1": "#cc241d",  # red
-        "color9": "#fb4934",  # light red
-        "color2": "#98971a",  # green
-        "color10": "#b8bb26",  # light green
-        "color3": "#d79921",  # yellow
-        "color11": "#fabd2f",  # light yellow
-        "color4": "#458588",  # blue
-        "color12": "#83a598",  # light blue
-        "color5": "#b16286",  # magenta
-        "color13": "#d3869b",  # light magenta
-        "color6": "#689d6a",  # cyan
-        "color14": "#8ec07c",  # light cyan
-        "color7": "#a89984",  # gray
-        "color15": "#928374",  # light gray
+        "color1": "#cc241d",
+        "color9": "#fb4934",
+        "color2": "#98971a",
+        "color10": "#b8bb26",
+        "color3": "#d79921",
+        "color11": "#fabd2f",
+        "color4": "#458588",
+        "color12": "#83a598",
+        "color5": "#b16286",
+        "color13": "#d3869b",
+        "color6": "#689d6a",
+        "color14": "#8ec07c",
+        "color7": "#a89984",
+        "color15": "#928374",
     },
     "ayu": {
         "background": "#0e1419",
@@ -43,6 +65,28 @@ THEME = {
         "color7": "#ffffff",
         "color15": "#ffffff",
     },
+    "cpl": {
+        "foreground": "#777777",
+        "background": "#000000",
+        "selection_foreground": "#745b00",
+        "selection_background": "#464646",
+        "color0": "#000000",
+        "color1": "#b10b00",
+        "color2": "#007232",
+        "color3": "#745b00",
+        "color4": "#3123ff",
+        "color5": "#9b0097",
+        "color6": "#006a78",
+        "color7": "#777777",
+        "color8": "#464646",
+        "color9": "#ff3d2b",
+        "color10": "#00ae50",
+        "color11": "#b18c00",
+        "color12": "#6786ff",
+        "color13": "#eb00e4",
+        "color14": "#00a3b7",
+        "color15": "#ababab",
+    }
 }
 SYMBOLS = {
     "0": '\U000f0f0e',
@@ -74,8 +118,8 @@ PLE = {
         "black medium": {"L": "\u23f4", "R": "\u23f5"},
     },
     "black_triangle": {
-        "lower": {"L": "\u25e3", "R": "\u25e2"}, 
-        "upper": {"L": "\u25e4", "R": "\u25e5"}, 
+        "lower": {"L": "\u25e3", "R": "\u25e2"},
+        "upper": {"L": "\u25e4", "R": "\u25e5"},
     },
 }
 

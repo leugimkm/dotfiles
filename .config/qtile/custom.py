@@ -3,7 +3,36 @@ from libqtile.layout.base import _SimpleLayoutBase
 from libqtile.widget.base import _TextBox
 from libqtile.command.base import expose_command
 
-from consts import PLE
+from consts import ALIASES, PLE
+
+
+class ColorTheme:
+
+    def __init__(self, theme):
+        self.theme = theme
+
+    def _alpha_to_hex(self, alpha):
+        if not (0 <= alpha <= 100):
+            return "ff"
+        return f"{round(alpha * 255 / 100):02X}"
+
+    def _resolve_key(self, value):
+        value_ = value.strip().lower()
+        if value_.isdigit():
+            return "color" + value_
+        if value_.startswith("color") and value_[5:].isdigit():
+            return value_
+        if value_ in ALIASES:
+            return ALIASES[value_]
+        return "background"
+
+    def __call__(self, value, alpha=100):
+        key_ = self._resolve_key(value)
+        base_color = self.theme[key_]
+        if base_color.startswith("#"):
+            base_color = base_color[1:]
+        alpha_hex = self._alpha_to_hex(alpha)
+        return f"#{base_color}{alpha_hex}"
 
 
 class Deco(_TextBox):
@@ -24,6 +53,7 @@ class Deco(_TextBox):
         width=bar.CALCULATED,
         **config
     ):
+        _t = {}
         if style == "triangle":
             T = PLE["triangle"]
             _t = {"L": T["lower"]["R"], "R": T["upper"]["L"]}
