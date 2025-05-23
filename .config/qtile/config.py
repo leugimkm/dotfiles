@@ -16,7 +16,7 @@ DIR = os.path.expanduser("~/pictures/wallpapers")
 ICONS = os.path.expanduser("~/pictures/icons")
 C = ColorTheme(THEME["gruvbox"])
 EXTRAS = False
-SQUARE = False
+SQUARE = True
 
 
 @hook.subscribe.startup
