@@ -60,6 +60,6 @@ function runcpp() {
     g++ -o "$1" "$1.cpp"
 }
 
-if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-  exec startx
-fi
+# if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+#   exec startx
+# fi
