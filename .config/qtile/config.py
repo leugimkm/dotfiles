@@ -12,6 +12,7 @@ from libqtile.utils import guess_terminal
 from custom import Center, Deco, ColorTheme
 from consts import SYMBOLS as S, THEME
 
+TERMINAL = guess_terminal()
 DIR = os.path.expanduser("~/pictures/wallpapers")
 ICONS = os.path.expanduser("~/pictures/icons")
 C = ColorTheme(THEME["gruvbox"])
@@ -76,7 +77,7 @@ keys = [
     Key(("M-C-k"), lazy.layout.grow_up()),
     Key(("M-n"), lazy.layout.normalize()),
     Key(("M-S-<Return>"), lazy.layout.toggle_split()),
-    Key(("M-<Return>"), lazy.spawn(guess_terminal())),
+    Key(("M-<Return>"), lazy.spawn(TERMINAL)),
     Key(("M-<Tab>"), lazy.next_layout()),
     Key(("M-w"), lazy.window.kill()),
     Key(("M-f"), lazy.window.toggle_fullscreen(), lazy.hide_show_bar()),
