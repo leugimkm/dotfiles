@@ -87,12 +87,12 @@ keys = [
     Key(("M-C-q"), lazy.shutdown()),
     Key(("M-r"), lazy.spawncmd()),
     Key(("M-C-m"), minimize()),
-    KeyChord( ("M-p"), [
+    KeyChord(("M-p"), [
         Key(("f"), lazy.spawn("firefox")),
         Key(("q"), lazy.spawn("qutebrowser")),
         Key(("r"), lazy.spawn("rofi -show drun")),
         Key(("1"), lazy.group["scratchpad"].dropdown_toggle("term")),
-    ]),
+    ], name="M-p"),
 ]
 
 groups = [
@@ -229,8 +229,7 @@ else:
 
 screens = [
     Screen(
-        wallpaper=set_wallpaper(),
-        wallpaper_mode="fill",
+        wallpaper=set_wallpaper(), wallpaper_mode="fill",
         top=bar.Bar(
             widgets,
             background="#28282840",
