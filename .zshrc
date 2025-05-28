@@ -2,7 +2,7 @@ bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
-HISTSIZE=5000
+HISTSIZE=1024
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -15,6 +15,7 @@ setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_find_no_dups
+setopt correct
 setopt no_beep
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -28,7 +29,9 @@ alias ll='lsd -la  --color=always'
 alias l='ls -l'
 alias la='ls -a'
 alias tree='lsd --tree'
-
+alias grep='grep --color=auto'
+alias df='df -h'
+alias du='du -h -d 1'
 alias tobash="sudo chsh $USER -s /bin/bash"
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -45,10 +48,9 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
 zinit snippet OMZP::git
-# zinit snippet OMZP::sudo
-# zinit snippet OMZP::archlinux
-# zinit snippet OMZP::command-not-found
+zinit snippet OMZP::command-not-found
 
 autoload -U compinit && compinit
 
@@ -60,9 +62,6 @@ eval "$(zoxide init zsh)"
 export PATH=$PATH:$HOME/.local/bin
 POSH_THEME="custom"
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"
-
-# powerline-daemon -q
-# . /usr/share/powerline/bindings/zsh/powerline.zsh
 
 function runcpp() {
     g++ -o "$1" "$1.cpp"

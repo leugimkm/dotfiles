@@ -1,28 +1,28 @@
 " PLUGINS ---------------------------------------------------------------- {{{
 
-if empty(glob('/.vim/autoload/plug.vim'))
+if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -flo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 call plug#begin()
-Plug 'morhetz/gruvbox'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim',
-Plug 'preservim/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'preservim/tagbar'
-Plug 'jiangmiao/auto-pairs'
-Plug 'vim-scripts/indentpython.vim'
-Plug 'lepture/vim-jinja'
-Plug 'pangloss/vim-javascript'
-Plug 'alvan/vim-closetag'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'vim-airline/vim-airline'
-Plug 'dense-analysis/ale'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'yaegassy/coc-astro', {'do': 'yarn install --frozen-lockfile'}
-Plug 'yaegassy/coc-esbonio', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'morhetz/gruvbox'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim',
+  Plug 'preservim/nerdtree'
+  Plug 'jistr/vim-nerdtree-tabs'
+  Plug 'preservim/tagbar'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'vim-scripts/indentpython.vim'
+  Plug 'lepture/vim-jinja'
+  Plug 'pangloss/vim-javascript'
+  Plug 'alvan/vim-closetag'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'vim-airline/vim-airline'
+  Plug 'dense-analysis/ale'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'yaegassy/coc-astro', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'yaegassy/coc-esbonio', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 let g:coc_global_extensions = [
@@ -41,8 +41,6 @@ let g:coc_global_extensions = [
 
 " }}}
 
-" autocmd vimenter * ++nested colorscheme gruvbox
-
 let mapleader=" "
 set nocompatible
 set mouse=a
@@ -60,6 +58,7 @@ match ErrorMsg /\s\+$/
 set signcolumn=yes
 highlight clear signcolumn
 set colorcolumn=80
+" set foldmethod=marker
 " set updatetime=300
 set hlsearch
 set incsearch
@@ -83,6 +82,7 @@ set belloff=all
 set nobackup
 set nowritebackup
 set noswapfile
+set history=1024
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
@@ -99,6 +99,9 @@ let g:gruvbox_transparent_bg=1
 colorscheme gruvbox
 highlight Normal guibg=NONE ctermbg=NONE
 
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* loadview
+
 au BufNewFile,BufRead *.js, *.html, *.css
   \ set tabstop=2
   \ softtabstop=2
@@ -111,12 +114,12 @@ au BufNewFile,BufRead *.py
   \ textwidth=79
 
 if has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
+  set clipboard=unnamed,unnamedplus
 endif
 
 if has('macunix')
-    vmap <C-x> :!pbcopy<CR>
-    vmap <C-c> :w !pbcopy<CR><CR>
+  vmap <C-x> :!pbcopy<CR>
+  vmap <C-c> :w !pbcopy<CR><CR>
 endif
 
 " let &listchars="eol:$,tab:\u258f,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
@@ -177,18 +180,19 @@ vnoremap <S-k> :m '<-2<CR>gv=gv
 au FileType python let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
 
 augroup toogle_number
-    autocmd!
-    autocmd BufLeave,FocusLost,InsertEnter,WinLeave * setlocal norelativenumber
-    autocmd BufEnter,FocusGained,InsertLeave,WinEnter * setlocal relativenumber
+  autocmd!
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave * setlocal norelativenumber
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * setlocal relativenumber
 augroup END
 
 let g:netrw_banner=0
 let g:netrw_winsize=25
 
 let g:NERDTreeWinPos="right"
+let g:NERDTreeWinSize=35
 let NERDTreeQuitOnOpen=1
-let NERDTreeIgnore=['\.pyc$', '__pycache__', '^node_modules$']
 let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.pyc$', '__pycache__', '^node_modules$']
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -196,9 +200,9 @@ function! CheckBackspace() abort
 endfunction
 
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
+  \ coc#pum#visible() ? coc#pum#next(1) :
+  \ CheckBackspace() ? "\<Tab>" :
+  \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
 nmap <silent><nowait> gd <Plug>(coc-definition)
@@ -207,18 +211,18 @@ nmap <silent><nowait> gi <Plug>(coc-implementation)
 nmap <silent><nowait> gr <Plug>(coc-references)
 
 function! RunPythonFile(split_type)
-    let l:file = expand("%:p")
-    let l:cmd = "python " . shellescape(l:file)
-    let l:send_keys = 'vim ' . shellescape(l:file) . '" C-m'
-    if empty($TMUX)
-        echo "No tmux session!"
-        " let l:com = 'tmux new-session -A -s vimux \; send-keys "' . l:send_keys
-        " silent execute "! " . l:com
-        " quit
-    endif
-    let l:tmux_cmd = "tmux split-window -" . a:split_type
-    let l:shell_cmd = "'zsh -c \"" . l:cmd . "; exec zsh\"'"
-    call system(l:tmux_cmd . " " . l:shell_cmd)
+  let l:file = expand("%:p")
+  let l:cmd = "python " . shellescape(l:file)
+  let l:send_keys = 'vim ' . shellescape(l:file) . '" C-m'
+  if empty($TMUX)
+    echo "No tmux session!"
+    " let l:com = 'tmux new-session -A -s vimux \; send-keys "' . l:send_keys
+    " silent execute "! " . l:com
+    " quit
+  endif
+  let l:tmux_cmd = "tmux split-window -" . a:split_type
+  let l:shell_cmd = "'zsh -c \"" . l:cmd . "; exec zsh\"'"
+  call system(l:tmux_cmd . " " . l:shell_cmd)
 endfunction
 
 nnoremap <leader>j- :call RunPythonFile('v')<CR>
