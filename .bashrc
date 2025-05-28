@@ -13,10 +13,10 @@ alias grep='grep --color=auto'
 alias tozsh="sudo chsh $USER -s /bin/zsh"
 alias tobash="sudo chsh $USER -s /bin/bash"
 
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-. /usr/share/powerline/bindings/bash/powerline.sh
+# powerline-daemon -q
+# POWERLINE_BASH_CONTINUATION=1
+# POWERLINE_BASH_SELECT=1
+# . /usr/share/powerline/bindings/bash/powerline.sh
 
 # POSH_THEME="custom"
 # eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"

@@ -1,9 +1,5 @@
-#
-# ~/.bash_profile
-#
-
 export RANGER_LOAD_DEFAUTL_RC=FALSE
-export PATH=$PATH:/home/leugimkm/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
