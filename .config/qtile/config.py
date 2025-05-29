@@ -225,11 +225,11 @@ if EXTRAS:
 if SQUARE:
     widgets += squared_widgets
 else:
-    widget += angled_widgets
+    widgets += angled_widgets
 
 screens = [
     Screen(
-        wallpaper=set_wallpaper(), wallpaper_mode="fill",
+        # wallpaper=set_wallpaper(), wallpaper_mode="fill",
         top=bar.Bar(
             widgets,
             background="#28282840",
