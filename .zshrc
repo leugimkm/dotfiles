@@ -25,7 +25,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 alias ls='lsd --color=always'
-alias ll='lsd -la  --color=always'
+alias ll='lsd -la --color=always'
 alias l='ls -l'
 alias la='ls -a'
 alias tree='lsd --tree'
