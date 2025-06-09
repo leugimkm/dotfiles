@@ -26,17 +26,18 @@ call plug#begin()
 call plug#end()
 
 let g:coc_global_extensions = [
-\ 'coc-json',
-\ 'coc-tsserver',
-\ 'coc-html',
-\ 'coc-css',
 \ 'coc-clangd',
-\ 'coc-pyright',
+\ 'coc-css',
+\ 'coc-html',
+\ 'coc-json',
 \ 'coc-markdownlint',
-\ 'coc-ultisnips',
+\ 'coc-pyright',
+\ 'coc-rust-analyzer',
 \ 'coc-sh',
-\ 'coc-yaml',
 \ 'coc-toml'
+\ 'coc-tsserver',
+\ 'coc-ultisnips',
+\ 'coc-yaml',
 \]
 
 " }}}
