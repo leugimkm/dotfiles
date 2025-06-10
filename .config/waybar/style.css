@@ -1,0 +1,83 @@
+* {
+    border: none;
+    border-radius: 15px;
+    color: #ebdbb2;
+    font-family: SauceCodePro NFM;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+.modules-left,
+.modules-right,
+.moduels-center
+{
+    background-color: rgba(22, 24, 25, 0.35);
+    margin: 8px 16px 0px 16px;
+}
+
+.moduels-center {
+  padding: 0 16px;
+}
+
+#workspaces {
+    background: transparent;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+}
+
+#workspaces button.focused {
+    background-color: #282828;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#custom-wallpaper,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#language,
+#mpd {
+    padding: 0 5px;
+    color: #ebdbb2;
+}
+
+#clock:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover,
+#backlight:hover,
+#network:hover,
+#pulseaudio:hover,
+#wireplumber:hover,
+#custom-media:hover,
+#custom-wallpaper:hover,
+#tray:hover,
+#mode:hover,
+#idle_inhibitor:hover,
+#scratchpad:hover,
+#power-profiles-daemon:hover,
+#language:hover,
+#mpd:hover {
+    background: rgba(26,27, 38, 0.9);
+}

@@ -1,0 +1,144 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "final_space": true,
+  "version": 3,
+  "secondary_prompt": {
+      "foreground": "#ffff87",
+      "background": "transparent",
+      "template": "\u276f\u276f "
+  },
+  "transient_prompt": {
+      "foreground": "#ffff87",
+      "foreground_templates": [
+        "{{ if gt .Code 0 }}#ef5350{{ end }}",
+        "{{ if eq .Code 0 }}#ffff87{{ end }}"
+      ],
+      "background": "transparent",
+      "template": "\u276f "
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "session",
+          "style": "diamond",
+          "background": "#0e1419",
+          "foreground": "#ffff87",
+          "leading_diamond": "\ue0b6",
+          "template": "{{ .UserName }} "
+        },
+        {
+          "type": "os",
+          "style": "diamond",
+          "foreground": "#1793d1",
+          "background": "#333333",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b4",
+          "template": "{{ .Icon }}"
+        },
+        {
+          "type": "root",
+          "style": "diamond",
+          "background": "#ef5350",
+          "foreground": "#FFFB38",
+          "properties": {
+            "root_icon": "\uf292"
+          },
+          "template": "<parentBackground>\ue0b0</> \uf0e7 "
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "#81a1c1",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "style": "agnoster_short"
+          },
+          "template": " {{ .Path }} "
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "#6c6c6c",
+          "foreground_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#ffeb95{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#c5e478{{ end }}",
+            "{{ if gt .Ahead 0 }}#C792EA{{ end }}",
+            "{{ if gt .Behind 0 }}#C792EA{{ end }}"
+          ],
+          "properties": {
+            "branch_icon": "\ue725 ",
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "template": " {{ .HEAD }} {{ if .Working.Changed }}{{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#ef5350> \uf046 {{ .Staging.String }}</>{{ end }} "
+        },
+        {
+            "type": "executiontime",
+            "style": "plain",
+            "template": " \uf252 {{ .FormattedMs }}"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "node",
+          "style": "diamond",
+          "background": "#303030",
+          "foreground": "#3C873A",
+          "leading_diamond": " \ue0b6",
+          "properties": {
+            "fetch_package_manager": true,
+            "npm_icon": " <#cc3a3a>\ue5fa</> ",
+            "yarn_icon": " <#348cba>\ue6a7</>"
+          },
+          "template": "\ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}",
+          "trailing_diamond": "\ue0b4"
+        },
+        {
+          "type": "python",
+          "style": "plain",
+          "foreground": "#458588",
+          "template": "\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}<#fabd2f>{{ .Full }}</>{{ end }} "
+        },
+        {
+            "type": "status",
+            "style": "diamond",
+            "properties": {
+                "always_enabled": true
+            },
+            "foreground": "#b8bb26",
+            "foreground_templates": [
+                "{{ if gt .Code 0 }}#fb4934{{ end }}"
+            ],
+            "trailing_diamond": "\u250b",
+            "template": " {{ if gt .Code 0 }}\ue20f{{ else }}\uf489{{ end }} "
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "#ffff87",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#ef5350{{ end }}"
+          ],
+          "properties": {
+            "always_enabled": true
+          },
+          "template": "\u276f"
+        }
+      ]
+    }
+  ]
+}
