@@ -15,8 +15,8 @@ alias df='df -h'
 alias du='du -h -d 1'
 alias tozsh="sudo chsh $USER -s /bin/zsh"
 
-# POSH_THEME="custom"
-# eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"
+POSH_THEME="custom"
+eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"
 eval "$(fzf --bash)"
 export FZF_CTRL_T_OPTS="
   --walker-skip .git,.venv,__pycache__,node_modules,target
