@@ -1,0 +1,33 @@
+local set = vim.opt
+
+set.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
+set.completeopt = "menu,menuone,noselect"
+set.conceallevel = 0
+set.confirm = true
+set.cmdheight = 0
+set.inccommand = "split"
+
+set.mouse = "a"
+set.wildmenu = true
+set.magic = true
+set.lazyredraw = true
+set.signcolumn = 'yes'
+set.colorcolumn = "80"
+set.ignorecase = true
+set.smartcase = true
+set.showmatch = true
+set.splitbelow = true
+set.splitright = true
+set.expandtab = true
+set.tabstop = 4
+set.shiftwidth = 4
+set.softtabstop = 4
+set.smartindent = true
+set.relativenumber = true
+set.number = true
+set.scrolloff = 8
+set.fileencoding = "utf-8"
+set.fileencodings = { "utf-8" }
+set.fileformats = { "unix", "dos", "mac" }
+set.list = false
+set.wrap = false
