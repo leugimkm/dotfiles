@@ -34,7 +34,7 @@ let g:coc_global_extensions = [
 \ 'coc-pyright',
 \ 'coc-rust-analyzer',
 \ 'coc-sh',
-\ 'coc-toml'
+\ 'coc-toml',
 \ 'coc-tsserver',
 \ 'coc-ultisnips',
 \ 'coc-yaml',
