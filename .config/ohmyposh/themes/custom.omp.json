@@ -10,8 +10,7 @@
   "transient_prompt": {
       "foreground": "#ffff87",
       "foreground_templates": [
-        "{{ if gt .Code 0 }}#ef5350{{ end }}",
-        "{{ if eq .Code 0 }}#ffff87{{ end }}"
+        "{{ if gt .Code 0 }}#ef5350{{ end }}"
       ],
       "background": "transparent",
       "template": "\u276f "
@@ -23,107 +22,96 @@
       "segments": [
         {
           "type": "session",
-          "style": "diamond",
-          "background": "#0e1419",
+          "style": "plain",
           "foreground": "#ffff87",
-          "leading_diamond": "\ue0b6",
           "template": "{{ .UserName }} "
         },
         {
-          "type": "os",
-          "style": "diamond",
-          "foreground": "#1793d1",
-          "background": "#333333",
-          "leading_diamond": "\ue0b6",
-          "template": "{{ .Icon }} "
-        },
-        {
-          "type": "root",
-          "style": "diamond",
-          "background": "#ef5350",
-          "foreground": "#FFFB38",
-          "properties": {
-            "root_icon": "\uf292"
-          },
-          "template": "<parentBackground>\ue0b0</> \uf0e7 "
-        },
-        {
           "type": "path",
-          "style": "powerline",
-          "background": "#444444",
-          "foreground": "#E4E4E4",
+          "style": "plain",
+          "foreground": "#81a1c1",
           "powerline_symbol": "\ue0b0",
           "properties": {
             "style": "agnoster_short"
           },
-          "template": " {{ .Path }} "
+          "template": "{{ .Path }} "
         },
         {
           "type": "git",
-          "style": "powerline",
-          "background": "#FFFB38",
-          "background_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#ffeb95{{ end }}",
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#c5e478{{ end }}",
-            "{{ if gt .Ahead 0 }}#C792EA{{ end }}",
-            "{{ if gt .Behind 0 }}#C792EA{{ end }}"
-          ],
-          "foreground": "#011627",
-          "powerline_symbol": "\ue0b0",
+          "style": "plain",
+          "foreground": "#6c6c6c",
+          "background": "transparent",
           "properties": {
             "branch_icon": "\ue725 ",
-            "fetch_status": true,
-            "fetch_upstream_icon": true
+            "branch_ahead_icon": "\u21e1",
+            "branch_behind_icon": "\u21e3",
+            "fetch_status": true
           },
-          "template": " {{ .HEAD }} {{ if .Working.Changed }}{{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#ef5350> \uf046 {{ .Staging.String }}</>{{ end }} "
-        },
-        {
-            "type": "executiontime",
-            "style": "diamond",
-            "template": " \uf252 {{ .FormattedMs }}"
+          "template": "{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{end}}{{ if .Working.Changed }}*{{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046{{ .Staging.String }}{{ end }} "
         }
       ]
     },
     {
-      "type": "prompt",
-      "alignment": "right",
+      "type": "rprompt",
+      "overflow": "hidden",
       "segments": [
         {
           "type": "node",
-          "style": "diamond",
-          "background": "#303030",
+          "style": "plain",
           "foreground": "#3C873A",
-          "leading_diamond": " \ue0b6",
           "properties": {
             "fetch_package_manager": true,
-            "npm_icon": " <#cc3a3a>\ue5fa</> ",
-            "yarn_icon": " <#348cba>\ue6a7</>"
+            "npm_icon": "<#cc3a3a>\ue5fa</>",
+            "yarn_icon": "<#348cba>\ue6a7</>"
           },
-          "template": "\ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}",
-          "trailing_diamond": "\ue0b4"
+          "template": "\ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }}{{ end }}{{ .Full }}"
         },
         {
           "type": "python",
-          "style": "diamond",
-          "background": "#458588",
-          "foreground": "#ebdbb2",
-          "invert_powerline": true,
-          "leading_diamond": " \ue0b6",
-          "template": "\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}<#fabd2f>{{ .Full }}</>{{ end }}",
-          "trailing_diamond": "\ue0b4"
+          "style": "plain",
+          "foreground": "#458588",
+          "template": "\ue235 {{ if .Error }}{{ .Error }}{{ else }}<#fabd2f>{{ .Full }}{{ end }}</>"
+        },
+        {
+          "type": "rust",
+          "style": "plain",
+          "foreground": "#925837",
+          "template": "\ue7a8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        },
+        {
+          "type": "go",
+          "style": "plain",
+          "foreground": "#06aad5",
+          "template": "\ue626 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        },
+        {
+          "type": "lua",
+          "style": "plain",
+          "foreground": "#4375a6",
+          "template": "\ue620 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        },
+        {
+          "type": "zig",
+          "style": "plain",
+          "foreground": "#ffad55",
+          "template": "\ue6a9 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        },
+        {
+            "type": "executiontime",
+            "style": "plain",
+            "template": " \uf252 {{ .FormattedMs }}"
         },
         {
             "type": "status",
-            "style": "diamond",
-            "properties": {
-                "always_enabled": true
-            },
+            "style": "plain",
             "foreground": "#b8bb26",
+            "background": "transparent",
             "foreground_templates": [
                 "{{ if gt .Code 0 }}#fb4934{{ end }}"
             ],
-            "background": "#282828",
-            "trailing_diamond": "\u250b",
+            "properties": {
+                "always_enabled": true
+            },
             "template": " {{ if gt .Code 0 }}\ue20f{{ else }}\uf489{{ end }} "
         }
       ]
