@@ -36,6 +36,7 @@ alias grep='grep --color=auto'
 alias df='df -h'
 alias du='du -h -d 1'
 alias tobash="sudo chsh $USER -s /bin/bash"
+# alias python='python3'
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
