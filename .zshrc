@@ -1,3 +1,6 @@
+# export PATH=/opt/homebrew/bin:$PATH
+export XDG_CONFIG_HOME=$XDG_CONFIG_HOME
+
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
@@ -66,6 +69,10 @@ eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.j
 function runcpp() {
     g++ -o "$1" "$1.cpp"
 }
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
 #   exec startx
