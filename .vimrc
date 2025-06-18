@@ -115,7 +115,7 @@ au BufNewFile,BufRead *.py
   \ textwidth=79
 
 if has('unnamedplus')
-  set clipboard=unnamed,unnamedplus
+  set clipboard+=unnamed,unnamedplus
 endif
 
 if has('macunix')
