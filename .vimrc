@@ -166,7 +166,7 @@ tnoremap <Esc> <C-\><C-n>
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 
-nnoremap <C-/> :terminal<CR>
+nnoremap <silent> <C-/> :terminal<CR>
 nnoremap <C-A-j> :!clear; python %<CR>
 " autocmd FileType python nnoremap <C-A-j> :terminal python %<CR>
 autocmd FileType python nnoremap <silent> <leader>sh :terminal python %<CR>
