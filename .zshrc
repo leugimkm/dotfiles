@@ -1,5 +1,5 @@
 # export PATH=/opt/homebrew/bin:$PATH
-export XDG_CONFIG_HOME=$XDG_CONFIG_HOME
+export XDG_CONFIG_HOME="$HOME/.config"
 
 bindkey -e
 bindkey '^p' history-search-backward
@@ -29,9 +29,9 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 alias ls='lsd --color=always'
 alias ll='lsd -la --color=always'
-alias l='lsd -l'
-alias la='lsd -a'
-alias lt='lsd --tree'
+alias l='lsd -l --color=always'
+alias la='lsd -a --color=always'
+alias lt='lsd --tree --color=always'
 alias grep='grep --color=auto'
 alias df='df -h'
 alias du='du -h -d 1'
@@ -52,7 +52,6 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
 zinit snippet OMZP::git
 zinit snippet OMZP::command-not-found
 
@@ -70,11 +69,12 @@ eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.j
 function runcpp() {
     g++ -o "$1" "$1.cpp"
 }
+#
+# if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+#   exec startx
+# fi
 
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-#   exec startx
-# fi
