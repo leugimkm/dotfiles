@@ -1,17 +1,30 @@
-local set = vim.opt
+local g, o, set = vim.g, vim.o, vim.opt
 
+g.mapleader = " "
+g.maplocalleader = " "
+g.netrw_banner = 0
+g.netrw_liststyle = 3
+g.netrw_winsize = 25
+g.loaded_python3_provider = 0
+g.loaded_ruby_provider = 0
+g.loaded_perl_provider = 0
+g.loaded_node_provider = 0
+
+o.winborder = "rounded"
+
+set.laststatus = 3
 set.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
 set.completeopt = "menu,menuone,noselect"
 set.conceallevel = 0
 set.confirm = true
 set.cmdheight = 0
 set.inccommand = "split"
-
+set.guicursor = "a:blinkwait175-blinkoff150-blinkon175"
 set.mouse = "a"
 set.wildmenu = true
 set.magic = true
 set.lazyredraw = true
-set.signcolumn = 'yes'
+set.signcolumn = "yes"
 set.colorcolumn = "80"
 set.ignorecase = true
 set.smartcase = true
@@ -31,3 +44,7 @@ set.fileencodings = { "utf-8" }
 set.fileformats = { "unix", "dos", "mac" }
 set.list = false
 set.wrap = false
+set.swapfile = false
+set.foldlevel = 99
+set.foldmethod = "expr"
+set.foldexpr = "v:lua.vim.treesitter.foldexpr()"
