@@ -168,7 +168,6 @@ tnoremap <Esc> <C-\><C-n>
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 
-<<<<<<< HEAD
 nnoremap <leader>wt :%s/\s\+$//e<CR>
 nnoremap <C-/> :terminal<CR>
 
@@ -183,12 +182,6 @@ else
   " autocmd FileType python nnoremap <C-A-j> :terminal python %<CR>
   autocmd FileType python nnoremap <silent> <leader>sh :terminal python %<CR>
 endif
-=======
-nnoremap <silent> <C-/> :terminal<CR>
-nnoremap <C-A-j> :!clear; python %<CR>
-" autocmd FileType python nnoremap <C-A-j> :terminal python %<CR>
-autocmd FileType python nnoremap <silent> <leader>sh :terminal python %<CR>
->>>>>>> 051077acb17b6f7b9ec3036f4edff5d9aae15419
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
