@@ -32,3 +32,5 @@ require("lazy").setup({ import = "plugins" }, {
   },
 })
 require("config.zen").setup()
+
+-- vim.cmd[[hi StatusLine guibg=NONE ctermbg=None]]
