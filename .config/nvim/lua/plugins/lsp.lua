@@ -53,18 +53,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.lsp.enable({
-  "astro",
-  "clangd",
-  "html",
-  "jsonls",
-  "lua_ls",
-  "pyright",
-  "ruff",
-  "rust_analyzer",
-  "typescript",
-})
-
+vim.lsp.config.lua_ls = {
+  settings = { Lua = { diagnostics = { globals = { "vim" } } } }
+}
 vim.lsp.config("*", {
   capabilities = capabilities,
 })
@@ -94,6 +85,7 @@ return {
       "yamlls",
       -- Formatters: manual install
       -- "prettier",
+      -- "rust_analyzer"
       -- "stylua",
     },
   },
