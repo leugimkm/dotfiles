@@ -42,7 +42,7 @@ let g:coc_global_extensions = [
 
 " }}}
 
-let mapleader=" "
+let mapleader="\<Space>"
 set nocompatible
 set mouse=a
 syntax on
@@ -99,11 +99,12 @@ let g:gruvbox_italic=1
 let g:gruvbox_transparent_bg=1
 colorscheme gruvbox
 highlight Normal guibg=NONE ctermbg=NONE
+highlight clear SignColumn
 
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* loadview
 
-au BufNewFile,BufRead *.js, *.html, *.css
+au BufNewFile,BufRead *.js, *.jsx, *.tsx, *.ts, *.msj, *.astro, *.html, *.css, *.lua
   \ set tabstop=2
   \ softtabstop=2
   \ shiftwidth=2
@@ -118,10 +119,11 @@ if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif
 
-if has('macunix')
-  vmap <C-x> :!pbcopy<CR>
-  vmap <C-c> :w !pbcopy<CR><CR>
-endif
+let s:platform = {
+\   'osx': has('macunix'),
+\   'linux': has('unix') && !has('macunix') && !has('win32unix'),
+\   'windows': has('win32') || has('win64'),
+\}
 
 " let &listchars="eol:$,tab:\u258f,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
 let &listchars="eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:%,space:\xb7"
@@ -166,10 +168,20 @@ tnoremap <Esc> <C-\><C-n>
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 
+nnoremap <leader>wt :%s/\s\+$//e<CR>
 nnoremap <C-/> :terminal<CR>
-nnoremap <C-A-j> :!clear; python %<CR>
-" autocmd FileType python nnoremap <C-A-j> :terminal python %<CR>
-autocmd FileType python nnoremap <silent> <leader>sh :terminal python %<CR>
+
+if s:platform['osx']
+  vmap <C-x> :!pbcopy<CR>
+  vmap <C-c> :w !pbcopy<CR><CR>
+  nnoremap <C-A-j> :!clear; python3 %<CR>
+  " autocmd FileType python nnoremap <C-A-j> :terminal python3 %<CR>
+  autocmd FileType python nnoremap <silent> <leader>sh :terminal python3 %<CR>
+else
+  nnoremap <C-A-j> :!clear; python %<CR>
+  " autocmd FileType python nnoremap <C-A-j> :terminal python %<CR>
+  autocmd FileType python nnoremap <silent> <leader>sh :terminal python %<CR>
+endif
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -195,6 +207,14 @@ let NERDTreeQuitOnOpen=1
 let NERDTreeShowHidden=1
 let NERDTreeIgnore=['\.pyc$', '__pycache__', '^node_modules$']
 
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -206,10 +226,17 @@ inoremap <silent><expr> <TAB>
   \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
+nmap <leader>cr <Plug>(coc-rename)
+nmap <silent><nowait> [g <Plug>(coc-diagnostic-prev)
+nmap <silent><nowait> ]g <Plug>(coc-diagnostic-next)
 nmap <silent><nowait> gd <Plug>(coc-definition)
 nmap <silent><nowait> gy <Plug>(coc-type-definition)
 nmap <silent><nowait> gi <Plug>(coc-implementation)
-nmap <silent><nowait> gr <Plug>(coc-references)
+nmap <silent><nowait> gr <plug>(coc-references)
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+xmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cf  <Plug>(coc-format-selected)
 
 function! RunPythonFile(split_type)
   let l:file = expand("%:p")
@@ -228,3 +255,24 @@ endfunction
 
 nnoremap <leader>j- :call RunPythonFile('v')<CR>
 nnoremap <leader>j\ :call RunPythonFile('h')<CR>
+
+let g:airline_mode_map = {
+  \ '__'     : '',
+  \ 'c'      : '󰑮',
+  \ 'i'      : '',
+  \ 'ic'     : '',
+  \ 'ix'     : '',
+  \ 'n'      : '',
+  \ 'multi'  : '',
+  \ 'ni'     : '',
+  \ 'no'     : '',
+  \ 'R'      : '',
+  \ 'Rv'     : '',
+  \ 's'      : '',
+  \ 'S'      : '',
+  \ ''     : '',
+  \ 't'      : '',
+  \ 'v'      : '󰸿',
+  \ 'V'      : '󰸽',
+  \ ''     : '󰹀',
+  \ }
