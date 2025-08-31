@@ -3,11 +3,15 @@ return {
     "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
-    opts = {
-      terminal_colors = true,
-      contrast = "hard",
-      dim_inactive = false,
-      transparent_mode = true,
-    }
+    config = function()
+      require("gruvbox").setup({
+        contrast = "hard",
+        transparent_mode = true,
+        overrides = {
+          ColorColumn = { bg = "#1d2021" },
+        },
+      })
+        vim.cmd.colorscheme("gruvbox")
+    end,
   },
 }

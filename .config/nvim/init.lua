@@ -11,33 +11,24 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 25
-vim.o.winborder = "rounded"
-
 require("config.options")
-require("config.autocmds")
-require("lazy").setup({
-  ui = { border = "rounded" },
-  spec = { { import = "plugins" } },
-  rocks = { enabled = false },
-  checker = { enabled = true },
-})
 require("config.keymaps")
-
-vim.cmd("colorscheme gruvbox")
-vim.lsp.enable({
-  "clangd",
-  "html",
-  "jsonls",
-  "lua_ls",
-  "pyright",
-  "rust_analizer",
-  "typescript",
+require("config.autocmds")
+require("lazy").setup({ import = "plugins" }, {
+  rocks = { enabled = false },
+  ui = { border = "rounded" },
+  checker = { enabled = true, notify = false },
+  change_detection = { notify = false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
 })
-local capabilities = require("blink.cmp").get_lsp_capabilities()
-vim.lsp.config("*", {
-  capabilities = capabilities
-})
+require("config.zen").setup()
