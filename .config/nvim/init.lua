@@ -10,7 +10,6 @@ if not vim.uv.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
@@ -32,5 +31,3 @@ require("lazy").setup({ import = "plugins" }, {
   },
 })
 require("config.zen").setup()
-
--- vim.cmd[[hi StatusLine guibg=NONE ctermbg=None]]

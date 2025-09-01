@@ -96,6 +96,11 @@ return {
         },
         use_icons = true,
       })
+      vim.cmd[[hi StatusLine guibg=NONE ctermbg=None]]
+      vim.api.nvim_set_hl(0, "MiniStatusLineFilename", { link = "StatusLine" })
+      for _, mode in ipairs({ "Normal", "Insert", "Visual", "Replace", "Command", "Other" }) do
+        vim.api.nvim_set_hl(0, "MiniStatuslineMode" .. mode, { link = "StatusLine" })
+      end
     end,
   },
 }
