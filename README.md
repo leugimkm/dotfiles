@@ -14,4 +14,4 @@ Minimal dotfiles for:
 - [tmux](https://github.com/tmux/tmux/wiki) - Terminal multiplexer
 - [Rofi](https://davatorium.github.io/rofi/) - Window switcher, application launcher and dmenu replacement
 - [Qutebrowser](https://www.qutebrowser.org/) - Keyboard-focused web browser
-- [Niri](https://github.com/YaLTeR/niri) - 
+- [Niri](https://github.com/YaLTeR/niri) - A scrollable-tiling Wayland compositor
