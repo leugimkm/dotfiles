@@ -1,0 +1,21 @@
+[general]
+import = [ "~/.config/alacritty/themes/solarized_dark_patched.toml" ]
+
+[window]
+opacity = 0.9
+blur = true
+padding = { x = 10, y = 10 }
+dynamic_padding = true
+# decorations = "Full"
+# dimensions = { columns = 120, lines = 40 }
+# position =  { x = 200, y = 100 }
+
+[font]
+size = 11
+normal.family = "SauceCodePro NFM"
+
+# [terminal]
+# shell = { program = "pwsh", args = ["-NoLogo"] }
+
+[colors]
+transparent_background_colors = true
