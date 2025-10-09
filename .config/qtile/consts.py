@@ -86,6 +86,28 @@ THEME = {
         "color13": "#eb00e4",
         "color14": "#00a3b7",
         "color15": "#ababab",
+    },
+    "solarized": {
+        "foreground": "#708183",
+        "background": "#031219",
+        "selection_foreground": "#001e26",
+        "selection_background": "#002731",
+        "color0": "#002731",
+        "color1": "#d01b24",
+        "color2": "#728905",
+        "color3": "#a57705",
+        "color4": "#2075c7",
+        "color5": "#c61b6e",
+        "color6": "#259185",
+        "color7": "#e9e2cb",
+        "color8": "#465a61",
+        "color9": "#bd3612",
+        "color10": "#465a61",
+        "color11": "#52676f",
+        "color12": "#708183",
+        "color13": "#5856b9",
+        "color14": "#81908f",
+        "color15": "#fcf4dc",
     }
 }
 SYMBOLS = {
