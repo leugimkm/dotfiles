@@ -2,23 +2,23 @@
 <interface>
     <object class="GtkMenu" id="menu">
         <child>
-            <object class="GtKMenuItem" id="shutdown">
-                <property name="lable">⏻ Shutdown</property>
+            <object class="GtkMenuItem" id="shutdown">
+                <property name="label">⏻ Shutdown</property>
             </object>
         </child>
         <child>
-            <object class="GtKMenuItem" id="reboot">
-                <property name="lable">⏻ Reboot</property>
+            <object class="GtkMenuItem" id="reboot">
+                <property name="label">⏻ Reboot</property>
             </object>
         </child>
         <child>
-            <object class="GtKMenuItem" id="suspend">
-                <property name="lable">⏻ Suspend</property>
+            <object class="GtkMenuItem" id="suspend">
+                <property name="label">⏻ Suspend</property>
             </object>
         </child>
         <child>
-            <object class="GtKMenuItem" id="hibernate">
-                <property name="lable">⏻ Hibernate</property>
+            <object class="GtkMenuItem" id="hibernate">
+                <property name="label">⏻ Hibernate</property>
             </object>
         </child>
     </object>
