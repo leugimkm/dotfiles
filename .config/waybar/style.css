@@ -37,6 +37,17 @@ window#waybar {
     background-color: #282828;
 }
 
+#custom-power {
+    background-color: #282828;
+    border-radius: 100px;
+    margin: 5px 5px;
+    padding: 1px;
+}
+
+#menu {
+    background-color: #282828;
+}
+
 #clock,
 #battery,
 #cpu,
@@ -49,6 +60,7 @@ window#waybar {
 #wireplumber,
 #custom-media,
 #custom-wallpaper,
+#custom-power,
 #tray,
 #mode,
 #idle_inhibitor,
@@ -72,6 +84,7 @@ window#waybar {
 #wireplumber:hover,
 #custom-media:hover,
 #custom-wallpaper:hover,
+#custom-power:hover,
 #tray:hover,
 #mode:hover,
 #idle_inhibitor:hover,

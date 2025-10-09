@@ -1,21 +1,30 @@
 [general]
 import = [ "~/.config/alacritty/themes/solarized_dark_patched.toml" ]
 
+# [env]
+# TERM = "xterm-256color"
+
 [window]
 opacity = 0.9
 blur = true
 padding = { x = 10, y = 10 }
 dynamic_padding = true
+decorations = "None"
 # decorations = "Full"
 # dimensions = { columns = 120, lines = 40 }
 # position =  { x = 200, y = 100 }
+title = ""
 
 [font]
-size = 11
-normal.family = "SauceCodePro NFM"
+# normal.family = "SauceCodePro NFM"
+normal = { family = "SauceCodePro NFM", style = "Regular" }
+bold = { family = "SauceCodePro NFM", style = "Bold" }
+italic = { family = "SauceCodePro NFM", style = "Italic" }
+size = 12
 
 # [terminal]
 # shell = { program = "pwsh", args = ["-NoLogo"] }
+# shell = { program = "/usr/bin/zsh", args = ["-1"] }
 
 [colors]
 transparent_background_colors = true
