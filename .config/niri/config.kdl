@@ -6,7 +6,6 @@
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
-hotkey-overlay { skip-at-startup; }
 input {
     keyboard {
         xkb {
@@ -70,6 +69,14 @@ input {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
+
+hotkey-overlay { skip-at-startup; }
+
+overview {
+    zoom 0.25
+    backdrop-color "#031219"
+}
+
 /-output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
@@ -343,7 +350,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
