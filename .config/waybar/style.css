@@ -1,6 +1,6 @@
 * {
     border: none;
-    border-radius: 15px;
+    border-radius: 12px;
     color: #ebdbb2;
     font-family: SauceCodePro NFM;
     font-size: 12px;
@@ -14,13 +14,12 @@ window#waybar {
 
 .modules-left,
 .modules-right,
-.moduels-center
-{
+.modules-center {
     background-color: rgba(22, 24, 25, 0.35);
     margin: 8px 16px 0px 16px;
 }
 
-.moduels-center {
+.modules-center {
   padding: 0 16px;
 }
 
@@ -29,7 +28,7 @@ window#waybar {
 }
 
 #workspaces button {
-    padding: 0 5px;
+    padding: 1px 5px;
     background: transparent;
 }
 
@@ -68,7 +67,7 @@ window#waybar {
 #power-profiles-daemon,
 #language,
 #mpd {
-    padding: 0 5px;
+    padding: 0 10px;
     color: #ebdbb2;
 }
 
@@ -92,5 +91,5 @@ window#waybar {
 #power-profiles-daemon:hover,
 #language:hover,
 #mpd:hover {
-    background: rgba(26,27, 38, 0.9);
+    background: rgba(26, 27, 38, 0.9);
 }

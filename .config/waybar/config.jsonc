@@ -2,7 +2,7 @@
     "layer": "top",
     "position": "top",
     "height": 34,
-    "spacing": 4,
+    "spacing": 0,
     "modules-left": [ "niri/workspaces", "custom/media" ],
     "modules-center": [ "niri/window" ],
     "modules-right": [
@@ -36,6 +36,13 @@
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
     },
+    // "niri/workspaces": {
+    //     "format": "{icon}",
+    //     "format-icons": {
+    //         "active": "",
+    //         "default": ""
+    //     }
+    // },
     "niri/language": { "format": "{short}" },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
