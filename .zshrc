@@ -1,4 +1,5 @@
 # export PATH=/opt/homebrew/bin:$PATH
+export PATH=$PATH:$HOME/.local/bin
 export XDG_CONFIG_HOME="$HOME/.config"
 
 bindkey -e
@@ -59,11 +60,10 @@ autoload -U compinit && compinit
 
 zinit cdreplay -q
 
+POSH_THEME="custom"
+
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
-
-export PATH=$PATH:$HOME/.local/bin
-POSH_THEME="custom"
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/themes/$POSH_THEME.omp.json)"
 
 function runcpp() {
