@@ -28,3 +28,6 @@ size = 12
 
 [colors]
 transparent_background_colors = true
+
+[mouse]
+hide_when_typing = true
