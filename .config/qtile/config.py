@@ -161,10 +161,10 @@ extra_widgets = [
 
 squared_widgets = [
     widget.Wallpaper(directory=DIR, label="\u2318", **SW("magenta")),
-    widget.CurrentLayoutIcon(
+    widget.CurrentLayout(
+        mode="both", icon_first=False,
         custom_icon_paths=[ICONS], scale=0.5, **SW("yellow", 50),
     ),
-    widget.CurrentLayout(**SW("yellow")),
     widget.KeyboardLayout(configured_keyboards=["us", "es"], **SW("green")),
     widget.Clock(format="%d/%m/%Y %a \u231b %H:%M %p", **SW("blue")),
     widget.QuickExit(default_text="\u23fb ", **SW("red")),
@@ -174,10 +174,10 @@ angled_widgets = [
     Deco(C("background"), "#00000000"),
     widget.Wallpaper(directory=DIR, label="\u2318", **AW("magenta", True)),
     Deco(C("selection_background"), C("background")),
-    widget.CurrentLayoutIcon(
+    widget.CurrentLayout(
+        mode="both", icon_first=False,
         custom_icon_paths=[ICONS], scale=0.5, **AW("yellow", False, 4),
     ),
-    widget.CurrentLayout(**AW("yellow", False)),
     Deco(C("background"), C("selection_background")),
     widget.KeyboardLayout(configured_keyboards=["us", "es"], **AW("green", True)),
     Deco(C("selection_background"), C("background")),
