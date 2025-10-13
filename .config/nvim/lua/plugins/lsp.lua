@@ -53,16 +53,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-vim.keymap.set("n", "leader<td>", function ()
+vim.keymap.set("n", "<leader>td", function ()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled(), nil)
 end, { desc = "Toggle LSP diagnostics" })
 
-vim.keymap.set("n", "leader<tv>", function ()
+vim.keymap.set("n", "<leader>tv", function ()
   local virtual_lines_state = not vim.diagnostic.config().virtual_lines
   vim.diagnostic.config({ virtual_lines = virtual_lines_state })
 end, { desc = "Toggle diagnostic virtual_lines" })
 
-vim.keymap.set("n", "leader<tt>", function ()
+vim.keymap.set("n", "<leader>tt", function ()
   local virtual_text_state = not vim.diagnostic.config().virtual_text
   vim.diagnostic.config({ virtual_text = virtual_text_state })
 end, { desc = "Toggle diagnostic virtual_text" })
