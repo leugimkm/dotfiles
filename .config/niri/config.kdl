@@ -356,7 +356,8 @@ binds {
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
-    Mod+T { spawn "bash" "-c" "~/scripts/swww_random_wallpaper.sh"; }
+    Mod+T hotkey-overlay-title="Change wallpaper" { spawn "bash" "-c" "~/scripts/swww_random_wallpaper.sh"; }
+    Mod+B hotkey-overlay-title="Toggle waybar" { spawn "sh" "-c" ""killall -s SIGUSR1 waybar; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
