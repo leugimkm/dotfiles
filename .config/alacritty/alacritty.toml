@@ -11,7 +11,7 @@ padding = { x = 10, y = 10 }
 dynamic_padding = true
 decorations = "None"
 # decorations = "Full"
-# dimensions = { columns = 120, lines = 40 }
+# dimensions = { columns = 134, lines = 30 }
 # position =  { x = 200, y = 100 }
 title = ""
 
@@ -20,6 +20,7 @@ title = ""
 normal = { family = "SauceCodePro NFM", style = "Regular" }
 bold = { family = "SauceCodePro NFM", style = "Bold" }
 italic = { family = "SauceCodePro NFM", style = "Italic" }
+bold_italic = { family = "SauceCodePro NFM", style = "Bold Italic" }
 size = 12
 
 # [terminal]
