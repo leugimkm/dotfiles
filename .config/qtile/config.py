@@ -75,7 +75,6 @@ keys = [
     Key(("M-C-l"), lazy.layout.grow_right()),
     Key(("M-C-j"), lazy.layout.grow_down()),
     Key(("M-C-k"), lazy.layout.grow_up()),
-    Key(("M-n"), lazy.layout.normalize()),
     Key(("M-S-<Return>"), lazy.layout.toggle_split()),
     Key(("M-<Return>"), lazy.spawn(TERMINAL)),
     Key(("M-<Tab>"), lazy.next_layout()),
