@@ -58,29 +58,31 @@ keys = [
     Key(("C-S-l"), lazy.layout.right()),
     Key(("C-S-j"), lazy.layout.down()),
     Key(("C-S-k"), lazy.layout.up()),
-    Key(("M-j"), lazy.group.next_window(), lazy.window.bring_to_front()),
-    Key(("M-k"), lazy.group.prev_window(), lazy.window.bring_to_front()),
-    Key(("M-<space>"), lazy.widget["keyboardlayout"].next_keyboard()),
+    Key(("M-S-h"), lazy.layout.swap_left(), lazy.layout.shuffle_left().when(layout="columns")),
+    Key(("M-S-l"), lazy.layout.swap_right(), lazy.layout.shuffle_right().when(layout="columns")),
+    Key(("M-S-j"), lazy.layout.shuffle_down()),
+    Key(("M-S-k"), lazy.layout.shuffle_up()),
     Key(("M-i"), lazy.layout.grow()),
     Key(("M-m"), lazy.layout.shrink()),
     Key(("M-n"), lazy.layout.reset()),
     Key(("M-o"), lazy.layout.maximize()),
     Key(("M-S-n"), lazy.layout.normalize()),
     Key(("M-S-<space>"), lazy.layout.flip()),
-    Key(("M-S-h"), lazy.layout.swap_left()),
-    Key(("M-S-l"), lazy.layout.swap_right()),
-    Key(("M-S-j"), lazy.layout.shuffle_down()),
-    Key(("M-S-k"), lazy.layout.shuffle_up()),
-    Key(("M-C-h"), lazy.layout.grow_left()),
-    Key(("M-C-l"), lazy.layout.grow_right()),
-    Key(("M-C-j"), lazy.layout.grow_down()),
-    Key(("M-C-k"), lazy.layout.grow_up()),
+    Key(("M-C-h"), lazy.layout.grow_left().when(layout="columns")),
+    Key(("M-C-l"), lazy.layout.grow_right().when(layout="columns")),
+    Key(("M-C-j"), lazy.layout.grow_down().when(layout="columns")),
+    Key(("M-C-k"), lazy.layout.grow_up().when(layout="columns")),
+    Key(("M-C-S-h"), lazy.layout.swap_column_left().when(layout="columns")),
+    Key(("M-C-S-l"), lazy.layout.swap_column_right().when(layout="columns")),
     Key(("M-S-<Return>"), lazy.layout.toggle_split()),
+    Key(("M-j"), lazy.group.next_window(), lazy.window.bring_to_front()),
+    Key(("M-k"), lazy.group.prev_window(), lazy.window.bring_to_front()),
+    Key(("M-<space>"), lazy.widget["keyboardlayout"].next_keyboard()),
     Key(("M-<Return>"), lazy.spawn(TERMINAL)),
     Key(("M-<Tab>"), lazy.next_layout()),
+    Key(("M-b"), lazy.hide_show_bar()),
     Key(("M-w"), lazy.window.kill()),
     Key(("M-f"), lazy.window.toggle_fullscreen(), lazy.hide_show_bar()),
-    Key(("M-b"), lazy.hide_show_bar()),
     Key(("M-t"), lazy.window.toggle_floating()),
     Key(("M-C-r"), lazy.reload_config()),
     Key(("M-C-q"), lazy.shutdown()),
@@ -97,11 +99,11 @@ keys = [
 groups = [
     Group(f"{i}", label=label, layout=layout)
     for i, (label, layout) in enumerate([
-        (S["1"], "monadtall"),
-        (S["2"], "monadthreecol"),
+        (S["1"], "columns"),
+        (S["2"], "monadtall"),
         (S["3"], "monadwide"),
-        (S["4"], "plasma"),
-        (S["5"], "max"),
+        (S["4"], "max"),
+        (S["5"], "center"),
     ], 1)
 ]
 
@@ -123,7 +125,7 @@ mouse = [
     Click("M-2", lazy.window.bring_to_front()),
 ]
 
-layout_theme = {
+layout_defaults = {
     "border_width": 0,
     "margin": 8,
     "border_normal": C("background"),
@@ -131,12 +133,11 @@ layout_theme = {
 }
 
 layouts = [
-    layout.MonadTall(**layout_theme),
-    layout.MonadThreeCol(**layout_theme),
-    layout.MonadWide(**layout_theme),
-    layout.Plasma(**layout_theme),
-    Center(**layout_theme),
-    layout.Max(**layout_theme),
+    layout.Columns(**layout_defaults),
+    layout.MonadTall(**layout_defaults),
+    layout.MonadWide(**layout_defaults),
+    layout.Max(**layout_defaults),
+    Center(**layout_defaults),
 ]
 
 widget_defaults = dict(font="SauceCodePro NF", fontsize=12, padding=0)
@@ -246,7 +247,7 @@ bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
-    **layout_theme,
+    **layout_defaults,
     float_rules=[
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),
