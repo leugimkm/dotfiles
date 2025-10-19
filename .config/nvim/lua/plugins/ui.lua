@@ -1,23 +1,3 @@
--- _G.zen_mode = false
--- vim.keymap.set("n", "<leader>tz", function()
---   _G.zen_mode = not _G.zen_mode
---   if _G.zen_mode then
---     vim.opt.laststatus = 0
---     vim.opt.number = false
---     vim.opt.relativenumber = false
---     vim.opt.colorcolumn = ""
---     vim.diagnostic.enable(false, nil)
---     vim.cmd("TwilightEnable")
---   else
---     vim.opt.laststatus = 3
---     vim.opt.number = true
---     vim.opt.relativenumber = true
---     vim.opt.colorcolumn = "80"
---     vim.diagnostic.enable(true, nil)
---     vim.cmd("TwilightDisable")
---   end
--- end, { noremap = true, silent = true, desc = "Toggle Zen UI" })
-
 return {
   {
     "folke/twilight.nvim",
