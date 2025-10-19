@@ -1,3 +1,4 @@
+-- just a comment
 return {
   {
     "folke/twilight.nvim",
