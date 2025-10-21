@@ -18,7 +18,7 @@ ALIASES = {
     "white": "color7",
     "bright white": "color15",
     "black": "color0",
-    "bright black": "color8"
+    "bright black": "color8",
 }
 THEME = {
     "gruvbox": {
@@ -96,7 +96,7 @@ THEME = {
         "color1": "#d01b24",
         "color2": "#728905",
         "color3": "#a57705",
-        "color4": "#2075c7",
+        "color4": "#3123ff",
         "color5": "#c61b6e",
         "color6": "#259185",
         "color7": "#e9e2cb",
@@ -108,23 +108,25 @@ THEME = {
         "color13": "#5856b9",
         "color14": "#81908f",
         "color15": "#fcf4dc",
-    }
+    },
 }
 SYMBOLS = {
-    "0": '\U000f0f0e',
-    "1": '\U000f0f0f',
-    "2": '\U000f0f10',
-    "3": '\U000f0f11',
-    "4": '\U000f0f12',
-    "5": '\U000f0f13',
-    "6": '\U000f0f14',
-    "7": '\U000f0f15',
-    "8": '\U000f0f16',
-    "9": '\U000f0f17',
+    "0": "\U000f0f0e",
+    "1": "\U000f0f0f",
+    "2": "\U000f0f10",
+    "3": "\U000f0f11",
+    "4": "\U000f0f12",
+    "5": "\U000f0f13",
+    "6": "\U000f0f14",
+    "7": "\U000f0f15",
+    "8": "\U000f0f16",
+    "9": "\U000f0f17",
+    "active": "\uf192",
+    "inactive": "\uf111",
 }
 PLE = {
     "flame": {"L": "\ue0c2", "R": "\ue0c0"},
-    "half_circle": {"L": "\ue0b6", "R": "\ue0c5"},
+    "half_circle": {"L": "\ue0b6", "R": "\ue0b4"},
     "half_black_circle": {"L": "\u25d6", "R": "\u25d7"},
     "hard_divider_inverse": {"L": "\ue0d7", "R": "\ue0d6"},
     "triangle": {
@@ -132,7 +134,7 @@ PLE = {
         "upper": {"L": "\ue0bc", "R": "\ue0be"},
     },
     "pixelated_squares": {
-        "big" : {"L": "\ue0c7", "R": "\ue0c6"},
+        "big": {"L": "\ue0c7", "R": "\ue0c6"},
         "small": {"L": "\ue0c5", "R": "\ue0c4"},
     },
     "pointing_triangle": {
@@ -144,4 +146,3 @@ PLE = {
         "upper": {"L": "\u25e4", "R": "\u25e5"},
     },
 }
-

@@ -1,13 +1,29 @@
+from pathlib import Path
+
 from libqtile import bar
+from libqtile.command.base import expose_command
 from libqtile.layout.base import _SimpleLayoutBase
 from libqtile.widget.base import _TextBox
-from libqtile.command.base import expose_command
+from libqtile.utils import guess_terminal
 
-from consts import ALIASES, PLE
+from consts import ALIASES, PLE, THEME
+
+HOME = Path.home()
+WALLPAPERS = HOME.joinpath("pictures", "wallpapers")
+ICONS = HOME.joinpath("pictures", "icons")
+LOGO = HOME.joinpath("pictures", "logos", "logo_custom.png")
+COLORSCHEME = "gruvbox"
+MINIMAL = True
+style = {
+    "extra": False,
+    "minimal": True,
+    "circle": False,
+    "squared": False,
+}
+terminal = guess_terminal()
 
 
 class ColorTheme:
-
     def __init__(self, theme):
         self.theme = theme
 
@@ -19,7 +35,7 @@ class ColorTheme:
     def _resolve_key(self, value):
         value_ = value.strip().lower()
         if value_.isdigit():
-            return "color" + value_
+            return f"color{value_}"
         if value_.startswith("color") and value_[5:].isdigit():
             return value_
         if value_ in ALIASES:
@@ -36,7 +52,6 @@ class ColorTheme:
 
 
 class Deco(_TextBox):
-
     defaults = [
         ("fontsize", None, "Font pixel size. Calculated if None."),
         ("fontshadow", None, "font shadow color, default is None (no shadow)."),
@@ -51,18 +66,26 @@ class Deco(_TextBox):
         style="triangle",
         side="L",
         width=bar.CALCULATED,
-        **config
+        fontsize=24,
+        **config,
     ):
         _t = {}
         if style == "triangle":
             T = PLE["triangle"]
             _t = {"L": T["lower"]["R"], "R": T["upper"]["L"]}
+        elif style == "circle":
+            T = PLE["half_circle"]
+            _t = {"L": T["R"], "R": T["L"]}
         elif style == "divider":
             T = PLE["hard_divider_inverse"]
             _t = {"L": T["R"], "R": T["L"]}
-        _TextBox.__init__(
-            self, text=_t[side], foreground=foreground, background=background,
-            width=width, fontsize=24 , **config,
+        super().__init__(
+            text=f"{_t[side]}",
+            foreground=foreground,
+            background=background,
+            width=width,
+            fontsize=fontsize,
+            **config,
         )
 
     @expose_command
@@ -71,11 +94,10 @@ class Deco(_TextBox):
 
     @expose_command
     def update(self, text):
-        _TextBox.update(self, text)
+        super().update(self, text)
 
 
 class Center(_SimpleLayoutBase):
-
     defaults = [
         ("margin", 0, "Margin of the layout (int or list of ints [N E S W])"),
         ("border_focus", "#0000ff", "Border color(s) for the W when F"),
@@ -88,7 +110,7 @@ class Center(_SimpleLayoutBase):
     ]
 
     def __init__(self, **config):
-        _SimpleLayoutBase.__init__(self, **config)
+        super().__init__(**config)
         self.add_defaults(Center.defaults)
 
     def add_client(self, client):
@@ -122,14 +144,14 @@ class Center(_SimpleLayoutBase):
 
     @expose_command("previous")
     def up(self):
-        _SimpleLayoutBase.previous(self)
+        super().previous()
 
     @expose_command("next")
     def down(self):
-        _SimpleLayoutBase.next(self)
+        super().next()
 
     @expose_command
-    def resize(self, resize_by = (0, 0)):
+    def resize(self, resize_by=(0, 0)):
         self.width = self.width + resize_by[0]
         self.height = self.height + resize_by[1]
         self.group.layout_all()
@@ -149,3 +171,23 @@ class Center(_SimpleLayoutBase):
     @expose_command(["shrink_up", "shrink_down"])
     def shrink_v(self):
         self.resize((0, -self.grow_amount))
+
+
+C = ColorTheme(THEME[COLORSCHEME])
+
+
+def AW(color, bg=True, pad=0):
+    bg_color = "background" if bg else "selection_background"
+    return {
+        "foreground": C(f"bright {color}"),
+        "background": C(bg_color),
+        "padding": pad,
+    }
+
+
+def SW(color, shade=35, pad=8):
+    return {
+        "foreground": C(f"bright {color}"),
+        "background": C(color, shade),
+        "padding": pad,
+    }
