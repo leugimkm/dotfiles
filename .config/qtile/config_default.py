@@ -65,7 +65,6 @@ keys.append(
     ]], name="M-p")
 )
 
-
 groups = [ Group(f"{i}", label=label, layout=layout) for i, (label, layout) in
     enumerate([
         [S[f"{i}"] if not MINIMAL else [S["inactive"]], layout]
@@ -176,7 +175,6 @@ r_angled = [
 minimal = minimal_circle if style["circle"] else minimal_angled
 widgets = minimal if style["minimal"] else default
 widgets += base
-
 if style["extra"]:
     widgets[:0] = extra
 if style["squared"]:
