@@ -66,7 +66,6 @@ r_angled = [
 minimal = minimal_circle if style["circle"] else minimal_angled
 widgets = minimal if style["minimal"] else default
 widgets += base
-
 if style["extra"]:
     widgets[:0] = extra
 if style["squared"]:
