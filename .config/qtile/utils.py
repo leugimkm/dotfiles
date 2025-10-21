@@ -1,36 +1,44 @@
-from pathlib import Path
-
-from libqtile import bar
+from libqtile import bar, widget
 from libqtile.command.base import expose_command
 from libqtile.layout.base import _SimpleLayoutBase
-from libqtile.widget.base import _TextBox
-from libqtile.utils import guess_terminal
 
 from consts import ALIASES, PLE, THEME
+from settings import C
 
-HOME = Path.home()
-WALLPAPERS = HOME.joinpath("pictures", "wallpapers")
-ICONS = HOME.joinpath("pictures", "icons")
-LOGO = HOME.joinpath("pictures", "logos", "logo_custom.png")
-COLORSCHEME = "gruvbox"
-MINIMAL = True
-style = {
-    "extra": False,
-    "minimal": True,
-    "circle": False,
-    "squared": False,
-}
-terminal = guess_terminal()
+
+def alpha_to_hex(alpha):
+    if not (0 <= alpha <= 100):
+        return "ff"
+    return f"{round(alpha * 255 / 100):02X}"
+
+
+def resolve(value, alpha=100):
+    if not value or value == "transparent":
+        return "#00000000"
+    if isinstance(value, str) and value.startswith("#"):
+        base = value[1:]
+        return f"#{base}{alpha_to_hex(alpha)}"
+    return C(value, alpha)
+
+
+def wconf(color, *, style="A", bg=True, pad=-1, shade=35):
+    """style(str): Can be "A"(Angled) or "S"(Squared)."""
+    bg_ = None
+    if style == "A":
+        bg_ = resolve("background" if bg else "selection_background")
+    elif style == "S":
+        pad = 8
+        bg_ = resolve(color, shade)
+    return {
+        "foreground": resolve(f"bright {color}"),
+        "background": bg_,
+        "padding": pad,
+    }
 
 
 class ColorTheme:
-    def __init__(self, theme):
-        self.theme = theme
-
-    def _alpha_to_hex(self, alpha):
-        if not (0 <= alpha <= 100):
-            return "ff"
-        return f"{round(alpha * 255 / 100):02X}"
+    def __init__(self, colorscheme):
+        self.theme = THEME[colorscheme]
 
     def _resolve_key(self, value):
         value_ = value.strip().lower()
@@ -44,57 +52,47 @@ class ColorTheme:
 
     def __call__(self, value, alpha=100):
         key_ = self._resolve_key(value)
-        base_color = self.theme[key_]
+        base_color = self.theme.get(key_, "#00000000")
         if base_color.startswith("#"):
             base_color = base_color[1:]
-        alpha_hex = self._alpha_to_hex(alpha)
-        return f"#{base_color}{alpha_hex}"
+        return f"#{base_color}{alpha_to_hex(alpha)}"
 
 
-class Deco(_TextBox):
-    defaults = [
-        ("fontsize", None, "Font pixel size. Calculated if None."),
-        ("fontshadow", None, "font shadow color, default is None (no shadow)."),
-        ("padding", None, "Padding left and right. Calculated if None."),
-        ("foreground", "#ffffff", "Foreground color."),
-    ]
-
-    def __init__(
-        self,
-        foreground,
-        background,
-        style="triangle",
-        side="L",
-        width=bar.CALCULATED,
-        fontsize=24,
-        **config,
-    ):
-        _t = {}
-        if style == "triangle":
-            T = PLE["triangle"]
-            _t = {"L": T["lower"]["R"], "R": T["upper"]["L"]}
-        elif style == "circle":
-            T = PLE["half_circle"]
-            _t = {"L": T["R"], "R": T["L"]}
-        elif style == "divider":
-            T = PLE["hard_divider_inverse"]
-            _t = {"L": T["R"], "R": T["L"]}
-        super().__init__(
-            text=f"{_t[side]}",
-            foreground=foreground,
-            background=background,
-            width=width,
-            fontsize=fontsize,
+def deco(
+    fg,
+    bg=None,
+    style="triangle",
+    side="L",
+    width=bar.CALCULATED,
+    fontsize=24,
+    fg_alpha=100,
+    bg_alpha=100,
+    **config,
+):
+    glyph = {
+        "triangle": {
+            "L": PLE["triangle"]["lower"]["R"],
+            "R": PLE["triangle"]["upper"]["L"],
+        },
+        "circle": {
+            "L": PLE["half_circle"]["R"],
+            "R": PLE["half_circle"]["L"],
+        },
+        "divider": {
+            "L": PLE["hard_divider_inverse"]["R"],
+            "R": PLE["hard_divider_inverse"]["L"],
+        },
+    }
+    return widget.TextBox(
+        **{
+            "text": f"{glyph[style][side]}",
+            "foreground": resolve(fg, fg_alpha),
+            "background": resolve(bg, bg_alpha),
+            "width": width,
+            "fontsize": fontsize,
             **config,
-        )
-
-    @expose_command
-    def get(self):
-        return self.text
-
-    @expose_command
-    def update(self, text):
-        super().update(self, text)
+        }
+    )
 
 
 class Center(_SimpleLayoutBase):
@@ -171,23 +169,3 @@ class Center(_SimpleLayoutBase):
     @expose_command(["shrink_up", "shrink_down"])
     def shrink_v(self):
         self.resize((0, -self.grow_amount))
-
-
-C = ColorTheme(THEME[COLORSCHEME])
-
-
-def AW(color, bg=True, pad=0):
-    bg_color = "background" if bg else "selection_background"
-    return {
-        "foreground": C(f"bright {color}"),
-        "background": C(bg_color),
-        "padding": pad,
-    }
-
-
-def SW(color, shade=35, pad=8):
-    return {
-        "foreground": C(f"bright {color}"),
-        "background": C(color, shade),
-        "padding": pad,
-    }

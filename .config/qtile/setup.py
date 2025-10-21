@@ -6,7 +6,7 @@ from libqtile.config import (
 from libqtile.lazy import lazy
 
 from consts import SYMBOLS as S
-from utils import MINIMAL, terminal
+from settings import MINIMAL, terminal
 
 
 @hook.subscribe.setgroup

@@ -20,6 +20,7 @@ ALIASES = {
     "black": "color0",
     "bright black": "color8",
 }
+
 THEME = {
     "gruvbox": {
         "background": "#282828",
@@ -89,7 +90,7 @@ THEME = {
     },
     "solarized": {
         "foreground": "#708183",
-        "background": "#031219",
+        "background": "#031219",  # 001e26
         "selection_foreground": "#001e26",
         "selection_background": "#002731",
         "color0": "#002731",
@@ -110,6 +111,7 @@ THEME = {
         "color15": "#fcf4dc",
     },
 }
+
 SYMBOLS = {
     "0": "\U000f0f0e",
     "1": "\U000f0f0f",
@@ -124,6 +126,7 @@ SYMBOLS = {
     "active": "\uf192",
     "inactive": "\uf111",
 }
+
 PLE = {
     "flame": {"L": "\ue0c2", "R": "\ue0c0"},
     "half_circle": {"L": "\ue0b6", "R": "\ue0b4"},

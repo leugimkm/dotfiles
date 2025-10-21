@@ -81,7 +81,7 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(prompt="> "),
                 widget.WindowName(),
-                widget.Chord(name_transform=lambda name: name.upper()),
+                widget.Chord(),
                 widget.CurrentLayout(mode="icon", scale=0.5),
                 widget.KeyboardLayout(configured_keyboards=["us", "es"]),
                 widget.WidgetBox(widgets=[
