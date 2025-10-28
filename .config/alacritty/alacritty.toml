@@ -12,7 +12,7 @@ dynamic_padding = true
 decorations = "None"
 # decorations = "Full"
 # dimensions = { columns = 134, lines = 30 }
-# position =  { x = 200, y = 100 }
+# position =  { x = 360, y = 200 }
 title = ""
 
 [font]
