@@ -1,10 +1,61 @@
 from libqtile import widget
 
-from settings import defaults, style
-from utils import wconf, deco
+from settings import style
+from utils import C, deco, wconf
 
 widget_defaults = dict(font="SauceCodePro NF", fontsize=12, padding=0)
 extension_defaults = widget_defaults.copy()
+
+defaults = {
+    "image": {
+        "filename": "~/Pictures/logos/logo_custom.png",
+        "scale": False,
+        "margin": 4,
+        "background": "#00000000",
+    },
+    "textbox": {
+        "text": "ayudaenpython.com",
+        "foreground": C("foreground"),
+        "background": C("selection_background"),
+    },
+    "prompt": {
+        "prompt": "> ",
+        "padding": 4,
+        "foreground": C("selection_foreground"),
+        "background": "#00000000",
+    },
+    "window": {
+        "format": "{name}",
+        "padding": 4,
+        "foreground": C("foreground"),
+        "background": "#00000000",
+    },
+    "groupbox": {
+        "highlight_method": "line",
+        "highlight_color": ["00000000", "00000000"],
+        "block_highlight_text_color": C("yellow"),
+        "active": C("selection_foreground"),
+        "inactive": C("selection_background"),
+        "background": C("background"),
+        "this_current_screen_border": C("bright yellow"),
+    },
+    "wallpaper": {
+        "directory": "~/Pictures/wallpapers/",
+        "label": "\u2318",
+    },
+    "layout": {
+        "mode": "both",
+        "icon_first": False,
+        "custom_icon_paths": ["~/Pictures/icons/"],
+        "scale": 0.5,
+    },
+    "keyboard": {"configured_keyboards": ["us", "es"]},
+    "clock": {"format": "%d/%m/%Y %a \u231b %H:%M %p"},
+    "exit": {
+        "default_text": "\u23fb ",
+        "countdown_format": "[{}]",
+    },
+}
 
 extra = [
     widget.Image(**defaults["image"]),

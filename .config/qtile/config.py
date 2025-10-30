@@ -2,7 +2,7 @@ from libqtile import bar
 from libqtile.config import Screen
 
 from setup import keys, mouse, groups, layouts, floating_layout
-from widgets import widgets,widget_defaults, extension_defaults
+from widgets import widgets, widget_defaults, extension_defaults
 
 screens = [
     Screen(

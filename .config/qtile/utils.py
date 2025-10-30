@@ -3,7 +3,7 @@ from libqtile.command.base import expose_command
 from libqtile.layout.base import _SimpleLayoutBase
 
 from consts import ALIASES, PLE, THEME
-from settings import C
+from settings import COLORSCHEME
 
 
 def alpha_to_hex(alpha):
@@ -56,6 +56,9 @@ class ColorTheme:
         if base_color.startswith("#"):
             base_color = base_color[1:]
         return f"#{base_color}{alpha_to_hex(alpha)}"
+
+
+C = ColorTheme(COLORSCHEME)
 
 
 def deco(
