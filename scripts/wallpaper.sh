@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="$HOME/pictures/wallpapers"
+DIR="$HOME/Pictures/wallpapers"
 FILES=$(ls "$DIR")
 SELECTED=$(echo "$FILES" | fzf --height=~50% --border=double)
 
