@@ -1,0 +1,33 @@
+[global]
+    frame_width = 1
+    follow = keyboard
+    width = (250, 500)
+    height = (0, 750)
+    offset = (16, 54)
+    padding = 5
+    horizontal_padding = 5
+    gap_size = 5
+    frame_color="#2d303c"
+    format = "<b>%s</b>\n%b"
+    foreground = "#cdd1dc"
+    transparency = 15
+    background = "#1e1e2ef0"
+    corners = all
+    corner_radius = 12
+    min_icon_size = 32
+    max_icon_size = 32
+
+[urgency_low]
+    foreground = "#a6e3a1"
+    frame_color = "#a6e3a1"
+    timeout = 5
+
+[urgency_normal]
+    foreground = "#74c7ec"
+    frame_color = "#74c7ec"
+    timeout = 10
+
+[urgency_critical]
+    foreground = "#f38ba8"
+    frame_color = "#f38ba8"
+    timeout = 15
