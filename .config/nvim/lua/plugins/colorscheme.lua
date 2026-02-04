@@ -6,6 +6,9 @@ return {
     config = function()
       require("gruvbox").setup({
         contrast = "hard",
+        italic = {
+          strings = false,
+        },
         transparent_mode = true,
         overrides = {
           ColorColumn = { bg = "#1d2021" },
