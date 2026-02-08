@@ -5,6 +5,15 @@ PS1='[\u@\h \W]\$ '
 
 set -o vi
 
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+export PATH=$PATH:$HOME/.local/bin
+# export PATH=/opt/homebrew/bin:$PATH
+export EDITOR="$(which nvim)"
+export VISUAL="$EDITOR"
+
 alias ls='lsd --color=auto'
 alias ll='lsd -la --color=auto'
 alias l='ls -l'
