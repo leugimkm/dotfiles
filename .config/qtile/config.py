@@ -10,8 +10,9 @@ from libqtile.utils import guess_terminal
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
-    subprocess.Popen([home])
+    script = os.path.expanduser("~/.config/qtile/autostart.sh")
+    if os.path.isfile(script):
+        subprocess.Popen(["sh", script])
 
 
 mod = "mod4"
@@ -52,15 +53,13 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
     Key(["control", "shift"], "space", lazy.layout.next()),
-]
-keys.append(
     KeyChord([mod], "p", [
         Key([], "f", lazy.spawn("firefox")),
         Key([], "q", lazy.spawn("qutebrowser")),
         Key([], "r", lazy.spawn("rofi -show drun")),
         Key([], "t", lazy.group["scratchpad"].dropdown_toggle("term")),
     ], name="M-p")
-)
+]
 
 groups = [Group(i) for i in "12345"]
 for i in groups:
