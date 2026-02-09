@@ -77,10 +77,19 @@ return {
         },
         use_icons = true,
       })
-      vim.cmd[[hi StatusLine guibg=NONE ctermbg=None]]
+      local color = { low = "#3c3826", high = "#fabd2f" }
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE", ctermbg = "NONE" })
       vim.api.nvim_set_hl(0, "MiniStatusLineFilename", { link = "StatusLine" })
       for _, mode in ipairs({ "Normal", "Insert", "Visual", "Replace", "Command", "Other" }) do
         vim.api.nvim_set_hl(0, "MiniStatuslineMode" .. mode, { link = "StatusLine" })
+        vim.api.nvim_set_hl(0, "MiniStatuslineMode" .. mode, { fg = color.low })
+      end
+      for _, group in ipairs({ "LineNr", "LineNrAbove", "LineNrBelow" }) do
+        vim.api.nvim_set_hl(0, group, { fg = color.low })
+      end
+      -- vim.api.nvim_set_hl(0, "LineNr", { fg = color.high })
+      for _, section in ipairs({ "Filename", "Fileinfo", "Devinfo" }) do
+        vim.api.nvim_set_hl(0, "MiniStatusLine" .. section, { fg = color.low })
       end
     end,
   },
