@@ -1,12 +1,12 @@
 local runners = {
   c = "gcc % -o %:r && ./%:r",
   cpp = "g++ % -o %:r && ./%:r",
-  go = "go run",
-  javascript = "node",
-  lua = "lua",
-  python = "python3",
-  ruby = "ruby",
-  sh = "sh",
+  go = "go run %",
+  javascript = "node %",
+  lua = "lua %",
+  python = "python3 %",
+  ruby = "ruby %",
+  sh = "sh %",
 }
 
 local function augroup(name)
@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup("highlight_yank"),
   desc = "Highlight on yank",
   callback = function()
-    (vim.hl or vim.highlighht).on_yank()
+    (vim.hl or vim.highlight).on_yank()
   end,
 })
 
@@ -71,8 +71,8 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("run_code"),
   pattern = "*",
   callback = function()
-    local current_filetype = vim.bo.filetype
-    local command = runners[current_filetype]
+    local ft = vim.bo.filetype
+    local command = runners[ft]
     pcall(vim.api.nvim_buf_del_keymap, 0, "n", "<C-A-j>")
     if command then
       vim.api.nvim_buf_set_keymap(
@@ -82,6 +82,61 @@ vim.api.nvim_create_autocmd("FileType", {
         ":w<CR>:split term://" .. command .. " %<CR>:resize 10<CR>",
         { noremap = true, silent = true, desc = "Execute file" }
       )
+    end
+  end,
+})
+
+local indent2 = { tabstop = 2, shiftwidth = 2, softtabstop = 2 }
+local indent4 = { tabstop = 4, shiftwidth = 4, softtabstop = 4 }
+local definitions = {
+  { ft = { "astro", "html", "css", "javascript", "typescript" }, opts = indent2 },
+  {
+    ft = { "lua" },
+    opts = indent2,
+    keys = { {
+      "n",
+      "<leader>rf",
+      function()
+        vim.cmd("luafile %")
+      end,
+      { desc = "Run Lua file" },
+    } },
+  },
+  { ft = { "python", "go", "rust" }, opts = indent4 },
+  { ft = { "markdown" }, opts = { textwidth = 80 } },
+}
+
+local filetypes = {}
+for _, def in ipairs(definitions) do
+  for _, ft in ipairs(def.ft) do
+    filetypes[ft] = def
+  end
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("user_filetypes"),
+  callback = function(ev)
+    local cfg = filetypes[ev.match]
+    if not cfg then
+      return
+    end
+    if cfg.opts then
+      for opt, val in pairs(cfg.opts) do
+        vim.opt_local[opt] = val
+      end
+    end
+    if cfg.keys then
+      for _, key in ipairs(cfg.keys) do
+        local mode = key[1]
+        local lhs = key[2]
+        local rhs = key[3]
+        local opts = key[4] or {}
+        opts.buffer = ev.buf
+        vim.keymap.set(mode, lhs, rhs, opts)
+      end
+    end
+    if cfg.on_attach then
+      cfg.on_attach(ev)
     end
   end,
 })
