@@ -89,21 +89,23 @@ vim.api.nvim_create_autocmd("FileType", {
 local indent2 = { tabstop = 2, shiftwidth = 2, softtabstop = 2 }
 local indent4 = { tabstop = 4, shiftwidth = 4, softtabstop = 4 }
 local definitions = {
-  { ft = { "astro", "html", "css", "javascript", "typescript" }, opts = indent2 },
+  { ft = { "astro", "html", "css", "javascript", "typescript", "md", "mdx" }, opts = indent2 },
+  { ft = { "markdown" }, opts = { textwidth = 80 } },
+  { ft = { "python", "go", "rust" }, opts = indent4 },
   {
     ft = { "lua" },
     opts = indent2,
-    keys = { {
-      "n",
-      "<leader>rf",
-      function()
-        vim.cmd("luafile %")
-      end,
-      { desc = "Run Lua file" },
-    } },
+    keys = {
+      {
+        "n",
+        "<leader>rf",
+        function()
+          vim.cmd("luafile %")
+        end,
+        { desc = "Run Lua file" },
+      },
+    },
   },
-  { ft = { "python", "go", "rust" }, opts = indent4 },
-  { ft = { "markdown" }, opts = { textwidth = 80 } },
 }
 
 local filetypes = {}
