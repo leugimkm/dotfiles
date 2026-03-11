@@ -14,7 +14,7 @@ return {
           ColorColumn = { bg = "#1d2021" },
         },
       })
-        vim.cmd.colorscheme("gruvbox")
+      vim.cmd.colorscheme("gruvbox")
     end,
   },
 }
