@@ -22,10 +22,11 @@ return {
     dependencies = "rafamadriz/friendly-snippets",
     version = "1.*",
     opts = {
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+      signature = { enabled = true },
+      sources = { default = { "lsp", "buffer", "snippets", "path", "omni" } },
       keymap = { preset = "default" },
-      appearance = {
-        nerd_font_variant = "mono",
-      },
+      appearance = { nerd_font_variant = "mono" },
       completion = {
         menu = {
           border = "rounded",
@@ -46,11 +47,6 @@ return {
           },
         },
       },
-      sources = {
-        default = { "lsp", "buffer", "snippets", "path", "omni" },
-      },
-      fuzzy = { implementation = "prefer_rust_with_warning" },
-      signature = { enabled = true },
     },
     opts_extend = { "sources.default" },
   },

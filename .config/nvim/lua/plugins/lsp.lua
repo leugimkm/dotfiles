@@ -85,7 +85,7 @@ return {
 			"yamlls",
 			-- Formatters: manual install
 			-- "prettier",
-			-- "rust_analyzer"
+			-- "ruff"
 			-- "stylua",
 		},
 	},
