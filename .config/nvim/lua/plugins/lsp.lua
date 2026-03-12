@@ -22,20 +22,20 @@ local function on_attach(bufnr)
     mode = mode or "n"
     vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
   end
-  map("K", vim.lsp.buf.hover, "Hover")
+  map("K", vim.lsp.buf.hover, "Hover documentation")
   map("gK", vim.lsp.buf.signature_help, "Signature help")
-  map("cr", vim.lsp.buf.rename, "Rename")
-  map("ca", vim.lsp.buf.code_action, "Code action")
-  -- map("gd", vim.lsp.buf.definition, "Goto definition")
-  -- map("gy", vim.lsp.buf.type_definition, "Goto type definition")
-  -- map("gi", vim.lsp.buf.implementation, "Goto implementation")
-  -- map("gr", vim.lsp.buf.references, "Goto references")
-  -- map("gD", vim.lsp.buf.declaration, "Goto declaration")
-  map("gd", "<Cmd>FzfLua lsp_definitions<CR>", "Goto definition")
-  map("gy", "<Cmd>FzfLua lsp_typedefs<CR>", "Goto type definition")
-  map("gi", "<Cmd>FzfLua lsp_implementations<CR>", "Goto implementation")
-  map("gr", "<Cmd>FzfLua lsp_references<CR>", "Goto references")
-  map("gD", "<Cmd>FzfLua lsp_declarations<CR>", "Goto declaration")
+  map("cr", vim.lsp.buf.rename, "[r]ename")
+  map("ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
+  -- map("gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
+  -- map("gr", vim.lsp.buf.references, "[g]oto [r]eferences")
+  -- map("gi", vim.lsp.buf.implementation, "[g]oto [i]mplementation")
+  -- map("gy", vim.lsp.buf.type_definition, "[g]oto t[y]pe definition")
+  -- map("gD", vim.lsp.buf.declaration, "[g]oto [D]eclaration")
+  map("gd", "<Cmd>FzfLua lsp_definitions<CR>", "[g]oto [d]efinition")
+  map("gr", "<Cmd>FzfLua lsp_references<CR>", "[g]oto [r]eferences")
+  map("gi", "<Cmd>FzfLua lsp_implementations<CR>", "[g]oto [i]mplementation")
+  map("gy", "<Cmd>FzfLua lsp_typedefs<CR>", "[g]oto t[y]pe definition")
+  map("gD", "<Cmd>FzfLua lsp_declarations<CR>", "[g]oto [D]eclaration")
   map("gl", "<Cmd>FzfLua lsp_document_diagnostics<CR>", "Show document diagnostics")
 end
 
@@ -51,10 +51,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-local capabilities = require("blink.cmp").get_lsp_capabilities()
 vim.lsp.config.lua_ls = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } }
-vim.lsp.config("*", { capabilities = capabilities })
+vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities() })
 
+-- NOTE: Install formatters manually: stylua, prettier, ruff
 return {
   "mason-org/mason-lspconfig.nvim",
   dependencies = {
@@ -63,7 +63,6 @@ return {
   },
   opts = {
     ensure_installed = {
-      -- LSP servers
       "astro",
       "bashls",
       "clangd",
@@ -78,10 +77,6 @@ return {
       "tailwindcss",
       "ts_ls",
       "yamlls",
-      -- Formatters: manual install
-      -- "prettier",
-      -- "ruff"
-      -- "stylua",
     },
   },
 }
