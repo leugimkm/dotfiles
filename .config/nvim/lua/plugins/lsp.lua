@@ -59,10 +59,7 @@ vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities()
 -- NOTE: Install formatters manually: stylua, prettier, ruff
 return {
   "mason-org/mason-lspconfig.nvim",
-  dependencies = {
-    { "mason-org/mason.nvim", opts = {} },
-    "neovim/nvim-lspconfig",
-  },
+  dependencies = { { "mason-org/mason.nvim", opts = {} }, "neovim/nvim-lspconfig" },
   opts = {
     ensure_installed = {
       "astro",

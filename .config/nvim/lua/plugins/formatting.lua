@@ -19,11 +19,7 @@ return {
       typescript = { "prettier" },
       yaml = { "prettier" },
     },
-    formatters = {
-      prettier = {
-        prepend_args = { "--trailing-comma", "noe" },
-      },
-    },
+    formatters = { prettier = { prepend_args = { "--trailing-comma", "none" } } },
   },
   keys = { {
     "<leader>cf",
