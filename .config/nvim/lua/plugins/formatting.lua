@@ -18,9 +18,18 @@ return {
       toml = { "prettier" },
       typescript = { "prettier" },
       yaml = { "prettier" },
-    }
+    },
+    formatters = {
+      prettier = {
+        prepend_args = { "--trailing-comma", "noe" },
+      },
+    },
   },
-  keys = {
-    { "<leader>cf", function() require("conform").format() end, desc = "Format" },
-  },
+  keys = { {
+    "<leader>cf",
+    function()
+      require("conform").format()
+    end,
+    desc = "Format",
+  } },
 }
