@@ -26,3 +26,4 @@ require("lazy").setup({ import = "plugins" }, {
 })
 require("config.ui").setup()
 require("config.zen").setup()
+-- require("config.statusline").setup()
