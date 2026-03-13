@@ -21,6 +21,12 @@
       "alignment": "left",
       "segments": [
         {
+          "type": "session",
+          "style": "plain",
+          "foreground": "#ffff87",
+          "template": "{{ .UserName }} "
+        },
+        {
           "type": "path",
           "style": "plain",
           "foreground": "#81a1c1",
