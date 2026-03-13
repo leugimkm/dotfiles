@@ -9,6 +9,26 @@ local runners = {
   sh = "sh %",
 }
 
+local function notify_floating(msg)
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { " " .. msg .. " " })
+  local win = vim.api.nvim_open_win(buf, false, {
+    relative = "editor",
+    row = 1,
+    col = vim.o.columns - #msg - 5,
+    width = #msg + 2,
+    height = 1,
+    style = "minimal",
+    border = "rounded",
+    focusable = false,
+  })
+  vim.defer_fn(function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end, 1500)
+end
+
 local function augroup(name)
   return vim.api.nvim_create_augroup("_" .. name, { clear = true })
 end
@@ -70,12 +90,27 @@ vim.api.nvim_create_autocmd("RecordingLeave", {
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("spell_lang"),
   pattern = { "markdown", "text" },
-  callback = function (ev)
+  callback = function(ev)
     vim.opt_local.spell = true
     vim.opt_local.spelllang = { "en", "es" }
     local opts = { buffer = ev.buf, remap = false }
     vim.keymap.set("n", "<leader>st", "<Cmd>set spell!<CR>", opts)
-  end
+    vim.keymap.set("n", "<leader>sl", function()
+      local msg = ""
+      local current = vim.opt_local.spelllang:get()
+      if #current == 2 then
+        vim.opt_local.spelllang = "en"
+        msg = "spell_lang: (en)"
+      elseif current[1] == "en" then
+        vim.opt_local.spelllang = "es"
+        msg = "spell_lang: (es)"
+      else
+        vim.opt_local.spelllang = { "en", "es" }
+        msg = "spell_lang: (en, es)"
+      end
+      notify_floating(msg)
+    end, opts)
+  end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
