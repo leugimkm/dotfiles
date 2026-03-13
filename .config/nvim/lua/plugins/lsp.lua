@@ -1,26 +1,23 @@
-local function configure_diagnostics()
-  vim.diagnostic.config({
-    underline = true,
-    update_in_insert = true,
-    severity_sort = true,
-    virtual_text = { severity = { max = vim.diagnostic.severity.WARN } },
-    virtual_lines = { severity = { min = vim.diagnostic.severity.ERROR } },
-    float = { border = "rounded", source = true },
-    signs = {
-      text = {
-        [vim.diagnostic.severity.ERROR] = "󰅚",
-        [vim.diagnostic.severity.WARN] = "󰀪",
-        [vim.diagnostic.severity.INFO] = "󰋽",
-        [vim.diagnostic.severity.HINT] = "󰌶",
-      },
+vim.diagnostic.config({
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  virtual_text = { severity = { max = vim.diagnostic.severity.WARN } },
+  virtual_lines = { severity = { min = vim.diagnostic.severity.ERROR } },
+  float = { border = "rounded", source = true, focusable = false },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "󰅚",
+      [vim.diagnostic.severity.WARN] = "󰀪",
+      [vim.diagnostic.severity.INFO] = "󰋽",
+      [vim.diagnostic.severity.HINT] = "󰌶",
     },
-  })
-end
+  },
+})
 
 local function on_attach(bufnr)
-  local map = function(keys, func, desc, mode)
-    mode = mode or "n"
-    vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+  local map = function(lhs, rhs, desc)
+    vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = "LSP: " .. desc })
   end
   map("K", vim.lsp.buf.hover, "Hover documentation")
   map("gK", vim.lsp.buf.signature_help, "Signature help")
@@ -28,7 +25,8 @@ local function on_attach(bufnr)
   map("ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
   map("[d", vim.diagnostic.goto_prev, "Prev diagnostic")
   map("]d", vim.diagnostic.goto_next, "Next diagnostic")
-  map("df", vim.diagnostic.open_float, "Show floating diagnostic")
+  map("<leader>cd", vim.diagnostic.open_float, "Show floating diagnostic")
+  map("<leader>cl", vim.diagnostic.setloclist, "Show diagnostic list")
   -- map("gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
   -- map("gr", vim.lsp.buf.references, "[g]oto [r]eferences")
   -- map("gi", vim.lsp.buf.implementation, "[g]oto [i]mplementation")
@@ -50,7 +48,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
     end
     on_attach(ev.buf)
-    configure_diagnostics()
   end,
 })
 

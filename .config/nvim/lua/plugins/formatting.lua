@@ -1,5 +1,6 @@
 return {
   "stevearc/conform.nvim",
+  event = "BufWritePre",
   opts = {
     formatters_by_ft = {
       astro = { name = "astro-language-server", timeout_ms = 500, lsp_format = "prefer" },

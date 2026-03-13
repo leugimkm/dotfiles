@@ -1,4 +1,3 @@
--- just a comment
 return {
   { "folke/twilight.nvim", opts = { context = -1 } },
   {

@@ -21,6 +21,7 @@ return {
     "saghen/blink.cmp",
     dependencies = "rafamadriz/friendly-snippets",
     version = "1.*",
+    event = { "InsertEnter", "CmdlineEnter" },
     opts = {
       fuzzy = { implementation = "prefer_rust_with_warning" },
       signature = { enabled = true },
