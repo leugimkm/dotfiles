@@ -68,6 +68,17 @@ vim.api.nvim_create_autocmd("RecordingLeave", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("spell_lang"),
+  pattern = { "markdown", "text" },
+  callback = function (ev)
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = { "en", "es" }
+    local opts = { buffer = ev.buf, remap = false }
+    vim.keymap.set("n", "<leader>st", "<Cmd>set spell!<CR>", opts)
+  end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
   group = augroup("run_code"),
   pattern = "*",
   callback = function()
