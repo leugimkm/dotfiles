@@ -1,154 +1,158 @@
 local M = {}
-
 local defaults = {
-  color = { low = "#3c3826", high = "#fabd2f" },
-  max = 10000,
+  colors = { low = "#3c3826", high = "#fabd2f" },
+  max_chars = 10000,
+  filename = { max_width = 0.40, truncate = true },
+  wordcount = { enabled = true, throttle = 800, filetypes = { "markdown", "text", "txt" } },
+  search = { enabled = true, maxcount = 500 },
+  virtcol_limit = 500,
+  filesize = { enabled = true },
 }
-
 M.opts = {}
 
 function M.setup_highlights()
-  vim.api.nvim_set_hl(0, "StatusLine", { fg = M.opts.color.low, bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = M.opts.color.low, bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "MsgArea", { fg = M.opts.color.high, bg = "NONE", ctermbg = "NONE" })
+  local set = vim.api.nvim_set_hl
+  local c = M.opts.colors
+  set(0, "StatusLine", { fg = c.low, bg = "NONE", ctermbg = "NONE" })
+  set(0, "StatusLineNC", { fg = c.low, bg = "NONE", ctermbg = "NONE" })
+  set(0, "MsgArea", { fg = c.high, bg = "NONE", ctermbg = "NONE" })
+  set(0, "StatuslineSearch", { fg = c.high, bg = "NONE" })
   for _, group in ipairs({ "LineNr", "LineNrAbove", "LineNrBelow" }) do
-    vim.api.nvim_set_hl(0, group, { fg = M.opts.color.low })
+    set(0, group, { fg = c.low })
   end
-  -- vim.api.nvim_set_hl(0, "LineNr", { fg = M.opts.color.high })
+  -- set(0, "LineNr", { fg = c.high })
+end
+
+local function truncate_path(path, max_len)
+  local utf_len = vim.fn.strchars(path)
+  if utf_len <= max_len then return path end
+  local start = math.max(0, utf_len - max_len)
+  return "…" .. vim.fn.strcharpart(path, start, max_len)
+end
+
+local function get_file_size()
+  if not M.opts.filesize.enabled then return "" end
+  local name = vim.api.nvim_buf_get_name(0)
+  if name == "" then return "" end
+  local ok, stat = pcall(vim.uv.fs_stat, name)
+  if not ok or not stat or stat.size <= 0 then return "" end
+  local size = stat.size
+  if size < 1024 then return size .. "B" end
+  if size < 1048576 then return string.format("%.1fK", size / 1024) end
+  return string.format("%.1fM", size / 1048576)
 end
 
 local function update_filename()
-  local path = vim.api.nvim_buf_get_name(0)
-  if path == "" then
-    vim.b.stl_filename = "[No Name]"
+  local b = vim.b
+  local absolute = vim.api.nvim_buf_get_name(0)
+  if absolute == "" then
+    b.stl_filename = "[No Name]"
     return
   end
-  local width = vim.api.nvim_win_get_width(0)
-  local max_len = math.floor(width * 0.40)
-  if vim.fn.strchars(path) <= max_len then
-    vim.b.stl_filename = path
-    return
+  local relative, width = vim.fn.fnamemodify(absolute, ":~:."), vim.api.nvim_win_get_width(0)
+  local max_len = math.floor(width * M.opts.filename.max_width)
+  if M.opts.filename.truncate then
+    b.stl_filename = truncate_path(relative, max_len)
+  else
+    b.stl_filename = relative
   end
-  vim.b.stl_filename = "…" .. path:sub(-max_len)
 end
 
-function M.filename()
-  return vim.b.stl_filename or ""
+local function is_valid_filetype(ft)
+  for _, v in ipairs(M.opts.wordcount.filetypes) do
+    if v == ft then return true end
+  end
+  return false
 end
 
 local function update_counter()
+  local b = vim.b
+  if not M.opts.wordcount.enabled then b.stl_counter = "" end
   local ft = vim.bo.filetype
-  if ft ~= "markdown" and ft ~= "text" and ft ~= "txt" then
-    vim.b.counter = ""
+  if not is_valid_filetype(ft) then
+    b.stl_counter, b.stl_last_count_time = "", nil
     return
   end
-  local max = M.opts.max
-  local winfo = vim.fn.wordcount()
-  local wc = winfo.words or 0
-  local cc = winfo.chars or 0
-  if cc > max then
-    vim.b.counter = string.format("%d/>10k", wc)
-    return
+  local now, last = vim.uv.now(), b.stl_last_count_time or 0
+  if (now - last) > M.opts.wordcount.throttle then
+    local wc = vim.fn.wordcount()
+    b.stl_cache_words, b.stl_cache_chars, b.stl_last_count_time = wc.words or 0, wc.chars or 0, now
   end
-  vim.b.counter = string.format("%d/%d", wc, cc)
-end
-
-function M.counter()
-  return vim.b.counter or ""
-end
-
-function M.buffer_percentage()
-  local line = vim.fn.line(".")
-  local total = vim.fn.line("$")
-  if total == 0 then
-    return "  0%%"
-  end
-  local percent = math.floor((line / total) * 100)
-  return string.format("%3d%%", percent)
-end
-
-local function buffer_size()
-  local name = vim.api.nvim_buf_get_name(0)
-  local size = vim.fn.getfsize(name)
-  if size <= 0 then
-    return ""
-  end
-  if size < 1024 then
-    return string.format("%dB", size)
-  elseif size < 1048576 then
-    return string.format("%.1fK", size / 1024)
+  local words, chars = b.stl_cache_words or 0, b.stl_cache_chars or 0
+  if chars > M.opts.max_chars then
+    b.stl_counter = string.format("%d/>%dk", words, M.opts.max_chars / 1000)
   else
-    return string.format("%.1fM", size / 1048576)
+    b.stl_counter = string.format("%d/%d", words, chars)
   end
 end
 
-function M.fileinfo()
-  local encoding = vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.o.encoding
-  local format = vim.bo.fileformat
-  local size = buffer_size()
-  return string.format("%s[%s] %s", encoding, format, size)
+local function update_search_count()
+  if not M.opts.search.enabled then return end
+  if vim.v.hlsearch == 0 then return end
+  if vim.fn.getreg("/") == "" then return end
+  pcall(vim.fn.searchcount, { recompute = true, maxcount = M.opts.search.maxcount })
+  vim.cmd("redrawstatus")
 end
 
 function M.search_count()
-if vim.v.hlsearch == 0 then
-    return ""
-  end
-  local ok, sc = pcall(vim.fn.searchcount, { recompute = true, maxcount = 9999 })
-  if not ok or sc.current == nil or sc.total == 0 then
-    return ""
-  end
-  if sc.incomplete == 1 then
-    return "?/?"
-  end
-  local too_many = ">" .. sc.maxcount
-  local current = sc.current > sc.maxcount and too_many or sc.current
-  local total = sc.total > sc.maxcount and too_many or sc.total
-  return current .. "/" .. total
+  if vim.fn.mode() ~= "n" then return "" end
+  if not M.opts.search.enabled then return "" end
+  if vim.v.hlsearch == 0 then return "" end
+  local ok, sc = pcall(vim.fn.searchcount, { recompute = false, maxcount = M.opts.search.maxcount })
+  if not ok or not sc or sc.total == 0 then return "" end
+  if sc.incomplete == 1 then return "?/? " end
+  local current = sc.current > sc.maxcount and ">" .. sc.maxcount or sc.current
+  local total = sc.total > sc.maxcount and ">" .. sc.maxcount or sc.total
+  return string.format("%s/%s ", current, total)
 end
 
-function M.setup_filename_autocmd()
-  vim.api.nvim_create_autocmd({ "BufEnter", "BufFilePost", "BufWinEnter", "VimResized", "WinResized" }, {
-    group = vim.api.nvim_create_augroup("StatusLineFilename", { clear = true }),
-    callback = update_filename,
-  })
-end
-
-function M.setup_counter_autocmd()
-  vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "TextChanged", "TextChangedI" }, {
-    group = vim.api.nvim_create_augroup("StatusLineCounter", { clear = true }),
-    callback = update_counter,
-  })
+function M.fileinfo()
+  local encoding = (vim.bo.fileencoding ~= "" and vim.bo.fileencoding) or vim.o.encoding
+  local format, size = vim.bo.fileformat, get_file_size()
+  if size == "" then return string.format("%s[%s]", encoding, format) end
+  return string.format("%s[%s] %s", encoding, format, size)
 end
 
 function M.safe_virt_len()
-  local col = vim.fn.col("$") - 1
-  if col > 500 then
-    return col
-  end
+  local bytes = vim.fn.col("$") - 1
+  if bytes > M.opts.virtcol_limit then return bytes end
   return vim.fn.virtcol("$") - 1
 end
 
 function M.setup_statusline()
   vim.opt.statusline = table.concat({
-    " %{v:lua.Statusline.filename()} %m%r ",
-    -- " %f%m%r|",  -- f: relative, F: absolute
+    " %{get(b:,'stl_filename','[No Name]')} %m%r%h%w ",
+    "%{get(b:,'stl_counter','')}",
     "%=",
+    "%#StatuslineSearch#%{v:lua.Statusline.search_count()}%*",
     "%{v:lua.Statusline.fileinfo()} ",
-    "%{v:lua.Statusline.counter()} ",
-    "%{v:lua.Statusline.search_count()} ",
-    "%l|%L|%2v|%-2{v:lua.Statusline.safe_virt_len()} ",
-    -- "%l|%L|%2v|%-2{virtcol('$') - 1} ",
-    "%{v:lua.Statusline.buffer_percentage()}",
+    "%l|%L|%2v|%-2{v:lua.Statusline.safe_virt_len()} %p%%",
   }, "")
 end
 
 function M.setup(user_opts)
-  M.opts = vim.tbl_deep_extend("force", defaults, user_opts or {})
+  M.opts = vim.tbl_deep_extend("force", vim.deepcopy(defaults), user_opts or {})
   _G.Statusline = M
   M.setup_highlights()
-  M.setup_counter_autocmd()
-  M.setup_filename_autocmd()
   M.setup_statusline()
+  local au = vim.api.nvim_create_augroup("CustomStatusline", { clear = true })
+  vim.api.nvim_create_autocmd(
+    { "BufEnter", "BufFilePost", "BufWinEnter", "BufWritePost", "VimResized", "WinResized" },
+    { group = au, callback = update_filename }
+  )
+  vim.api.nvim_create_autocmd(
+    { "BufEnter", "BufWinEnter", "TextChanged", "TextChangedI", "InsertLeave" },
+    { group = au, callback = update_counter }
+  )
+  vim.api.nvim_create_autocmd(
+    { "CmdlineLeave" },
+    { group = au, pattern = { "/", "?" }, callback = update_search_count }
+  )
+  vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, { group = au, callback = update_search_count })
+  vim.schedule(function()
+    update_filename()
+    update_counter()
+  end)
 end
 
 return M
