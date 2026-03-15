@@ -1,28 +1,39 @@
 local M = {}
-local color = { low = "#3c3826", high = "#fabd2f" }
-local MAX_CHARS = 10000
 
-local function setup_highlights()
-  vim.api.nvim_set_hl(0, "StatusLine", { fg = color.low, bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = color.low, bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "MsgArea", { fg = color.high, bg = "NONE", ctermbg = "NONE" })
+local defaults = {
+  color = { low = "#3c3826", high = "#fabd2f" },
+  max = 10000,
+}
+
+M.opts = {}
+
+function M.setup_highlights()
+  vim.api.nvim_set_hl(0, "StatusLine", { fg = M.opts.color.low, bg = "NONE", ctermbg = "NONE" })
+  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = M.opts.color.low, bg = "NONE", ctermbg = "NONE" })
+  vim.api.nvim_set_hl(0, "MsgArea", { fg = M.opts.color.high, bg = "NONE", ctermbg = "NONE" })
   for _, group in ipairs({ "LineNr", "LineNrAbove", "LineNrBelow" }) do
-    vim.api.nvim_set_hl(0, group, { fg = color.low })
+    vim.api.nvim_set_hl(0, group, { fg = M.opts.color.low })
   end
-  -- vim.api.nvim_set_hl(0, "LineNr", { fg = color.high })
+  -- vim.api.nvim_set_hl(0, "LineNr", { fg = M.opts.color.high })
 end
 
-local function filename()
-  local absolute_path = vim.api.nvim_buf_get_name(0)
-  if absolute_path == "" then
-    return "[No Name]"
+local function update_filename()
+  local path = vim.api.nvim_buf_get_name(0)
+  if path == "" then
+    vim.b.stl_filename = "[No Name]"
+    return
   end
   local width = vim.api.nvim_win_get_width(0)
   local max_len = math.floor(width * 0.40)
-  if vim.fn.strchars(absolute_path) <= max_len then
-    return absolute_path
+  if vim.fn.strchars(path) <= max_len then
+    vim.b.stl_filename = path
+    return
   end
-  return " .." .. absolute_path:sub(-max_len)
+  vim.b.stl_filename = "…" .. path:sub(-max_len)
+end
+
+function M.filename()
+  return vim.b.stl_filename or ""
 end
 
 local function update_counter()
@@ -31,21 +42,22 @@ local function update_counter()
     vim.b.counter = ""
     return
   end
+  local max = M.opts.max
   local winfo = vim.fn.wordcount()
   local wc = winfo.words or 0
   local cc = winfo.chars or 0
-  if cc > MAX_CHARS then
+  if cc > max then
     vim.b.counter = string.format("%d/>10k", wc)
     return
   end
   vim.b.counter = string.format("%d/%d", wc, cc)
 end
 
-local function counter()
+function M.counter()
   return vim.b.counter or ""
 end
 
-local function buffer_percentage()
+function M.buffer_percentage()
   local line = vim.fn.line(".")
   local total = vim.fn.line("$")
   if total == 0 then
@@ -56,7 +68,8 @@ local function buffer_percentage()
 end
 
 local function buffer_size()
-  local size = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
+  local name = vim.api.nvim_buf_get_name(0)
+  local size = vim.fn.getfsize(name)
   if size <= 0 then
     return ""
   end
@@ -69,23 +82,15 @@ local function buffer_size()
   end
 end
 
-local function fileinfo()
+function M.fileinfo()
   local encoding = vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.o.encoding
   local format = vim.bo.fileformat
   local size = buffer_size()
   return string.format("%s[%s] %s", encoding, format, size)
 end
 
-local function setup_counter_autocmd()
-  local group = vim.api.nvim_create_augroup("StatusLineCounter", { clear = true })
-  vim.api.nvim_create_autocmd(
-    { "BufEnter", "BufWinEnter", "TextChanged", "TextChangedI" },
-    { group = group, callback = update_counter }
-  )
-end
-
-local function search_count()
-  if vim.v.hlsearch == 0 then
+function M.search_count()
+if vim.v.hlsearch == 0 then
     return ""
   end
   local ok, sc = pcall(vim.fn.searchcount, { recompute = true, maxcount = 9999 })
@@ -101,29 +106,49 @@ local function search_count()
   return current .. "/" .. total
 end
 
-local function setup_statusline()
+function M.setup_filename_autocmd()
+  vim.api.nvim_create_autocmd({ "BufEnter", "BufFilePost", "BufWinEnter", "VimResized", "WinResized" }, {
+    group = vim.api.nvim_create_augroup("StatusLineFilename", { clear = true }),
+    callback = update_filename,
+  })
+end
+
+function M.setup_counter_autocmd()
+  vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "TextChanged", "TextChangedI" }, {
+    group = vim.api.nvim_create_augroup("StatusLineCounter", { clear = true }),
+    callback = update_counter,
+  })
+end
+
+function M.safe_virt_len()
+  local col = vim.fn.col("$") - 1
+  if col > 500 then
+    return col
+  end
+  return vim.fn.virtcol("$") - 1
+end
+
+function M.setup_statusline()
   vim.opt.statusline = table.concat({
-    " %{v:lua.require'config.statusline'.filename()} %m%r ",
+    " %{v:lua.Statusline.filename()} %m%r ",
     -- " %f%m%r|",  -- f: relative, F: absolute
     "%=",
-    "%{v:lua.require'config.statusline'.fileinfo()} ",
-    "%{v:lua.require'config.statusline'.counter()} ",
-    "%{v:lua.require'config.statusline'.search_count()} ",
-    "%l|%L|%2v|%-2{virtcol('$') - 1} ",
-    "%{v:lua.require'config.statusline'.buffer_percentage()}",
+    "%{v:lua.Statusline.fileinfo()} ",
+    "%{v:lua.Statusline.counter()} ",
+    "%{v:lua.Statusline.search_count()} ",
+    "%l|%L|%2v|%-2{v:lua.Statusline.safe_virt_len()} ",
+    -- "%l|%L|%2v|%-2{virtcol('$') - 1} ",
+    "%{v:lua.Statusline.buffer_percentage()}",
   }, "")
 end
 
-M.filename = filename
-M.fileinfo = fileinfo
-M.buffer_percentage = buffer_percentage
-M.counter = counter
-M.search_count = search_count
-
-function M.setup()
-  setup_highlights()
-  setup_counter_autocmd()
-  setup_statusline()
+function M.setup(user_opts)
+  M.opts = vim.tbl_deep_extend("force", defaults, user_opts or {})
+  _G.Statusline = M
+  M.setup_highlights()
+  M.setup_counter_autocmd()
+  M.setup_filename_autocmd()
+  M.setup_statusline()
 end
 
 return M
