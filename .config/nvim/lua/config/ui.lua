@@ -1,5 +1,5 @@
 local M = {}
-
+local state = { buf = nil, original_globals = {} }
 local defaults = {
   art = {
     "▄▄▌  ▄▄▄ .▄• ▄▌ ▄▄ • ▪  • ▌ ▄ ·. ▄ •▄ • ▌ ▄ ·.",
@@ -8,9 +8,7 @@ local defaults = {
     "▐█▌▐▌▐█▄▄▌▐█▄█▌▐█▄▪▐█▐█▌██ ██▌▐█▌▐█.█▌██ ██▌▐█▌",
     ".▀▀▀  ▀▀▀  ▀▀▀ ·▀▀▀▀ ▀▀▀▀▀  █▪▀▀▀·▀  ▀▀▀  █▪▀▀▀",
   },
-  global_opts = {
-    laststatus = 0,
-  },
+  global_opts = { laststatus = 0 },
   buffer_opts = {
     buftype = "nofile",
     bufhidden = "wipe",
@@ -24,12 +22,6 @@ local defaults = {
     filetype = "startscreen",
   },
 }
-
-local state = {
-  buf = nil,
-  original_globals = {},
-}
-
 M.config = {}
 
 local function get_art_width()
@@ -105,28 +97,9 @@ function M.open()
     vim.api.nvim_buf_set_option(state.buf, k, v)
   end
   render()
-  vim.api.nvim_create_autocmd("VimResized", {
-    buffer = state.buf,
-    callback = render,
-  })
-  vim.api.nvim_create_autocmd("BufUnload", {
-    buffer = state.buf,
-    once = true,
-    callback = restore_globals,
-  })
-  local blocked = {
-    "i",
-    "a",
-    "o",
-    "O",
-    "I",
-    "A",
-    "r",
-    "R",
-    "s",
-    "S",
-    "u",
-  }
+  vim.api.nvim_create_autocmd("VimResized", { buffer = state.buf, callback = render })
+  vim.api.nvim_create_autocmd("BufUnload", { buffer = state.buf, once = true, callback = restore_globals })
+  local blocked = { "i", "a", "o", "O", "I", "A", "r", "R", "s", "S", "u" }
   for _, key in ipairs(blocked) do
     vim.keymap.set("n", key, "<nop>", { buffer = state.buf, silent = true })
   end
