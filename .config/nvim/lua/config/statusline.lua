@@ -24,13 +24,16 @@ function M.setup_highlights()
 end
 
 local function truncate_path(path, max_len)
-  local width = vim.fn.strdisplaywidth(path)
-  if width <= max_len then return path end
+  if vim.fn.strdisplaywidth(path) <= max_len then return path end
   local start = math.max(0, vim.fn.strchars(path) - max_len)
   return "…" .. vim.fn.strcharpart(path, start, max_len)
 end
 
-local function update_filename()
+local function u_filename()
+  if vim.bo.buftype ~= "" then
+    vim.b.stl_filename = vim.fn.expand("%:t")
+    return
+  end
   local name = vim.api.nvim_buf_get_name(0)
   if name == "" then
     vim.b.stl_filename = "[No Name]"
@@ -41,15 +44,14 @@ local function update_filename()
   vim.b.stl_filename = M.opts.filename.truncate and truncate_path(relative, max_len) or relative
 end
 
-local function update_counter()
+local function u_counter()
   local ft = vim.bo.filetype
   if not M.opts.wordcount.enabled or not M.opts.wordcount.filetypes[ft] then
     vim.b.stl_counter = ""
     return
   end
   local b = vim.b
-  local tick = vim.b.changedtick
-  local now = vim.uv.now()
+  local tick, now = b.changedtick, vim.uv.now()
   if tick ~= b.stl_last_tick or (now - (b.stl_last_count_time or 0) > M.opts.wordcount.throttle) then
     local wc = vim.fn.wordcount()
     b.stl_cache_words, b.stl_cache_chars = wc.words or 0, wc.chars or 0
@@ -60,7 +62,7 @@ local function update_counter()
     or string.format("%d/%d", words, chars)
 end
 
-local function update_filesize()
+local function u_filesize()
   local name = vim.api.nvim_buf_get_name(0)
   if not M.opts.filesize or not M.opts.filesize.enabled or name == "" then
     vim.b.stl_filesize = ""
@@ -77,14 +79,14 @@ local function update_filesize()
     or string.format("%.1fM", size / 1048576)
 end
 
-local function update_fileinfo()
+local function u_fileinfo()
   local encoding = vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.o.encoding
   local format, size = vim.bo.fileformat, vim.b.stl_filesize or ""
   vim.b.stl_fileinfo = size == "" and string.format("%s[%s]", encoding, format)
     or string.format("%s[%s] %s", encoding, format, size)
 end
 
-local function update_search()
+local function u_search()
   if not M.opts.search.enabled or vim.v.hlsearch == 0 or vim.fn.getreg("/") == "" then
     vim.b.stl_search = ""
     return
@@ -104,7 +106,7 @@ local function update_search()
   vim.b.stl_search = current .. "/" .. total .. " "
 end
 
-local function update_virtcol()
+local function u_virtcol()
   local limit = M.opts.virtcol_limit
   local bytes = vim.fn.col("$") - 1
   vim.b.stl_virtcol = bytes > limit and bytes or vim.fn.virtcol("$") - 1
@@ -122,45 +124,40 @@ function M.setup_statusline()
   }, "")
 end
 
-function M.statusline_update(event)
-  if event == "BufEnter" or event == "BufWritePost" or event == "WinResized" then
-    update_filename()
-    update_filesize()
-    update_fileinfo()
-  end
-  if event == "TextChanged" or event == "TextChangedI" or event == "InsertLeave" then update_counter() end
-  if event == "CursorMoved" or event == "CursorMovedI" then
-    update_search()
-    update_counter()
-    update_virtcol()
-  end
-end
-
 function M.setup(user_opts)
   M.opts = vim.tbl_deep_extend("force", vim.deepcopy(defaults), user_opts or {})
   _G.Statusline = M
   M.setup_highlights()
   M.setup_statusline()
   local au = vim.api.nvim_create_augroup("CustomStatusline", { clear = true })
-  local events = {
-    "BufEnter",
-    "BufFilePost",
-    "BufWritePost",
-    "CursorMoved",
-    "CursorMovedI",
-    "InsertLeave",
-    "TextChanged",
-    "TextChangedI",
-    "WinResized",
-  }
-  for _, event in ipairs(events) do
-    vim.api.nvim_create_autocmd(event, { group = au, callback = function() M.statusline_update(event) end })
-  end
-  vim.api.nvim_create_autocmd({ "CmdlineLeave" }, { group = au, pattern = { "/", "?" }, callback = update_search })
-  vim.api.nvim_create_autocmd({ "OptionSet" }, { group = au, pattern = "hlsearch", callback = update_search })
+  vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "WinResized" }, {
+    group = au,
+    callback = function()
+      u_filename()
+      u_filesize()
+      u_fileinfo()
+    end,
+  })
+  vim.api.nvim_create_autocmd(
+    { "TextChanged", "TextChangedI", "InsertLeave", "BufWinEnter", "FileType" },
+    { group = au, callback = function() u_counter() end }
+  )
+  vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+    group = au,
+    callback = function()
+      u_search()
+      u_virtcol()
+    end,
+  })
+  vim.api.nvim_create_autocmd({ "CmdlineLeave" }, { group = au, pattern = { "/", "?" }, callback = u_search })
+  vim.api.nvim_create_autocmd({ "OptionSet" }, { group = au, pattern = "hlsearch", callback = u_search })
   vim.defer_fn(function()
-    M.statusline_update("BufEnter")
-    M.statusline_update("TextChanged")
+    u_filename()
+    u_filesize()
+    u_fileinfo()
+    u_counter()
+    u_search()
+    u_virtcol()
   end, 50)
 end
 
