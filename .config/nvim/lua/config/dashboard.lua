@@ -34,9 +34,7 @@ end
 
 local function get_plugin_stats()
   local ok, lazy = pcall(require, "lazy")
-  if not ok then
-    return 0, 0, 0
-  end
+  if not ok then return 0, 0, 0 end
   local stats = lazy.stats()
   return stats.loaded, stats.count, stats.startuptime
 end
@@ -49,9 +47,7 @@ local function get_footer()
 end
 
 local function render()
-  if not vim.api.nvim_buf_is_valid(state.buf) then
-    return
-  end
+  if not vim.api.nvim_buf_is_valid(state.buf) then return end
   local win = vim.api.nvim_get_current_win()
   local width = vim.api.nvim_win_get_width(win)
   local height = vim.api.nvim_win_get_height(win)
@@ -115,15 +111,9 @@ function M.setup(opts)
     group = vim.api.nvim_create_augroup("ui_start_screen", { clear = true }),
     once = true,
     callback = function()
-      if vim.fn.argc() ~= 0 then
-        return
-      end
-      if vim.api.nvim_buf_get_name(0) ~= "" then
-        return
-      end
-      if vim.bo.modified then
-        return
-      end
+      if vim.fn.argc() ~= 0 then return end
+      if vim.api.nvim_buf_get_name(0) ~= "" then return end
+      if vim.bo.modified then return end
       M.open()
     end,
   })
@@ -131,9 +121,7 @@ function M.setup(opts)
     pattern = "LazyVimStarted",
     callback = function()
       state.footer = get_footer()
-      if state.buf and vim.api.nvim_buf_is_valid(state.buf) then
-        render()
-      end
+      if state.buf and vim.api.nvim_buf_is_valid(state.buf) then render() end
     end,
   })
 end
