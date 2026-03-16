@@ -85,7 +85,7 @@ local function update_fileinfo()
 end
 
 local function update_search()
-  if not M.opts.search.enabled or vim.hlsearch == 0 or vim.fn.getreg("/") == "" then
+  if not M.opts.search.enabled or vim.v.hlsearch == 0 or vim.fn.getreg("/") == "" then
     vim.b.stl_search = ""
     return
   end
@@ -157,6 +157,7 @@ function M.setup(user_opts)
     vim.api.nvim_create_autocmd(event, { group = au, callback = function() M.statusline_update(event) end })
   end
   vim.api.nvim_create_autocmd({ "CmdlineLeave" }, { group = au, pattern = { "/", "?" }, callback = update_search })
+  vim.api.nvim_create_autocmd({ "OptionSet" }, { group = au, pattern = "hlsearch", callback = update_search })
   vim.defer_fn(function()
     M.statusline_update("BufEnter")
     M.statusline_update("TextChanged")
