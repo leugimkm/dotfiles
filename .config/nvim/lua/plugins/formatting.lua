@@ -22,11 +22,5 @@ return {
     },
     formatters = { prettier = { prepend_args = { "--trailing-comma", "none" } } },
   },
-  keys = { {
-    "<leader>cf",
-    function()
-      require("conform").format()
-    end,
-    desc = "Format",
-  } },
+  keys = { { "<leader>cf", function() require("conform").format() end, desc = "Format" } },
 }

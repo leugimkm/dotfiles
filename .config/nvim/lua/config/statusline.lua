@@ -2,7 +2,7 @@ local M = {}
 local defaults = {
   colors = { low = "#3c3826", high = "#fabd2f" },
   max_chars = 10000,
-  filename = { max_width = 0.40, truncate = true},
+  filename = { max_width = 0.40, truncate = true },
   wordcount = { enabled = true, throttle = 800, filetypes = { "markdown", "text", "txt" } },
   search = { enabled = true, maxcount = 500 },
   virtcol_limit = 500,

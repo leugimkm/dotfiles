@@ -5,12 +5,7 @@ return {
     version = "*",
     opts = {
       mappings = {
-        ["`"] = {
-          action = "closeopen",
-          pair = "``",
-          neigh_pattern = "[^||`].",
-          register = { cr = false },
-        },
+        ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^||`].", register = { cr = false } },
       },
       skip_next = [=[[%w%%%'%[%"%.%`%$]]=],
       skip_unbalanced = true,
@@ -23,7 +18,7 @@ return {
     version = "1.*",
     event = { "InsertEnter", "CmdlineEnter" },
     opts = {
-      fuzzy = { implementation = "prefer_rust_with_warning" },
+      fuzzy = { implementation = "prefer_rust" },
       signature = { enabled = true },
       sources = { default = { "lsp", "buffer", "snippets", "path", "omni" } },
       keymap = { preset = "default" },

@@ -13,9 +13,7 @@ return {
       { "<leader>fk", "<Cmd>FzfLua keymaps<CR>", desc = "Key maps" },
       {
         "<leader>fc",
-        function()
-          require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
-        end,
+        function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end,
         desc = "Find config files",
       },
     },
@@ -30,9 +28,7 @@ return {
       skip_confirm_for_simple_edits = true,
       view_options = {
         show_hidden = true,
-        is_always_hidden = function(name, _)
-          return name == ".." or name == ".git"
-        end,
+        is_always_hidden = function(name, _) return name == ".." or name == ".git" end,
       },
       float = { padding = 4, max_width = 0.8, max_height = 0.8 },
       keymaps = { ["<C-c>"] = false, ["q"] = "actions.close" },

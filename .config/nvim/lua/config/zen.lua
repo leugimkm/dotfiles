@@ -1,5 +1,4 @@
 local M = { _active = false, _saved = {}, opts = {} }
-
 local defaults = {
   keymaps = {
     zen = "<leader>tz",
@@ -28,28 +27,20 @@ local function has_twilight()
   return ok
 end
 
-local function save_option(name)
-  M._saved[name] = vim.opt[name]:get()
-end
+local function save_option(name) M._saved[name] = vim.opt[name]:get() end
 
 local function restore_option(name)
   local saved = M._saved[name]
-  if saved ~= nil then
-    vim.opt[name] = saved
-  end
+  if saved ~= nil then vim.opt[name] = saved end
 end
 
 local function apply_option(name, state)
   local opt = M.opts.options[name]
-  if opt then
-    vim.opt[name] = opt[state and "on" or "off"]
-  end
+  if opt then vim.opt[name] = opt[state and "on" or "off"] end
 end
 
 local function toggle_twilight(state)
-  if not has_twilight() then
-    return
-  end
+  if not has_twilight() then return end
   if state then
     vim.cmd("TwilightEnable")
   else
@@ -62,36 +53,18 @@ local function enter()
     save_option(name)
     apply_option(name, false)
   end
-
-  if M.opts.diagnostics.enable then
-    vim.diagnostic.enable(false)
-  end
-
-  if M.opts.twilight.enable then
-    toggle_twilight(true)
-  end
-
-  if type(M.opts.custom_on) == "function" then
-    M.opts.custom_on()
-  end
+  if M.opts.diagnostics.enable then vim.diagnostic.enable(false) end
+  if M.opts.twilight.enable then toggle_twilight(true) end
+  if type(M.opts.custom_on) == "function" then M.opts.custom_on() end
 end
 
 local function exit()
   for name in pairs(M.opts.options) do
     restore_option(name)
   end
-
-  if M.opts.diagnostics.enable then
-    vim.diagnostic.enable(true)
-  end
-
-  if M.opts.twilight.enable then
-    toggle_twilight(false)
-  end
-
-  if type(M.opts.custom_off) == "function" then
-    M.opts.custom_off()
-  end
+  if M.opts.diagnostics.enable then vim.diagnostic.enable(true) end
+  if M.opts.twilight.enable then toggle_twilight(false) end
+  if type(M.opts.custom_off) == "function" then M.opts.custom_off() end
 end
 
 function M.toggle()
@@ -104,16 +77,11 @@ function M.toggle()
 end
 
 function M.toggle_option(name)
-  if not M.opts.options[name] then
-    return
-  end
-
+  if not M.opts.options[name] then return end
   local current = vim.opt[name]:get()
   local is_on = current == M.opts.options[name].on
   local new_state = not is_on
-
   apply_option(name, new_state)
-
   if name == "number" then
     apply_option("relativenumber", new_state)
     apply_option("colorcolumn", new_state)
@@ -124,29 +92,25 @@ end
 function M.toggle_all()
   local status_on = vim.opt.laststatus:get() == M.opts.options.laststatus.on
   local new_state = not status_on
-
   apply_option("laststatus", new_state)
   M.toggle_option("number")
-
   local diag_state = vim.diagnostic.is_enabled()
   vim.diagnostic.enable(not diag_state)
 end
 
 function M.setup(user_opts)
   M.opts = vim.tbl_deep_extend("force", defaults, user_opts or {})
-
   local km = M.opts.keymaps
   vim.keymap.set("n", km.zen, M.toggle, { desc = "Toggle zen mode" })
   vim.keymap.set("n", km.all, M.toggle_all, { desc = "Toggle all (statusline, lineNr, diagnostics)" })
-  vim.keymap.set("n", km.statusline, function()
-    M.toggle_option("laststatus")
-  end, { desc = "Toggle statusline" })
-  vim.keymap.set("n", km.linenr, function()
-    M.toggle_option("number")
-  end, { desc = "Toggle lineNr, relativenumber, colorcolumn and signcolumn " })
-  vim.keymap.set("n", km.diagnostics, function()
-    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-  end, { desc = "Toggle diagnostics" })
+  vim.keymap.set("n", km.statusline, function() M.toggle_option("laststatus") end, { desc = "Toggle statusline" })
+  vim.keymap.set("n", km.linenr, function() M.toggle_option("number") end, { desc = "Toggle nu, rnu, cc & scl" })
+  vim.keymap.set(
+    "n",
+    km.diagnostics,
+    function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end,
+    { desc = "Toggle diagnostics" }
+  )
   vim.keymap.set("n", km.virtuallines, function()
     local cfg = vim.diagnostic.config()
     vim.diagnostic.config({ virtual_lines = not cfg.virtual_lines })
@@ -155,10 +119,7 @@ function M.setup(user_opts)
     local cfg = vim.diagnostic.config()
     vim.diagnostic.config({ virtual_text = not cfg.virtual_text })
   end, { desc = "Toggle diagnostic virtual_text" })
-
-  vim.api.nvim_create_user_command("ZenModeToggle", function()
-    M.toggle()
-  end, {})
+  vim.api.nvim_create_user_command("ZenModeToggle", function() M.toggle() end, {})
 end
 
 return M

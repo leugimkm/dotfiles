@@ -31,9 +31,7 @@ return {
           ["!"] = { long = "", short = "Sh", hl = "MiniStatuslineModeOther" },
           ["t"] = { long = "", short = "T", hl = "MiniStatuslineModeOther" },
         }, {
-          __index = function()
-            return { long = "Unknown", short = "", hl = "%#MiniStatuslineModeOther#" }
-          end,
+          __index = function() return { long = "Unknown", short = "", hl = "%#MiniStatuslineModeOther#" } end,
         })
         local mode_info = modes[vim.fn.mode()]
         local mode = MiniStatusline.is_truncated(args.trunc_width) and mode_info.short or mode_info.long
@@ -61,9 +59,7 @@ return {
               { hl = mode_hl, strings = { search, location } },
             })
           end,
-          inactive = function()
-            return "%=%#MiniStatuslineInactive#%F%="
-          end,
+          inactive = function() return "%=%#MiniStatuslineInactive#%F%=" end,
         },
         use_icons = true,
       })

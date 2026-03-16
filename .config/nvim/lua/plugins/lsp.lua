@@ -16,9 +16,7 @@ vim.diagnostic.config({
 })
 
 local function on_attach(bufnr)
-  local map = function(lhs, rhs, desc)
-    vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = "LSP: " .. desc })
-  end
+  local map = function(lhs, rhs, desc) vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = "LSP: " .. desc }) end
   map("K", vim.lsp.buf.hover, "Hover documentation")
   map("gK", vim.lsp.buf.signature_help, "Signature help")
   map("cr", vim.lsp.buf.rename, "[r]ename")
@@ -32,12 +30,14 @@ local function on_attach(bufnr)
   -- map("gi", vim.lsp.buf.implementation, "[g]oto [i]mplementation")
   -- map("gy", vim.lsp.buf.type_definition, "[g]oto t[y]pe definition")
   -- map("gD", vim.lsp.buf.declaration, "[g]oto [D]eclaration")
+  -- map("gO", vim.lsp.buf.document_symbol, "Lsp d[O]cument")
   map("gd", "<Cmd>FzfLua lsp_definitions<CR>", "[g]oto [d]efinition")
   map("gr", "<Cmd>FzfLua lsp_references<CR>", "[g]oto [r]eferences")
   map("gi", "<Cmd>FzfLua lsp_implementations<CR>", "[g]oto [i]mplementation")
   map("gy", "<Cmd>FzfLua lsp_typedefs<CR>", "[g]oto t[y]pe definition")
   map("gD", "<Cmd>FzfLua lsp_declarations<CR>", "[g]oto [D]eclaration")
   map("gl", "<Cmd>FzfLua lsp_document_diagnostics<CR>", "Show document diagnostics")
+  map("gO", "<Cmd>FzfLua lsp_document_symbols<CR>", "LSP d[O]cument")
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {
