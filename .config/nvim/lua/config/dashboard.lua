@@ -24,7 +24,7 @@ local defaults = {
 }
 M.config = {}
 
-local function computer_art_width()
+local function compute_art_width()
   local width = 0
   for _, line in ipairs(M.config.art) do
     width = math.max(width, vim.fn.strdisplaywidth(line))
@@ -48,9 +48,9 @@ end
 
 local function render()
   if not vim.api.nvim_buf_is_valid(state.buf) then return end
-  local win = vim.api.nvim_get_current_win()
-  local width = vim.api.nvim_win_get_width(win)
-  local height = vim.api.nvim_win_get_height(win)
+  state.win = vim.api.nvim_get_current_win()
+  local width = vim.api.nvim_win_get_width(state.win)
+  local height = vim.api.nvim_win_get_height(state.win)
   local lines = {}
   local art = M.config.art
   local art_height = #art
@@ -95,7 +95,7 @@ function M.open()
   end
   render()
   vim.api.nvim_create_autocmd("VimResized", { buffer = state.buf, callback = render })
-  vim.api.nvim_create_autocmd("BufUnload", { buffer = state.buf, once = true, callback = restore_globals })
+  vim.api.nvim_create_autocmd("BufWipeout", { buffer = state.buf, once = true, callback = restore_globals })
   local blocked = { "i", "a", "o", "O", "I", "A", "r", "R", "s", "S", "u" }
   for _, key in ipairs(blocked) do
     vim.keymap.set("n", key, "<nop>", { buffer = state.buf, silent = true })
@@ -105,20 +105,22 @@ end
 function M.setup(opts)
   opts = opts or {}
   M.config = vim.tbl_deep_extend("force", defaults, opts)
-  computer_art_width()
+  compute_art_width()
   state.footer = get_footer()
   vim.api.nvim_create_autocmd("VimEnter", {
     group = vim.api.nvim_create_augroup("ui_start_screen", { clear = true }),
     once = true,
     callback = function()
-      if vim.fn.argc() ~= 0 then return end
+      if vim.fn.argc() > 0 then return end
+      if vim.bo.filetype ~= "" then return end
+      if vim.bo.buftype ~= "" then return end
       if vim.api.nvim_buf_get_name(0) ~= "" then return end
       if vim.bo.modified then return end
       M.open()
     end,
   })
   vim.api.nvim_create_autocmd("User", {
-    pattern = "LazyVimStarted",
+    pattern = { "LazyDone", "LazyVimStarted" },
     callback = function()
       state.footer = get_footer()
       if state.buf and vim.api.nvim_buf_is_valid(state.buf) then render() end
