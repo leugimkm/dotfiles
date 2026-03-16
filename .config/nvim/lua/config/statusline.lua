@@ -3,7 +3,7 @@ local defaults = {
   colors = { low = "#3c3826", high = "#fabd2f" },
   max_chars = 10000,
   filename = { max_width = 0.40, truncate = true },
-  wordcount = { enabled = true, throttle = 800, filetypes = { "markdown", "text", "txt" } },
+  wordcount = { enabled = true, throttle = 800, filetypes = { markdown = true, text = true, txt = true } },
   search = { enabled = true, maxcount = 500 },
   virtcol_limit = 500,
   filesize = { enabled = true },
@@ -24,46 +24,33 @@ function M.setup_highlights()
 end
 
 local function truncate_path(path, max_len)
-  local utf_len = vim.fn.strchars(path)
-  if utf_len <= max_len then return path end
-  local start = math.max(0, utf_len - max_len)
+  local width = vim.fn.strdisplaywidth(path)
+  if width <= max_len then return path end
+  local start = math.max(0, vim.fn.strchars(path) - max_len)
   return "…" .. vim.fn.strcharpart(path, start, max_len)
 end
 
 local function update_filename()
-  local b = vim.b
   local name = vim.api.nvim_buf_get_name(0)
   if name == "" then
-    if b.stl_filename ~= "[No Name]" then b.stl_filename = "[No Name]" end
+    vim.b.stl_filename = "[No Name]"
     return
   end
   local relative, width = vim.fn.fnamemodify(name, ":~:."), vim.api.nvim_win_get_width(0)
   local max_len = math.floor(width * M.opts.filename.max_width)
-  local new_name = M.opts.filename.truncate and truncate_path(relative, max_len) or relative
-  if b.stl_filename ~= new_name then b.stl_filename = new_name end
-end
-
-local function valid_ft(ft)
-  for _, v in ipairs(M.opts.wordcount.filetypes) do
-    if v == ft then return true end
-  end
-  return false
+  vim.b.stl_filename = M.opts.filename.truncate and truncate_path(relative, max_len) or relative
 end
 
 local function update_counter()
-  local b = vim.b
-  if not M.opts.wordcount.enabled then
-    b.stl_counter = ""
-    return
-  end
   local ft = vim.bo.filetype
-  if not valid_ft(ft) then
-    b.stl_counter = ""
+  if not M.opts.wordcount.enabled or not M.opts.wordcount.filetypes[ft] then
+    vim.b.stl_counter = ""
     return
   end
-  local tick = vim.b.changedtick or 0
+  local b = vim.b
+  local tick = vim.b.changedtick
   local now = vim.uv.now()
-  if b.stl_last_tick ~= tick or (now - (b.stl_last_count_time or 0) > M.opts.wordcount.throttle) then
+  if tick ~= b.stl_last_tick or (now - (b.stl_last_count_time or 0) > M.opts.wordcount.throttle) then
     local wc = vim.fn.wordcount()
     b.stl_cache_words, b.stl_cache_chars = wc.words or 0, wc.chars or 0
     b.stl_last_count_time, b.stl_last_tick = now, tick
@@ -73,45 +60,54 @@ local function update_counter()
     or string.format("%d/%d", words, chars)
 end
 
-local function get_file_size()
-  if not M.opts.filesize.enabled then return "" end
+local function update_filesize()
   local name = vim.api.nvim_buf_get_name(0)
-  if name == "" then return "" end
+  if not M.opts.filesize or not M.opts.filesize.enabled or name == "" then
+    vim.b.stl_filesize = ""
+    return
+  end
   local ok, stat = pcall(vim.uv.fs_stat, name)
-  if not ok or not stat or stat.size <= 0 then return "" end
+  if not ok or not stat or stat.size <= 0 then
+    vim.b.stl_filesize = ""
+    return
+  end
   local size = stat.size
-  if size < 1024 then return size .. "B" end
-  if size < 1048576 then return string.format("%.1fK", size / 1024) end
-  return string.format("%.1fM", size / 1048576)
+  vim.b.stl_filesize = (size < 1024) and (size .. "B")
+    or (size < 1048576) and string.format("%.1fK", size / 1024)
+    or string.format("%.1fM", size / 1048576)
 end
 
-function M.fileinfo()
+local function update_fileinfo()
   local encoding = vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.o.encoding
-  local format, size = vim.bo.fileformat, get_file_size()
-  if size == "" then return string.format("%s[%s]", encoding, format) end
-  return string.format("%s[%s] %s", encoding, format, size)
+  local format, size = vim.bo.fileformat, vim.b.stl_filesize or ""
+  vim.b.stl_fileinfo = size == "" and string.format("%s[%s]", encoding, format)
+    or string.format("%s[%s] %s", encoding, format, size)
 end
 
-local function update_search_count()
-  if not M.opts.search.enabled or vim.v.hlsearch == 0 or vim.fn.getreg("/") == "" then return end
-  pcall(vim.fn.searchcount, { recompute = true, maxcount = M.opts.search.maxcount })
-  vim.cmd("redrawstatus")
+local function update_search()
+  if not M.opts.search.enabled or vim.hlsearch == 0 or vim.fn.getreg("/") == "" then
+    vim.b.stl_search = ""
+    return
+  end
+  local max_c = M.opts.search.maxcount
+  local ok, sc = pcall(vim.fn.searchcount, { recompute = true, maxcount = max_c })
+  if not ok or not sc or sc.total == 0 then
+    vim.b.stl_search = ""
+    return
+  end
+  if sc.incomplete == 1 then
+    vim.b.stl_search = "?/? "
+    return
+  end
+  local current = sc.current > max_c and ">" .. max_c or sc.current
+  local total = sc.total > max_c and ">" .. max_c or sc.total
+  vim.b.stl_search = current .. "/" .. total .. " "
 end
 
-function M.search_count()
-  if not M.opts.search.enabled or vim.v.hlsearch == 0 or vim.fn.mode() ~= "n" then return "" end
-  local ok, sc = pcall(vim.fn.searchcount, { recompute = false, maxcount = M.opts.search.maxcount })
-  if not ok or not sc or sc.total == 0 then return "" end
-  if sc.incomplete == 1 then return "?/? " end
-  local current = sc.current > sc.maxcount and ">" .. M.opts.search.maxcount or sc.current
-  local total = sc.total > sc.maxcount and ">" .. M.opts.search.maxcount or sc.total
-  return string.format("%s/%s ", current, total)
-end
-
-function M.safe_virt_len()
+local function update_virtcol()
+  local limit = M.opts.virtcol_limit
   local bytes = vim.fn.col("$") - 1
-  if bytes > M.opts.virtcol_limit then return bytes end
-  return vim.fn.virtcol("$") - 1
+  vim.b.stl_virtcol = bytes > limit and bytes or vim.fn.virtcol("$") - 1
 end
 
 function M.setup_statusline()
@@ -120,10 +116,24 @@ function M.setup_statusline()
     " %{get(b:,'stl_filename','[No Name]')} %m%r%h%w ",
     "%{get(b:,'stl_counter','')}",
     "%=",
-    "%#StatuslineSearch#%{v:lua.Statusline.search_count()}%*",
-    "%{v:lua.Statusline.fileinfo()} ",
-    "%l|%L|%2v|%-2{v:lua.Statusline.safe_virt_len()} %p%%",
+    "%#StatuslineSearch#%{get(b:,'stl_search','')}%*",
+    "%{get(b:,'stl_fileinfo','')} ",
+    "%l|%L|%2v|%-2{get(b:,'stl_virtcol','0')} %p%%",
   }, "")
+end
+
+function M.statusline_update(event)
+  if event == "BufEnter" or event == "BufWritePost" or event == "WinResized" then
+    update_filename()
+    update_filesize()
+    update_fileinfo()
+  end
+  if event == "TextChanged" or event == "TextChangedI" or event == "InsertLeave" then update_counter() end
+  if event == "CursorMoved" or event == "CursorMovedI" then
+    update_search()
+    update_counter()
+    update_virtcol()
+  end
 end
 
 function M.setup(user_opts)
@@ -132,22 +142,24 @@ function M.setup(user_opts)
   M.setup_highlights()
   M.setup_statusline()
   local au = vim.api.nvim_create_augroup("CustomStatusline", { clear = true })
-  vim.api.nvim_create_autocmd(
-    { "BufEnter", "BufFilePost", "BufWinEnter", "BufWritePost", "VimResized", "WinResized" },
-    { group = au, callback = update_filename }
-  )
-  vim.api.nvim_create_autocmd(
-    { "BufEnter", "BufWinEnter", "TextChanged", "TextChangedI", "InsertLeave" },
-    { group = au, callback = update_counter }
-  )
-  vim.api.nvim_create_autocmd(
-    { "CmdlineLeave" },
-    { group = au, pattern = { "/", "?" }, callback = update_search_count }
-  )
-  vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, { group = au, callback = update_search_count })
+  local events = {
+    "BufEnter",
+    "BufFilePost",
+    "BufWritePost",
+    "CursorMoved",
+    "CursorMovedI",
+    "InsertLeave",
+    "TextChanged",
+    "TextChangedI",
+    "WinResized",
+  }
+  for _, event in ipairs(events) do
+    vim.api.nvim_create_autocmd(event, { group = au, callback = function() M.statusline_update(event) end })
+  end
+  vim.api.nvim_create_autocmd({ "CmdlineLeave" }, { group = au, pattern = { "/", "?" }, callback = update_search })
   vim.defer_fn(function()
-    update_filename()
-    update_counter()
+    M.statusline_update("BufEnter")
+    M.statusline_update("TextChanged")
   end, 50)
 end
 
