@@ -55,15 +55,6 @@ function M.setup(user_opts)
   vim.keymap.set({ "n", "t" }, opts.keys.lhs, M.toggle_terminal, opts.keys.opts)
   vim.keymap.set("t", "<Esc><Esc>", "<c-\\><c-n>", { desc = "Term: back to 'N' mode" })
   vim.api.nvim_create_user_command(opts.cmd, M.toggle_terminal, {})
-  vim.api.nvim_create_autocmd("VimResized", {
-    group = vim.api.nvim_create_augroup("FtermResize", { clear = true }),
-    callback = function()
-      if vim.api.nvim_win_is_valid(M.state.floating.win) then
-        local w, h, r, c = calculate(opts)
-        vim.api.nvim_win_set_config(M.state.floating.win, { width = w, height = h, col = c, row = r })
-      end
-    end,
-  })
 end
 
 return M
