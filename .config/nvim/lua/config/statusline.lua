@@ -1,5 +1,5 @@
-local M = {}
-M.config = {
+local M = { components = {}, opts = {} }
+local config = {
   colors = { low = "#32302f", high = "#fabd2f" },
   limits = { size = 5242880, wordcount = 50000, max_chars = 10000 },
   filename = { max_width = 0.40, truncate = true },
@@ -9,8 +9,6 @@ M.config = {
   position = "default",
   sep = " ",
 }
-M.opts = {}
-M.components = {}
 
 local function blend_fg_color(ratio)
   local hl = vim.api.nvim_get_hl(0, { name = "StatusLine" })
@@ -128,10 +126,10 @@ function M.render()
 end
 
 function M.setup(user_opts)
-  M.opts = vim.tbl_deep_extend("force", vim.deepcopy(M.config), user_opts or {})
+  M.opts = vim.tbl_deep_extend("force", vim.deepcopy(config), user_opts or {})
+  _G.Statusline = M
   M.setup_highlights()
   vim.api.nvim_create_autocmd("ColorScheme", { callback = function() M.setup_highlights() end })
-  _G.Statusline = M
   vim.o.statusline = "%!v:lua.Statusline.render()"
 end
 
