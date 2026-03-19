@@ -70,6 +70,8 @@ return {
           LineNrBelow = { fg = color.dark0_soft },
           CursorLineNr = { fg = color.dark0_soft },
           LineNr = { fg = color.dark1 },
+          -- FloatBorder = { bg ="NONE"},
+          -- OilBorder = { bg ="NONE"},
         },
       })
       vim.cmd.colorscheme("gruvbox")
